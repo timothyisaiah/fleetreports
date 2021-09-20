@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Generator Report</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../dist/js/datepicker/sass/bootstrap-datetimepicker-build.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+</head>
+
+<body class="hold-transition sidebar-mini  sidebar-collapse">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="../../index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM -->
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                        aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="../../index.html" class="brand-link">
+                <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">FMS-Reports</span>
+            </a>
+
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="data.html" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Create Report</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="fleetreports.html" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Fleet Report</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="gensets.html" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Gensets Report</p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Gensets Reports</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Fleet reports</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row" style="padding: 10px;">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="row text-center" style="padding: 10px;">
+                                    <div class="col-md-4"> <button class="btn btn-sm btn-success btn"
+                                            onclick="viewFuelPerformanceReport('Only');">View Fuel performance
+                                            Report</button>
+                                    </div>
+                                    <div class="col-md-4"> <button class="btn btn-sm btn-warning btn"
+                                            onclick="viewServicingPerformanceReport('Only');">View Servicing Performance
+                                            Report</button>
+                                    </div>
+                                    <div class="col-md-4"> <button class="btn btn-sm btn-danger btn"
+                                            onclick="viewWholeGeneratorReport('Only')">View Whole Generator
+                                            Report</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="reportsdom">
+                        <!-- tables  -->
+                        <div id="fuelperformancedom">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Fuel performance <span id="fuelperformanceperiod"
+                                                    class="pull-right"></span></h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="fuelperformancetable">
+                                                <thead>
+                                                    <!-- <tr>
+                                                        <th colspan="9" id="">
+
+                                                        </th>
+                                                    </tr> -->
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>AssetName</th>
+                                                        <th>Location</th>
+                                                        <th>Refueling[LTRS]</th>
+                                                        <th>FuelConsumed[LTRS]</th>
+                                                        <th>Cost/LTR[UGX]</th>
+                                                        <th>CostOfFuelConsumed</th>
+                                                        <th>FuelLost[LTRS]</th>
+                                                        <th>CostOfFuel[UGX]</th>
+                                                        <th>ConsumptionLTRS/HR</th>
+                                                        <th>CurrentFuelLevelInTank[LTRS]</th>
+                                                        <th>FuelTankCapacity[LTRS]</th>
+                                                        <th>RefuelingRequired[LTRS]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fuelperformance-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                        <div id="servicingdom">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Servicing Performance <span id="servicingperiod"
+                                                    class="pull-right"></span></h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="servicingtable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th>AssetName</th>
+                                                        <th>Location</th>
+                                                        <th>CurrentEngineRunning[HRS]</th>
+                                                        <th>TargetServiceRunHours[HRS]</th>
+                                                        <th>EngineHRSLeftToService</th>
+                                                        <th>CostOfService[UGX]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="servicing-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 3.1.0-rc
+            </div>
+            <strong>Copyright &copy; 2014-2021 <a href="https://teesatechnologies.com">Teesa Technologies</a>.</strong>
+            All
+            rights reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../plugins/jszip/jszip.min.js"></script>
+    <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../../dist/js/datepicker/js/Moment.js"></script>
+    <script src="../../dist/js/datepicker/js/bootstrap-datetimepicker.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <!-- Page specific script -->
+    <script>
+        var fuelperformancetable = $("#fuelperformancetable").DataTable({
+            "dom": "Bfrtip",
+            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+        });
+        var servicingtable = $("#servicingtable").DataTable({
+            "dom": "Bfrtip",
+            "buttons": ["copy", "csv", "excel", "pdf", "print"]
+        });
+
+        var avaliableReports = [];
+        $(document).ready(function () {
+            listAllReportsAvailable();
+        });
+        $(function () {
+            // $('#ecodriving').DataTable({
+            //   "paging": true,
+            //   "lengthChange": false,
+            //   "searching": false,
+            //   "ordering": true,
+            //   "info": true,
+            //   "autoWidth": false,
+            //   "responsive": true,
+            // });
+            // $("#exampletime").datetimepicker();
+            // $("#exampletime2").datetimepicker();
+        });
+
+        function checkenddate() {
+            if ($('#startdate').val() !== '') {
+                var start = Date.parse(($('#startdate').val()).toString());
+                var end = Date.parse(($('#enddate').val()).toString());
+                console.log($('#enddate').val());
+                if (start > end) {
+                    //            $('#eDate').css('border-color', '#ff0000');
+                    $('#startdate').val('');
+                    $('#enddate').focus();
+                    return false;
+                } else {
+                    $('#enddate').css('border-color', '#C0C0C0');
+                    return true;
+                }
+            } else {
+                return false;
+            }
+
+            return true;
+        }
+
+        function viewFuelPerformanceReport(option) {
+            if (option === 'Only') {
+                $('#fleetoperationsdom').css('display', 'none');
+                $('#ecodrivingdom').css('display', 'none');
+            }
+            var fuelreport;
+            var fuelsummary;
+            //Retieve Fuel volume report
+            $.ajax({
+                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                data: {
+                    hash: "7a91782874f5aa854a7d0c616750e5bb",
+                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
+                },
+                type: 'GET',
+                success: function (response) {
+                    fuelreport = response;
+                    console.log("Fuel Report :");
+                    console.log(fuelreport);
+                }, error: function () {
+                    alert('There has been an error, Please Try again');
+                },
+                async: false
+            });
+
+            $('#fuelcostperiod').text(' From: ' + fuelreport.report.from + ' To : ' + fuelreport.report.to);
+
+            console.log(fuelreport);
+            fuelsummary = fuelreport.report.sheets;
+            // Pending is set up json structure to recieve data from fuel volume report 
+            // debugger;
+            $('#fuel-table-bod').html('');
+            for (var i = 1; i < fuelsummary.length; i++) {
+                // debugger;
+                var assetname = fuelsummary[i].header;
+                var drivername = 'Unidentified Driver';
+                var refueling = 0;
+                var fuelconsumed = 0;
+                var cost = '-';
+                var CostOfFuelConsumed = '-';
+                var fuellost = '-';
+
+                fuelcoststable.row.add([
+                    i.toString(),
+                    assetname,
+                    drivername,
+                    refueling,
+                    fuelconsumed,
+                    cost,
+                    CostOfFuelConsumed,
+                    fuellost,
+                ]).draw();
+            }
+
+        }
+
+        function viewServicingPerformanceReport(option) {
+            if (option === 'Only') {
+                $('#fleetoperationsdom').css('display', 'none');
+                $('#ecodrivingdom').css('display', 'none');
+            }
+            var tripreport;
+            var fuelreport;
+            var tripsummary;
+            var fuelsummary;
+            $.ajax({
+                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                data: {
+                    hash: "7a91782874f5aa854a7d0c616750e5bb",
+                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
+                },
+                type: 'GET',
+                success: function (response) {
+                    tripreport = response;
+                    console.log("Trip Report: " + tripreport);
+                }, error: function () {
+                    alert('There has been an error, Please Try again');
+                },
+                async: false
+            });
+
+            $('#servicingperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
+            $('#servicing-table-bod').html('');
+
+            // debugger;
+            // create loop to hadle maintanace report 
+        }
+
+        function getMax(arr) {
+            var max;
+            for (var i = 0; i < arr.length; i++) {
+                if (max == null || parseInt(arr[i].max_speed.raw) > parseInt(max))
+                    max = arr[i].max_speed.raw;
+            }
+            return max;
+        }
+            
+        function listAllReportsAvailable() {
+            $.ajax({
+                url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+                type: 'GET',
+                data: {
+                    hash: "7a91782874f5aa854a7d0c616750e5bb"
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.list.length > 0) {
+                        for (var i = 0; i < response.list.length; i++) {
+                            console.log(response.list[i].id);
+                            avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
+                        }
+                        console.log("Available Reports List: ");
+                        console.log(avaliableReports);
+                    } else {
+                        $.confirm({
+                            title: 'Error',
+                            content: 'There is no report currently, please generate one and try again!',
+                            useBootstrap: false,
+                            type: 'red',
+                            theme: 'modern',
+                            icon: 'fa fa-exclamation-triangle',
+                            buttons: {
+                                close: {
+                                    text: 'Close',
+                                    action: function () { }
+                                }
+                            }
+                        });
+                    }
+                },
+                async: false,
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+
+        }
+
+        function viewAllReportsAvailable() {
+            viewFleetOperationsreport('All');
+            viewEcodrivingreport('All');
+            viewFuelreport('All');
+            viewMaintanancereport('All');
+
+            $('#fleetoperationsdom').css('display', 'block');
+            $('#ecodrivingdom').css('display', 'block');
+            $('#fueldom').css('display', 'block');
+            $('#maintanancedom').css('display', 'block');
+        }
+
+    </script>
+</body>
+
+</html>
