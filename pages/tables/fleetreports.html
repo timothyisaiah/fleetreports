@@ -14,6 +14,7 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/jquery-confirm/jquery-confirm.css">
     <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="../../dist/js/datepicker/sass/bootstrap-datetimepicker-build.css">
     <!-- Theme style -->
@@ -30,7 +31,7 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../../index3.html" class="nav-link">Home</a>
+                    <a href="data.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link">Contact</a>
@@ -49,6 +50,12 @@
                     </div>
                 </div>
             </form>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="../examples/login.html" class="nav-link">Log Out</a>
+                </li>
+            </ul>
         </nav>
         <!-- /.navbar -->
 
@@ -68,7 +75,7 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
+                    <!-- <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -76,7 +83,7 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="data.html" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -84,7 +91,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="fleetreports.html" class="nav-link">
+                        <a href="fleetreports.html" class="nav-link active">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Fleet Report</p>
                         </a>
@@ -107,6 +114,7 @@
                 word-break: break-all;
                 overflow: hidden;
             }
+
             table th {
                 max-width: 40px;
                 white-space: nowrap;
@@ -152,7 +160,7 @@
                         </div>
                         <div class="col-md-2"> -->
                         <div class="col-md-12 text-right">
-                            <button class="btn btn-primary" onclick="viewAllReportsAvailable();" id="btn-view-report"><i
+                            <button class="btn btn-primary btn-sm" onclick="viewAllReportsAvailable();" id="btn-view-report"><i
                                     class="fa fa-eye"></i>
                                 View All
                                 Reports</button>
@@ -214,17 +222,21 @@
                                                         <th title="Asset Name">Asset Name</th>
                                                         <th title="Driver Name">Driver Name</th>
                                                         <th title="Mileage covered (KM)">Mileage covered (KM)</th>
-                                                        <th title="Engine Runtime [HH:mm:ss]">Engine Runtime [HH:mm:ss]</th>
+                                                        <th title="Engine Runtime [HH:mm:ss]">Engine Runtime [HH:mm:ss]
+                                                        </th>
                                                         <th title="Idling Time [HH:mm:ss]">Idling Time [HH:mm:ss]</th>
                                                         <th title="Driving Time [HH:mm:ss]">Driving Time [HH:mm:ss]</th>
                                                         <th title="Parking Time [HH:mm:ss]">Parking Time [HH:mm:ss]</th>
                                                         <th title="Asset Utilization [%]">Asset Utilization [%]</th>
                                                         <th title="Weekend Driving">Weekend Driving</th>
-                                                        <th title="Weekend Mileage Covered [KM]">Weekend Mileage Covered [KM]</th>
+                                                        <th title="Weekend Mileage Covered [KM]">Weekend Mileage Covered
+                                                            [KM]</th>
                                                         <th title="Night Driving">Night Driving</th>
-                                                        <th title="Night Driving Mileage Covered [KM]">Night Driving Mileage Covered [KM]</th>
+                                                        <th title="Night Driving Mileage Covered [KM]">Night Driving
+                                                            Mileage Covered [KM]</th>
                                                         <th title="Early Morning Driving">Early Morning Driving</th>
-                                                        <th title="Early Morning Driving Mileage Covered [KM]">Early Morning Driving Mileage Covered [KM]</th>
+                                                        <th title="Early Morning Driving Mileage Covered [KM]">Early
+                                                            Morning Driving Mileage Covered [KM]</th>
                                                         <th title="Geofence Exit/Entry">Geofence Exit/Entry</th>
                                                     </tr>
                                                 </thead>
@@ -263,7 +275,8 @@
                                                         <th title="Harsh Driving">Harsh Driving</th>
                                                         <th title="Harsh Driving Count">Harsh Driving Count</th>
                                                         <th title="Accident">Accident</th>
-                                                        <th title="Driver / Vehicle Performance">Driver / Vehicle Performance</th>
+                                                        <th title="Driver / Vehicle Performance">Driver / Vehicle
+                                                            Performance</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="eco-table-bod">
@@ -299,9 +312,11 @@
                                                         <th title="Fuel Consumed [ltrs]">Fuel Consumed [ltrs]</th>
                                                         <th title="Consumption [Km/L]">Consumption [Km/L]</th>
                                                         <th title="Refueling [Ltrs]">Refueling [Ltrs]</th>
-                                                        <th title="Fuel Lost (Siphoned) [Ltrs]">Fuel Lost (Siphoned) [Ltrs]</th>
+                                                        <th title="Fuel Lost (Siphoned) [Ltrs]">Fuel Lost (Siphoned)
+                                                            [Ltrs]</th>
                                                         <th title="Cost/Ltr [Ugx]">Cost/Ltr [Ugx]</th>
-                                                        <th title="Cost Of Fuel Consumed [Ugx]">Cost Of Fuel Consumed [Ugx]</th>
+                                                        <th title="Cost Of Fuel Consumed [Ugx]">Cost Of Fuel Consumed
+                                                            [Ugx]</th>
                                                         <th title="Initial Volume [Ltrs]">Initial Volume [Ltrs]</th>
                                                         <th title="Final Volume [Ltrs]">Final Volume [Ltrs]</th>
                                                     </tr>
@@ -442,6 +457,7 @@
     <script src="../../dist/js/demo.js"></script>
     <!-- Page specific script -->
     <script>
+        var hash;
         var fleettable = $("#fleetoperations").DataTable({
             "dom": "Bfrtip",
             "buttons": ["copy", "csv", "excel", "pdf", "print"]
@@ -465,7 +481,15 @@
         });
         var avaliableReports = [];
         $(document).ready(function () {
+            var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+            // debugger;
+            hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
             listAllReportsAvailable();
+            $('#fleetoperationsdom').css('display', 'none');
+            $('#ecodrivingdom').css('display', 'none');
+            $('#fueldom').css('display', 'none');
+            $('#maintanancedom').css('display', 'none');
+            $('#speedviolationdom').css('display', 'none');
         });
         $(function () {
             // $('#ecodriving').DataTable({
@@ -521,7 +545,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
                 },
                 type: 'GET',
@@ -540,7 +564,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
                 },
                 type: 'GET',
@@ -558,7 +582,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Geofence entry/exit events')].id
                 },
                 type: 'GET',
@@ -702,7 +726,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Eco-driving report')].id
                 },
                 type: 'GET',
@@ -719,7 +743,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
                 },
                 type: 'GET',
@@ -826,7 +850,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
                 },
                 type: 'GET',
@@ -897,7 +921,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
                 },
                 type: 'GET',
@@ -914,7 +938,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
                 },
                 type: 'GET',
@@ -1073,7 +1097,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
                 },
                 type: 'GET',
@@ -1129,7 +1153,7 @@
                 url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
                 type: 'GET',
                 data: {
-                    hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e"
+                    hash: hash
                 },
                 success: function (response) {
                     console.log(response);
@@ -1151,7 +1175,7 @@
                             buttons: {
                                 close: {
                                     text: 'Close',
-                                    action: function () { }
+                                    action: function () { window.location.href='data.html'}
                                 }
                             }
                         });

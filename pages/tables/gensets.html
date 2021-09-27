@@ -49,6 +49,11 @@
                     </div>
                 </div>
             </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="../examples/login.html" class="nav-link">Log Out</a>
+                </li>
+            </ul>
         </nav>
         <!-- /.navbar -->
 
@@ -68,7 +73,7 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
+                    <!-- <li class="nav-item menu-open">
                         <a href="#" class="nav-link active">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
@@ -76,7 +81,7 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="data.html" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -90,7 +95,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="gensets.html" class="nav-link">
+                        <a href="gensets.html" class="nav-link active">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Gensets Report</p>
                         </a>
@@ -99,7 +104,23 @@
             </nav>
             <!-- /.sidebar-menu -->
         </aside>
+        <style>
+            table td {
+                max-width: 50px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                overflow: hidden;
+            }
 
+            table th {
+                max-width: 40px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                word-break: break-all;
+                overflow: hidden;
+            }
+        </style>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -416,7 +437,7 @@
             }
             return max;
         }
-            
+
         function listAllReportsAvailable() {
             $.ajax({
                 url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",

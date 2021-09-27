@@ -49,6 +49,12 @@
           </div>
         </div>
       </form>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="../examples/login.html" class="nav-link">Log Out</a>
+        </li>
+      </ul>
     </nav>
     <!-- /.navbar -->
 
@@ -67,7 +73,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
+          <!-- <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -75,9 +81,9 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <a href="data.html" class="nav-link">
+            <a href="data.html" class="nav-link active">
               <i class="far fa-circle nav-icon"></i>
               <p>Create Reports</p>
             </a>
@@ -106,12 +112,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Fleet Reports</h1>
+              <h1>Create Report</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Fleet Reports</li>
+                <li class="breadcrumb-item active">Create Report</li>
               </ol>
             </div>
           </div>
@@ -122,33 +128,23 @@
       <section class="content">
         <div class="container-fluid">
           <!-- Date picker  -->
-          <div class="row">
+          <div class="row" style="padding: 2% 5%;">
             <div class="col-md-5">
+              <label style="padding-left: 10px;">Start Date:</label>
               <input type="date" class="form-control" id="startdate">
             </div>
             <div class="col-md-5">
+              <label style="padding-left: 10px;">End Date:</label>
               <input type="date" class="form-control" id="enddate">
             </div>
-            <div class="col-md-2">
-              <button class="btn btn-primary" onclick="generateReport()"><i class="fa fa-download"></i> Generate
+            <div class="col-md-2" style="padding: 2.7%;">
+              <button class="btn btn-sm btn-primary" onclick="createReports()"><i class="fa fa-download"></i> Generate
                 Report</button>
             </div>
           </div>
-          <div class="row" style="padding: 20px;">
-            <div class="col-md-4">
-              <button class="btn btn-sm btn-success"><i class="fa fa-eye"></i> View Report</button>
-            </div>
-            <div class="col-md-4">
-              <button class="btn btn-sm btn-warning" onclick="createReports()"><i class="fa fa-plus"></i>Create
-                Report</button>
-            </div>
-            <div class="col-md-4">
-              <button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i
-                  class="fa fa-trash"></i>Delete Report</button>
-            </div>
-          </div>
+
           <!-- tables  -->
-          <div class="row">
+          <div class="row" style="padding: 2% 2%;">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
@@ -156,12 +152,12 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div id="available-reports" onclick="window.location.href='fleetreports.html'">
-                    <div class="text-center">
+                  <div id="available-reports" class="row">
+                    <!-- <div class="col-md-12 text-center">
                       <div class="spinner-grow text-secondary" role="status">
                         <span class="sr-only">Loading...</span>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                   <!-- <table class="table table-bordered" id="dataTable">
                     <thead>
@@ -249,6 +245,7 @@
   <script src="../../dist/js/demo.js"></script>
   <!-- Page specific script -->
   <script>
+    var hash;
     var trackerlist = [];
     var reportlist = [];
     $(function () {
@@ -267,16 +264,27 @@
     });
 
     $(document).ready(function () {
+      var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+      // debugger;
+      hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
       $.ajax({
         url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
         type: 'GET',
         data: {
-          hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e"
+          hash: hash
         },
         success: function (response) {
           console.log(response);
+          // debugger;
           if (response.list.length > 0) {
-            $('#available-reports').html('<div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div>');
+            $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
+              '<div class="col-md-6">' +
+              '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
+              '</div>' +
+              '<div class="col-md-6">' +
+              '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
+              '</div>' +
+              '</div></div>');
             for (var i = 0; i < response.list.length; i++) {
               console.log(response.list[i].id);
               avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
@@ -289,6 +297,7 @@
               content: 'There is no report currently, please generate one and try again!',
               useBootstrap: false,
               type: 'red',
+              boxWidth: '30%',
               theme: 'modern',
               icon: 'fa fa-exclamation-triangle',
               buttons: {
@@ -329,157 +338,13 @@
       return true;
     }
 
-    // function viewFleetOperationsreport() {
-    //   //Retieve Trip Report
-    //   var tripreport;
-    //   var enginehours;
-    //   $.ajax({
-    //     url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-    //     data: {
-    //       hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
-    //       report_id: 24506
-    //     },
-    //     type: 'GET',
-    //     success: function (response) {
-
-    //     }, error: function () {
-    //       alert('There has been an error, Please Try again');
-    //     },
-    //     async: false
-    //   });
-
-
-
-    //   //Retieve Engine Hours
-    //   $.ajax({
-    //     url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-    //     data: {
-    //       hash: "02d4aad3606697c7255b5aa2c12ff00a",
-    //       report_id: 24506
-    //     },
-    //     type: 'GET',
-    //     success: function (response) {
-
-    //     }, error: function () {
-    //       alert('There has been an error, Please Try again');
-    //     },
-    //     async: false
-    //   });
-    // }
-
-    function generateReport() {
-      var startDate = $('#startdate').val();
-      var endDate = $('#enddate').val();
-      if (checkenddate()) {
-        $('#table-bod').html('<div><div class="spinner-grow text-primary pull-center"></div></div>');
-
-        startDate = startDate.replace("/", "-") + ' 00:00:00';
-        endDate = endDate.replace("/", "-") + ' 23:59:59';
-        console.log(endDate + "   " + startDate);
-        $.ajax({
-          url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
-          data: {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e"
-          },
-          type: 'GET',
-          success: function (response) {
-            // debugger;
-            console.log(response);
-            var vehicles = response.list;
-            $('#table-bod').html('');
-
-            for (var i = 0; i < vehicles.length; i++) {
-              console.log(vehicles[i].label);
-              var distancetraveled = 0;
-              var enginetime = 0;
-
-              $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/track/list',
-                data: {
-                  hash: "02d4aad3606697c7255b5aa2c12ff00a",
-                  tracker_id: vehicles[i].id,
-                  type: "engine_hours",
-                  from: startDate,
-                  to: endDate
-                },
-                type: 'GET',
-                success: function (resp) {
-                  // debugger;
-                  console.log(resp);
-                  var tracks = resp.list;
-                  for (var x = 0; x < tracks.length; x++) {
-                    distancetraveled = distancetraveled + tracks[x].length;
-                  }
-
-                }, error: function () {
-                  alert('There has been an error, Please Try again');
-                },
-                async: false
-              });
-
-
-
-              $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/tracker/stats/engine_hours/read',
-                data: {
-                  hash: "02d4aad3606697c7255b5aa2c12ff00a",
-                  tracker_id: vehicles[i].id,
-                  type: "engine_hours",
-                  from: startDate,
-                  to: endDate
-                },
-                type: 'GET',
-                success: function (resp) {
-                  // debugger;
-                  console.log(resp);
-                  enginetime = resp.value;
-
-                }, error: function (error) {
-                  console.log(error);
-                },
-                async: false
-              });
-
-              //Append Fetched values to datatable
-              var row = '<tr>' +
-                ' <td>' + vehicles[i].label + '</td>' +
-                ' <td>' + startDate + '</td>' +
-                ' <td>' + endDate + '</td>' +
-                ' <td>' + distancetraveled + '</td>' +
-                ' <td>' + enginetime + '</td>' +
-                ' <td>0.00</td>' +
-                ' <td>0.00</td>' +
-                ' <td>0.00</td>' +
-                ' <td>0.00</td>' +
-                ' <td>0.00</td>' +
-                '</tr>';
-
-              $('#table-bod').append(row);
-
-
-            }
-          }
-        });
-      } else {
-        $.confirm({
-          title: 'Error',
-          content: 'Please select a valid date range!',
-          useBootstrap: false,
-          type: 'red',
-          theme: 'modern',
-          icon: 'fa fa-exclamation-triangle',
-          buttons: {
-            close: {
-              text: 'Close',
-              action: function () { }
-            }
-          }
-        });
-      }
-    }
     function createReports() {
       const createReportsAsync = async () => {
-
+        $('#available-reports').html('<div class="col-md-12 text-center">'
+          + ' <div class="spinner-grow text-secondary" role="status">'
+          + '<span class="sr-only">Loading...</span>'
+          + ' </div>'
+          + '</div>');
         var startDate = $('#startdate').val();
         var endDate = $('#enddate').val();
         if (checkenddate()) {
@@ -493,7 +358,7 @@
             $.ajax({
               url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
               data: {
-                hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e"
+                hash: hash
               },
               type: 'GET',
               success: function (response) {
@@ -511,80 +376,6 @@
               async: false
             });
           }
-
-
-          // // 2. Generate reports for selected period
-          // // 2.1  Trip report 
-          // var plugin = {
-          //   "hide_empty_tabs": true,
-          //   "plugin_id": 4,
-          //   "show_seconds": false,
-          //   "include_summary_sheet_only": false,
-          //   "split": true,
-          //   "show_idle_duration": false,
-          //   "show_coordinates": false,
-          //   "filter": true,
-          //   "group_by_driver": true
-          // };
-
-          // var dataObject = {
-          //   "plugin": plugin,
-          //   "hash": 'd6044df83f69e93b88d5cb660504a8a0',
-          //   "title": 'Trip report',
-          //   "trackers": trackerlist,
-          //   "from": startDate,
-          //   "to": endDate,
-          //   "time_filter": {
-          //     "from": "00:00:00",
-          //     "to": "23:59:59",
-          //     "weekdays": [1, 2, 3, 4, 5, 6, 7]
-          //   }
-          // };
-
-          // console.log(dataObject);
-          // console.log(JSON.stringify(dataObject));
-          // console.log(JSON.parse(JSON.stringify(dataObject)));
-          // debugger;
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   contentType: "application/json",
-          //   type: 'GET',
-          //   data: {
-          //     "plugin": {
-          //       "hide_empty_tabs": true,
-          //       "plugin_id": 4,
-          //       "show_seconds": false,
-          //       "include_summary_sheet_only": false,
-          //       "split": true,
-          //       "show_idle_duration": false,
-          //       "show_coordinates": false,
-          //       "filter": true,
-          //       "group_by_driver": true
-          //     },
-          //     "time_filter": {
-          //       "from": "00:00:00",
-          //       "to": "23:59:59",
-          //       "weekdays": [1, 2, 3, 4, 5, 6, 7]
-          //     },
-          //     "hash": "d6044df83f69e93b88d5cb660504a8a0",
-          //     "title": "Trip report",
-          //     "trackers": [5080, 5083, 5102, 5166, 5275],
-          //     "from": "2021-09-15 00:00:00",
-          //     "to": "2021-09-15 23:59:59"
-          //   },
-          //   success: function (response) {
-          //     debugger;
-          //     console.log(response);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     debugger;
-          //     console.log(error.responseJSON);
-          //   }
-          // });
-
-
 
           //Using the javascript API to create reports
           // 2.1 Trip Report 
@@ -606,7 +397,7 @@
               "to": "23:59:59",
               "weekdays": [1, 2, 3, 4, 5, 6, 7]
             },
-            "hash": "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            "hash": hash,
             "title": "Trip report",
             "trackers": trackerlist,
             "from": startDate,
@@ -633,7 +424,7 @@
 
           // 2.2 Eco Driving Report 
           var ecoReportdata = {
-            "hash": "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            "hash": hash,
             "title": "Eco-driving report",
             "trackers": trackerlist,
             "from": startDate,
@@ -668,7 +459,7 @@
 
           // 2.3 Engine Hours Report 
           var engineHoursdata = {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            hash: hash,
             title: "Engine hours report",
             trackers: trackerlist,
             from: startDate,
@@ -709,7 +500,7 @@
 
           // 2.4 Geo Fence Entry/Exit 
           var geoFencedata = {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            hash: hash,
             title: "Geofence entry/exit events",
             trackers: trackerlist,
             from: startDate,
@@ -753,7 +544,7 @@
 
           // 2.5 Speed Violation Report
           var SpeedViolationdata = {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            hash: hash,
             title: "Speed violation report",
             trackers: trackerlist,
             from: startDate,
@@ -801,7 +592,7 @@
 
           // 2.6 Car Security Report 
           var CarSecurityData = {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            hash: hash,
             title: "Car security report",
             trackers: trackerlist,
             from: startDate,
@@ -844,7 +635,7 @@
 
           // 2.7 Fuel Volume Report 
           var fuelVolumeData = {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+            hash: hash,
             title: "Fuel report",
             trackers: trackerlist,
             from: startDate,
@@ -887,268 +678,19 @@
             });
 
 
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   contentType: "application/json",
-          //   type: 'GET',
-          //   data: {
-          //     "hash": "ce9aaa3428e3f4f2f71b17bc004ecb3e",
-          //     "title": "Eco-driving report",
-          //     "trackers": [3305, 3306, 3338, 3404, 3453, 3528, 3529, 3541, 4719, 4791, 6035],
-          //     "from": "2021-08-22 00:00:00",
-          //     "to": "2021-09-09 23:59:59",
-          //     "time_filter": { "from": "00:00:00", "to": "23:59:59", "weekdays": [1, 2, 3, 4, 5, 6, 7] },
-          //     "plugin": {
-          //       "hide_empty_tabs": true, "plugin_id": 46, "show_seconds": false, "include_summary_sheet_only": false, "split": true, "show_idle_duration": true, "show_coordinates": false, "filter": true, "group_by_driver": true, "show_detailed": true,
-          //       "min_duration_minutes": 1, "max_speed": 60, "smoothing": false, "graph_type": "mileage"
-          //     }
-          //   },
-          //   success: function (response) {
-          //     debugger;
-          //     console.log(response);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     debugger;
-          //     console.log(error.responseJSON);
-          //   }
-          // });
-
-          // // 2.2  Engine Hours report 
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Engine hours report",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 7,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true,
-          //       show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       show_detailed: true
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
-          // // 2.3  Geofence entry/exit events report
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Geofence entry/exit events",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: {
-          //       from: "00:00:00",
-          //       to: "23:59:59",
-          //       weekdays: [1, 2, 3, 4, 5, 6, 7]
-          //     },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 89,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true,
-          //       show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       min_minutes_in_zone: 1
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
-
-          // // 2.4  Eco-Driving report 
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Eco-driving report",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 46,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true,
-          //       show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       show_detailed: true,
-          //       min_duration_minutes: 1,
-          //       max_speed: 60
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
-          // // 2.5  Speed Violation report
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Speed violation",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: {
-          //       from: "00:00:00",
-          //       to: "23:59:59",
-          //       weekdays: [1, 2, 3, 4, 5, 6, 7]
-          //     },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 27,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true,
-          //       show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       show_detailed: true,
-          //       min_duration_minutes: 1,
-          //       max_speed: 60
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
-          // // 2.6  Car Security
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Car security report",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 15,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true,
-          //       show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       show_detailed: true,
-          //       min_duration_minutes: 1,
-          //       max_speed: 60
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
-          // 2.7  Fuel Volume
-          // $.ajax({
-          //   url: "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
-          //   type: 'GET',
-          //   data: {
-          //     hash: "02d4aad3606697c7255b5aa2c12ff00a",
-          //     title: "Fuel volume report",
-          //     trackers: trackerlist,
-          //     from: startDate,
-          //     to: endDate,
-          //     time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-          //     plugin: {
-          //       hide_empty_tabs: true,
-          //       plugin_id: 10,
-          //       show_seconds: true,
-          //       include_summary_sheet_only: false,
-          //       split: true, show_idle_duration: true,
-          //       show_coordinates: false,
-          //       filter: true,
-          //       group_by_driver: true,
-          //       show_detailed: true,
-          //       min_duration_minutes: 1,
-          //       max_speed: 60,
-          //       smoothing: false,
-          //       graph_type: "mileage"
-          //     }
-          //   },
-          //   success: function (response) {
-          //     console.log(response.id);
-          //     reportlist.push(response.id);
-          //   },
-          //   async: false,
-          //   error: function (error) {
-          //     console.log(error);
-          //   }
-          // });
-
           if (reportlist.length >= 6) {
             $.confirm({
               title: 'Success',
               content: 'Report Successfully Created',
               useBootstrap: false,
               type: 'green',
+              boxWidth: '30%',
               theme: 'modern',
               icon: 'fa fa-tick',
               buttons: {
                 close: {
                   text: 'Close',
-                  action: function () { }
+                  action: function () { listAllReportsAvailable() }
                 }
               }
             });
@@ -1160,6 +702,52 @@
       createReportsAsync();
     }
     function listAllReportsAvailable() {
+      $.ajax({
+        url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+        type: 'GET',
+        data: {
+          hash: hash
+        },
+        success: function (response) {
+          console.log(response);
+          // debugger;
+          if (response.list.length > 0) {
+            $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
+              '<div class="col-md-6">' +
+              '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
+              '</div>' +
+              '<div class="col-md-6">' +
+              '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
+              '</div>' +
+              '</div></div>');
+            for (var i = 0; i < response.list.length; i++) {
+              console.log(response.list[i].id);
+              avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
+            }
+            console.log("Available Reports List: ");
+            console.log(avaliableReports);
+          } else {
+            $.confirm({
+              title: 'Error',
+              content: 'There is no report currently, please generate one and try again!',
+              useBootstrap: false,
+              type: 'red',
+              theme: 'modern',
+              icon: 'fa fa-exclamation-triangle',
+              buttons: {
+                close: {
+                  text: 'Close',
+                  action: function () { }
+                }
+              }
+            });
+          }
+        },
+        async: false,
+        error: function (error) {
+          console.log(error);
+        }
+      });
 
     }
 
@@ -1171,7 +759,7 @@
           url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
           type: 'GET',
           data: {
-            hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e"
+            hash: hash
           },
           success: function (response) {
             console.log(response);
@@ -1187,6 +775,7 @@
                 content: 'There is no report currently please generate one and try again!',
                 useBootstrap: false,
                 type: 'red',
+                boxWidth: '30%',
                 theme: 'modern',
                 icon: 'fa fa-exclamation-triangle',
                 buttons: {
@@ -1212,27 +801,30 @@
             url: "https://hosting.fms-ecsinternational.com/api/report/tracker/delete",
             type: 'GET',
             data: {
-              hash: "ce9aaa3428e3f4f2f71b17bc004ecb3e",
+              hash: hash,
               report_id: reportlist[i]
             },
             success: function (response) {
               console.log(response);
               if (response.success === true) {
                 console.log("Successfully deleted Report");
-                $.confirm({
-                  title: 'Success',
-                  content: 'Report Successfully deleted',
-                  useBootstrap: false,
-                  type: 'success',
-                  theme: 'modern',
-                  icon: 'fa fa-tick',
-                  buttons: {
-                    close: {
-                      text: 'Close',
-                      action: function () { }
+                if (i === (reportlist.length - 1)) {
+                  $.confirm({
+                    title: 'Success',
+                    content: 'Report Successfully deleted',
+                    useBootstrap: false,
+                    type: 'green',
+                    theme: 'modern',
+                    icon: 'fa fa-tick',
+                    boxWidth: '30%',
+                    buttons: {
+                      close: {
+                        text: 'Close',
+                        action: function () { $('#available-reports').html('') }
+                      }
                     }
-                  }
-                });
+                  });
+                }
               } else {
                 console.log("Failed to delete Report, Please try again");
               }

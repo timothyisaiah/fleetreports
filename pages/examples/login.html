@@ -11,6 +11,8 @@
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- jquery -->
+  <link rel="stylesheet" href="../../plugins/jquery-confirm/jquery-confirm.css">
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
@@ -20,7 +22,7 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="../tables/data.html"><b>FMS Reports</b></a>
+      <a href="../tables/data.html" id="loadhome"><b>FMS Reports</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -29,7 +31,7 @@
 
         <!-- <form action="../tables/data.html" method="post"> -->
         <a href="../tables/data.html" id="homepagelink"></a>
-        <form>
+        <form action="../tables/data.html">
           <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Email" id="useremail" required>
             <div class="input-group-append">
@@ -57,7 +59,7 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button class="btn btn-primary btn-block" onclick="logIn()">Sign In</button>
+              <button class="btn btn-primary btn-block" id="login" onclick="logIn()">Sign In</button>
             </div>
             <!-- /.col -->
           </div>
@@ -74,12 +76,12 @@
       </div> -->
         <!-- /.social-auth-links -->
 
-        <p class="mb-1">
+        <!-- <p class="mb-1">
           <a href="forgot-password.html">I forgot my password</a>
         </p>
         <p class="mb-0">
           <a href="register.html" class="text-center">Register a new membership</a>
-        </p>
+        </p> -->
       </div>
       <!-- /.login-card-body -->
     </div>
@@ -88,12 +90,24 @@
 
   <!-- jQuery -->
   <script src="../../plugins/jquery/jquery.min.js"></script>
+  <script src="../../plugins/jquery-confirm/jquery-confirm.js"></script>
   <!-- Bootstrap 4 -->
   <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE App -->
   <script src="../../dist/js/adminlte.min.js"></script>
   <script>
-    function logIn() {
+    var localstoragedataobj = {};
+    $(document).ready(function () {
+      //This removes previous login details
+      if (localStorage.getItem("user_hash")) {
+        localStorage.removeItem("user_hash");
+      }
+    });
+
+    $('#login').click(function (e) {
+      debugger;
+      e.preventDefault();
+      e.stopImmediatePropagation();
       var login = $('#useremail').val();
       var password = $('#userpassword').val();
 
@@ -106,23 +120,47 @@
           },
           type: 'POST',
           success: function (response) {
-            console.log(response);
-            // window.location.href = "../tables/data.html";
+            console.log('Excecuted');
+            // console.log(responseJSON);
             debugger;
-            $.ajax({
-              url: '../tables/data.html',
-              data: {
+            console.log(response);
+            // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
+            debugger;
+
+            if (typeof localstoragedataobj !== "undefined") {
+              localstoragedataobj = {
                 hash: response.hash
-              },
-              type: 'POST',
-              success: function (response) {
-                $('.login-page').html(response);
-              }, error: function (error) {
-                console.log(error.responseJSON);
+              };
+              if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
+                localStorage.setItem("user_hash", JSON.stringify(localstoragedataobj));
               }
-            });
+            }
+            if (response.hash !== undefined) {
+              debugger;
+              window.location.href = '../tables/data.html';
+            } else {
+              debugger;
+              location.reload();
+            }
           },
           error: function (error) {
+            $.confirm({
+              title: 'Error',
+              content: 'Please Enter correct login credentials',
+              useBootstrap: false,
+              type: 'red',
+              theme: 'modern',
+              icon: 'fa fa-exclamation-triangle',
+              buttons: {
+                close: {
+                  text: 'Close',
+                  action: function () {
+                    location.reload();
+                  }
+                }
+              }
+            });
+            return false;
             console.log(error.responseJSON);
           },
           async: false
@@ -130,7 +168,63 @@
       } else {
         $.alert('Please enter Vaild Email and password');
       }
-    }
+    });
+    // function logIn() {
+    //   // debugger;
+    //   var login = $('#useremail').val();
+    //   var password = $('#userpassword').val();
+
+    //   if (login !== '' && login !== undefined && password !== '' && password !== undefined) {
+    //     $.ajax({
+    //       url: 'https://hosting.fms-ecsinternational.com/api/user/auth',
+    //       data: {
+    //         login: login,
+    //         password: password
+    //       },
+    //       type: 'POST',
+    //       success: function (response) {
+    //         console.log('Excecuted');
+    //         console.log(responseJSON);
+    //         debugger;
+    //         console.log(response);
+    //         // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
+    //         debugger;
+
+    //         if (typeof localstoragedataobj !== "undefined") {
+    //           localstoragedataobj = {
+    //             hash: response.hash
+    //           };
+    //           if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
+    //             localStorage.setItem("user_hash", JSON.stringify(localstoragedataobj));
+    //           }
+    //         }
+
+    //       },
+    //       error: function (error) {
+    //         location.reload();
+    //         $.confirm({
+    //           title: 'Error',
+    //           content: 'Please Enter correct login credentials',
+    //           useBootstrap: false,
+    //           type: 'red',
+    //           theme: 'modern',
+    //           icon: 'fa fa-exclamation-triangle',
+    //           buttons: {
+    //             close: {
+    //               text: 'Close',
+    //               action: function () { }
+    //             }
+    //           }
+    //         });
+    //         return false;
+    //         console.log(error.responseJSON);
+    //       },
+    //       async: false
+    //     });
+    //   } else {
+    //     $.alert('Please enter Vaild Email and password');
+    //   }
+    // }
   </script>
 </body>
 
