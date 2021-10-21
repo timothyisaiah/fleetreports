@@ -129,15 +129,19 @@
         <div class="container-fluid">
           <!-- Date picker  -->
           <div class="row" style="padding: 2% 5%;">
-            <div class="col-md-5">
+            <div class="col-md-3">
               <label style="padding-left: 10px;">Start Date:</label>
               <input type="date" class="form-control" id="startdate">
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
               <label style="padding-left: 10px;">End Date:</label>
               <input type="date" class="form-control" id="enddate">
             </div>
-            <div class="col-md-2" style="padding: 2.7%;">
+            <div class="col-md-3">
+              <label style="padding-left: 10px;">Max Speed (km/h):</label>
+              <input type="number" class="form-control" id="maxspeed" name="maxspeed">
+            </div>
+            <div class="col-md-3" style="padding: 2.7%;">
               <button class="btn btn-sm btn-primary" onclick="createReports()"><i class="fa fa-download"></i> Generate
                 Report</button>
             </div>
@@ -205,9 +209,9 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <div class="float-right d-none d-sm-block">
-        <b>Version</b> 3.1.0-rc
+        <b>Version</b> 0.1.1
       </div>
-      <strong>Copyright &copy; 2014-2021 <a href="https://teesatechnologies.com">Teesa Technologies</a>.</strong> All
+      <strong>Copyright &copy; 2019-2021 <a href="https://twitter.com/timo15isaiah">Timothy Isaiah Ateesa</a>.</strong> All
       rights reserved.
     </footer>
 
@@ -338,6 +342,14 @@
       return true;
     }
 
+    function checkMaxSpeed() {
+      var maxspeed = $('#maxspeed').val();
+      if (maxspeed === '') {
+        $.alert("Please Input Maximum speed(Speed violation)")
+        return false;
+      }
+      return true;
+    }
     function createReports() {
       const createReportsAsync = async () => {
         $('#available-reports').html('<div class="col-md-12 text-center">'
@@ -347,7 +359,8 @@
           + '</div>');
         var startDate = $('#startdate').val();
         var endDate = $('#enddate').val();
-        if (checkenddate()) {
+        var maxspeed = parseInt($('#maxspeed').val());
+        if (checkenddate() && checkMaxSpeed()) {
           debugger;
           startDate = startDate.replace("/", "-") + ' 00:00:00';
           endDate = endDate.replace("/", "-") + ' 23:59:59';
@@ -432,7 +445,7 @@
             "time_filter": { "from": "00:00:00", "to": "23:59:59", "weekdays": [1, 2, 3, 4, 5, 6, 7] },
             "plugin": {
               "hide_empty_tabs": true, "plugin_id": 46, "show_seconds": true, "include_summary_sheet_only": false, "split": true, "show_idle_duration": true, "show_coordinates": false, "filter": true, "group_by_driver": true, "show_detailed": true,
-              "min_duration_minutes": 1, "max_speed": 60, "smoothing": false, "graph_type": "mileage"
+              "min_duration_minutes": 1, "max_speed": maxspeed, "smoothing": false, "graph_type": "mileage"
             }
           }
 
@@ -566,7 +579,7 @@
               group_by_driver: true,
               show_detailed: true,
               min_duration_minutes: 1,
-              max_speed: 100
+              max_speed: maxspeed
             }
           }
 
@@ -610,7 +623,7 @@
               group_by_driver: true,
               show_detailed: true,
               min_duration_minutes: 1,
-              max_speed: 60
+              max_speed: maxspeed
             }
           }
 
@@ -652,7 +665,7 @@
               group_by_driver: true,
               show_detailed: true,
               min_duration_minutes: 1,
-              max_speed: 60,
+              max_speed: maxspeed,
               smoothing: false,
               graph_type: "mileage"
             }

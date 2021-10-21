@@ -105,7 +105,7 @@
     });
 
     $('#login').click(function (e) {
-      debugger;
+      // debugger;
       e.preventDefault();
       e.stopImmediatePropagation();
       var login = $('#useremail').val();
@@ -122,10 +122,10 @@
           success: function (response) {
             console.log('Excecuted');
             // console.log(responseJSON);
-            debugger;
+            // debugger;
             console.log(response);
             // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
-            debugger;
+            // debugger;
 
             if (typeof localstoragedataobj !== "undefined") {
               localstoragedataobj = {
@@ -136,7 +136,7 @@
               }
             }
             if (response.hash !== undefined) {
-              debugger;
+              // debugger;
               window.location.href = '../tables/data.html';
             } else {
               debugger;
