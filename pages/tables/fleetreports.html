@@ -62,7 +62,7 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="../../index.html" class="brand-link">
+            <a href="data.html" class="brand-link">
                 <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">FMS-Reports</span>
@@ -160,10 +160,11 @@
                         </div>
                         <div class="col-md-2"> -->
                         <div class="col-md-12 text-right">
-                            <button class="btn btn-primary btn-sm" onclick="viewAllReportsAvailable();" id="btn-view-report"><i
-                                    class="fa fa-eye"></i>
+                            <button class="btn btn-primary btn-sm" onclick="viewAllReportsAvailable();"
+                                id="btn-view-report"><i class="fa fa-eye"></i>
                                 View All
-                                Reports</button>
+                                Reports
+                            </button>
                         </div>
                     </div>
                     <div class="row" style="padding: 10px;">
@@ -190,14 +191,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-center" >
+                        <div class="spinner-border" role="status" id="progressloading">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
 
-                    <div id="progressloading" style="display: none;">
+                    <!-- <div id="progressloading" style="display: none;">
                         <div class="text-center">
                             <div class="spinner-grow text-secondary" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="reportsdom">
                         <!-- tables  -->
                         <div id="fleetoperationsdom">
@@ -480,6 +486,16 @@
             "bSort": false
         });
         var avaliableReports = [];
+
+        function showLoader() {
+            document.getElementById('progressloading')
+                .style.display = 'block';
+        };
+        function hideLoader() {
+            document.getElementById('progressloading')
+                .style.display = 'none';
+        };
+
         $(document).ready(function () {
             var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
             // debugger;
@@ -490,6 +506,7 @@
             $('#fueldom').css('display', 'none');
             $('#maintanancedom').css('display', 'none');
             $('#speedviolationdom').css('display', 'none');
+            hideLoader();
         });
         $(function () {
             // $('#ecodriving').DataTable({
@@ -527,14 +544,20 @@
         }
 
         function viewFleetOperationsreport(option) {
-            $('#progressloading').css('display', 'block');
-
+            // $('#progressloading').css('display', 'block');
             if (option === 'Only') {
+                showLoader();
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
+                $('#speedviolationdom').css('display', 'block');
             }
             //Retieve Trip Report
             // $("#btn-view-report").prop('disabled', true);
@@ -554,6 +577,7 @@
                 }, error: function (error) {
                     console.log(error.responseJSON);
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -573,6 +597,7 @@
                 }, error: function (error) {
                     console.log(error.responseJSON);
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -706,16 +731,24 @@
 
                 ]).draw();
             }
-            $('#progressloading').css('display', 'none');
+            hideLoader();
+            // $('#progressloading').css('display', 'none');
         }
 
         function viewEcodrivingreport(option) {
             if (option === 'Only') {
+                showLoader();
                 $('#fleetoperationsdom').css('display', 'none');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
+                $('#speedviolationdom').css('display', 'block');
             }
             var ecoreport;
             var speedviolation;
@@ -735,6 +768,7 @@
                 }, error: function (error) {
                     console.log(error.responseJSON);
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -752,6 +786,7 @@
                 }, error: function (error) {
                     console.log(error.responseJSON);
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -834,15 +869,24 @@
                 ]).draw();
             }
 
+            hideLoader();
+
         }
 
         function viewFuelreport(option) {
             if (option === 'Only') {
+                showLoader();
                 $('#fleetoperationsdom').css('display', 'none');
                 $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
+                $('#speedviolationdom').css('display', 'block');
             }
             var fuelreport;
             var fuelsummary;
@@ -859,6 +903,7 @@
                     console.log("Fuel Report :" + fuelreport);
                 }, error: function () {
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -903,16 +948,23 @@
                     finalVolume
                 ]).draw();
             }
-
+            hideLoader();
         }
 
         function viewMaintanancereport(option) {
             if (option === 'Only') {
+                showLoader();
                 $('#fleetoperationsdom').css('display', 'none');
                 $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'none');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
+                $('#speedviolationdom').css('display', 'block');
             }
             var tripreport;
             var fuelreport;
@@ -930,6 +982,7 @@
                     console.log("Trip Report: " + tripreport);
                 }, error: function () {
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -947,6 +1000,7 @@
                     console.log("fuel report : " + fuelreport);
                 }, error: function () {
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -956,7 +1010,7 @@
             $('title').html('Maintenance Performance Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
             // $('#maintanace-table-bod').html('');
             maintanancecoststable.clear().draw();
-
+            hideLoader();
             // debugger;
             // create loop to hadle maintanace report 
         }
@@ -969,124 +1023,131 @@
             }
             return max;
         }
-        function generateReport() {
-            var startDate = $('#startdate').val();
-            var endDate = $('#enddate').val();
-            if (checkenddate()) {
-                $('#table-bod').html('<div><div class="spinner-grow text-primary pull-center"></div></div>');
+        // function generateReport() {
+        //     var startDate = $('#startdate').val();
+        //     var endDate = $('#enddate').val();
+        //     if (checkenddate()) {
+        //         $('#table-bod').html('<div><div class="spinner-grow text-primary pull-center"></div></div>');
 
-                startDate = startDate.replace("/", "-") + ' 00:00:00';
-                endDate = endDate.replace("/", "-") + ' 23:59:59';
-                console.log(endDate + "   " + startDate);
-                $.ajax({
-                    url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
-                    data: {
-                        hash: "02d4aad3606697c7255b5aa2c12ff00a"
-                    },
-                    type: 'GET',
-                    success: function (response) {
-                        // debugger;
-                        console.log(response);
-                        var vehicles = response.list;
-                        // $('#table-bod').html('');
+        //         startDate = startDate.replace("/", "-") + ' 00:00:00';
+        //         endDate = endDate.replace("/", "-") + ' 23:59:59';
+        //         console.log(endDate + "   " + startDate);
+        //         $.ajax({
+        //             url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
+        //             data: {
+        //                 hash: "02d4aad3606697c7255b5aa2c12ff00a"
+        //             },
+        //             type: 'GET',
+        //             success: function (response) {
+        //                 // debugger;
+        //                 console.log(response);
+        //                 var vehicles = response.list;
+        //                 // $('#table-bod').html('');
 
-                        for (var i = 0; i < vehicles.length; i++) {
-                            console.log(vehicles[i].label);
-                            var distancetraveled = 0;
-                            var enginetime = 0;
+        //                 for (var i = 0; i < vehicles.length; i++) {
+        //                     console.log(vehicles[i].label);
+        //                     var distancetraveled = 0;
+        //                     var enginetime = 0;
 
-                            $.ajax({
-                                url: 'https://hosting.fms-ecsinternational.com/api/track/list',
-                                data: {
-                                    hash: "02d4aad3606697c7255b5aa2c12ff00a",
-                                    tracker_id: vehicles[i].id,
-                                    type: "engine_hours",
-                                    from: startDate,
-                                    to: endDate
-                                },
-                                type: 'GET',
-                                success: function (resp) {
-                                    // debugger;
-                                    console.log(resp);
-                                    var tracks = resp.list;
-                                    for (var x = 0; x < tracks.length; x++) {
-                                        distancetraveled = distancetraveled + tracks[x].length;
-                                    }
+        //                     $.ajax({
+        //                         url: 'https://hosting.fms-ecsinternational.com/api/track/list',
+        //                         data: {
+        //                             hash: "02d4aad3606697c7255b5aa2c12ff00a",
+        //                             tracker_id: vehicles[i].id,
+        //                             type: "engine_hours",
+        //                             from: startDate,
+        //                             to: endDate
+        //                         },
+        //                         type: 'GET',
+        //                         success: function (resp) {
+        //                             // debugger;
+        //                             console.log(resp);
+        //                             var tracks = resp.list;
+        //                             for (var x = 0; x < tracks.length; x++) {
+        //                                 distancetraveled = distancetraveled + tracks[x].length;
+        //                             }
 
-                                }, error: function () {
-                                    alert('There has been an error, Please Try again');
-                                },
-                                async: false
-                            });
-
-
-
-                            $.ajax({
-                                url: 'https://hosting.fms-ecsinternational.com/api/tracker/stats/engine_hours/read',
-                                data: {
-                                    hash: "02d4aad3606697c7255b5aa2c12ff00a",
-                                    tracker_id: vehicles[i].id,
-                                    type: "engine_hours",
-                                    from: startDate,
-                                    to: endDate
-                                },
-                                type: 'GET',
-                                success: function (resp) {
-                                    // debugger;
-                                    console.log(resp);
-                                    enginetime = resp.value;
-
-                                }, error: function (error) {
-                                    console.log(error);
-                                },
-                                async: false
-                            });
-
-                            //Append Fetched values to datatable
-                            var row = '<tr>' +
-                                ' <td>' + vehicles[i].label + '</td>' +
-                                ' <td>' + startDate + '</td>' +
-                                ' <td>' + endDate + '</td>' +
-                                ' <td>' + distancetraveled + '</td>' +
-                                ' <td>' + enginetime + '</td>' +
-                                ' <td>0.00</td>' +
-                                ' <td>0.00</td>' +
-                                ' <td>0.00</td>' +
-                                ' <td>0.00</td>' +
-                                ' <td>0.00</td>' +
-                                '</tr>';
-
-                            $('#table-bod').append(row);
+        //                         }, error: function () {
+        //                             alert('There has been an error, Please Try again');
+        //                         },
+        //                         async: false
+        //                     });
 
 
-                        }
-                    }
-                });
-            } else {
-                $.confirm({
-                    title: 'Error',
-                    content: 'Please select a valid date range!',
-                    useBootstrap: false,
-                    type: 'red',
-                    theme: 'modern',
-                    icon: 'fa fa-exclamation-triangle',
-                    buttons: {
-                        close: {
-                            text: 'Close',
-                            action: function () { }
-                        }
-                    }
-                });
-            }
-        }
+
+        //                     $.ajax({
+        //                         url: 'https://hosting.fms-ecsinternational.com/api/tracker/stats/engine_hours/read',
+        //                         data: {
+        //                             hash: "02d4aad3606697c7255b5aa2c12ff00a",
+        //                             tracker_id: vehicles[i].id,
+        //                             type: "engine_hours",
+        //                             from: startDate,
+        //                             to: endDate
+        //                         },
+        //                         type: 'GET',
+        //                         success: function (resp) {
+        //                             // debugger;
+        //                             console.log(resp);
+        //                             enginetime = resp.value;
+
+        //                         }, error: function (error) {
+        //                             console.log(error);
+        //                         },
+        //                         async: false
+        //                     });
+
+        //                     //Append Fetched values to datatable
+        //                     var row = '<tr>' +
+        //                         ' <td>' + vehicles[i].label + '</td>' +
+        //                         ' <td>' + startDate + '</td>' +
+        //                         ' <td>' + endDate + '</td>' +
+        //                         ' <td>' + distancetraveled + '</td>' +
+        //                         ' <td>' + enginetime + '</td>' +
+        //                         ' <td>0.00</td>' +
+        //                         ' <td>0.00</td>' +
+        //                         ' <td>0.00</td>' +
+        //                         ' <td>0.00</td>' +
+        //                         ' <td>0.00</td>' +
+        //                         '</tr>';
+
+        //                     $('#table-bod').append(row);
+
+
+        //                 }
+        //             }
+        //         });
+        //     } else {
+        //         $.confirm({
+        //             title: 'Error',
+        //             content: 'Please select a valid date range!',
+        //             useBootstrap: false,
+        //             type: 'red',
+        //             theme: 'modern',
+        //             icon: 'fa fa-exclamation-triangle',
+        //             buttons: {
+        //                 close: {
+        //                     text: 'Close',
+        //                     action: function () { }
+        //                 }
+        //             }
+        //         });
+        //     }
+        // }
 
 
         function viewSpeedViolationreport(option) {
             if (option === 'Only') {
+                showLoader();
                 $('#fleetoperationsdom').css('display', 'none');
                 $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
+                $('#speedviolationdom').css('display', 'block');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
             var speedviolation;
@@ -1106,6 +1167,7 @@
                 }, error: function (error) {
                     console.log(error.responseJSON);
                     alert('There has been an error, Please Try again');
+                    hideLoader();
                 },
                 async: false
             });
@@ -1144,7 +1206,7 @@
                     }
                 }
             }
-
+            hideLoader();
         }
 
 
@@ -1175,7 +1237,7 @@
                             buttons: {
                                 close: {
                                     text: 'Close',
-                                    action: function () { window.location.href='data.html'}
+                                    action: function () { window.location.href = 'data.html' }
                                 }
                             }
                         });
@@ -1190,6 +1252,7 @@
         }
 
         function viewAllReportsAvailable() {
+            showLoader();
             viewFleetOperationsreport('All');
             viewEcodrivingreport('All');
             viewFuelreport('All');
@@ -1201,6 +1264,7 @@
             $('#fueldom').css('display', 'block');
             $('#maintanancedom').css('display', 'block');
             $('#speedviolationdom').css('display', 'block');
+            hideLoader();
         }
         // function formatDate(dateString){
         //     2021-08-22 00:00:00
