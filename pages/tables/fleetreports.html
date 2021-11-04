@@ -912,7 +912,12 @@
             $('title').html('Fuel Costs performance Report  From: ' + new Date(fuelreport.report.from).toLocaleString() + ' To : ' + new Date(fuelreport.report.to).toLocaleString());
 
             console.log(fuelreport);
+            if(fuelreport.report.sheets[0].sections[0].text !==  'No data'){
             fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+            }else{
+                hideLoader();
+                return;
+            }
             console.log(fuelsummary);
 
             // Pending is set up json structure to recieve data from fuel volume report 

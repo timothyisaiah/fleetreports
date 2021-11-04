@@ -7,8 +7,9 @@
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Open data.html",
-            "file": "d:\\Isaiah\\Isaiah\\Gigs\\htmlTemplates\\Dashboards\\AdminLTE-master\\AdminLTE-master\\index.html"
+            "name": "Launch Chrome against localhost",
+            "url": "D:\\Isaiah\\Isaiah\\Gigs\\htmlTemplates\\Dashboards\\AdminLTE-master\\reports\\index.html",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
