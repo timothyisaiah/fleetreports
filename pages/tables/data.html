@@ -52,7 +52,7 @@
 
       <ul class="navbar-nav ml-auto">
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="../examples/login.html" class="nav-link">Log Out</a>
+          <a href="../../index.html" class="nav-link">Log Out</a>
         </li>
       </ul>
     </nav>
@@ -142,7 +142,8 @@
               <input type="number" class="form-control" id="maxspeed" name="maxspeed">
             </div>
             <div class="col-md-3" style="padding: 2.7%;">
-              <button class="btn btn-sm btn-primary" onclick="createReports()"><i class="fa fa-download"></i> Generate
+              <button class="btn btn-sm btn-primary" onclick="createReports()" id="btn-generate"><i
+                  class="fa fa-download"></i> Generate
                 Report</button>
             </div>
           </div>
@@ -211,7 +212,8 @@
       <div class="float-right d-none d-sm-block">
         <b>Version</b> 0.1.1
       </div>
-      <strong>Copyright &copy; 2019-2021 <a href="https://twitter.com/timo15isaiah">Timothy Isaiah Ateesa</a>.</strong> All
+      <strong>Copyright &copy; 2019-2021 <a href="https://twitter.com/timo15isaiah">Timothy Isaiah Ateesa</a>.</strong>
+      All
       rights reserved.
     </footer>
 
@@ -279,7 +281,7 @@
           hash: hash
         },
         success: function (response) {
-          console.log(response);
+          // console.log(response);
           // debugger;
           if (response.list.length > 0) {
             $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
@@ -291,11 +293,11 @@
               '</div>' +
               '</div></div>');
             for (var i = 0; i < response.list.length; i++) {
-              console.log(response.list[i].id);
+              // console.log(response.list[i].id);
               avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
             }
-            console.log("Available Reports List: ");
-            console.log(avaliableReports);
+            // console.log("Available Reports List: ");
+            // console.log(avaliableReports);
           } else {
             $.confirm({
               title: 'Error',
@@ -316,16 +318,29 @@
         },
         async: false,
         error: function (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
 
     });
+
+    //Track vehicle selection
+    function checkForVehicle(valuee) {
+      // debugger;
+      if (valuee === 'all') {
+        $('input[name="vehicle-check-list"]').each(function () {
+          this.checked = true;
+        });
+      } else {
+        $('#checkAll').prop('checked', false);
+      }
+    }
+
     function checkenddate() {
       if ($('#startdate').val() !== '' && $('#enddate').val() !== '') {
         var start = Date.parse(($('#startdate').val()).toString());
         var end = Date.parse(($('#enddate').val()).toString());
-        console.log($('#enddate').val());
+        // console.log($('#enddate').val());
         if (start > end) {
           //            $('#eDate').css('border-color', '#ff0000');
           $('#startdate').val('');
@@ -351,13 +366,9 @@
       }
       return true;
     }
-    function createReports() {
-      const createReportsAsync = async () => {
-        $('#available-reports').html('<div class="col-md-12 text-center">'
-          + ' <div class="spinner-grow text-secondary" role="status">'
-          + '<span class="sr-only">Loading...</span>'
-          + ' </div>'
-          + '</div>');
+
+    function generateReports() {
+      const generateReportsAsync = async () => {
         var startDate = $('#startdate').val();
         var endDate = $('#enddate').val();
         var maxspeed = parseInt($('#maxspeed').val());
@@ -365,32 +376,7 @@
           // debugger;
           startDate = startDate.replace("/", "-") + ' 00:00:00';
           endDate = endDate.replace("/", "-") + ' 23:59:59';
-          console.log(endDate + "   " + startDate);
-
-          // 1. Get all assets to be tracked 
-          if (trackerlist.length == 0) {
-            $.ajax({
-              url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
-              data: {
-                hash: hash
-              },
-              type: 'GET',
-              success: function (response) {
-                // debugger;
-                console.log(response);
-                var vehicles = response.list;
-                for (var i = 0; i < vehicles.length; i++) {
-                  console.log(vehicles[i].label);
-                  trackerlist.push(vehicles[i].id);
-                }
-                console.log(trackerlist);
-              }, error: function (error) {
-                console.log(error);
-              },
-              async: false
-            });
-          }
-
+          // console.log(endDate + "   " + startDate);
           //Using the javascript API to create reports
           // 2.1 Trip Report 
 
@@ -427,12 +413,28 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              console.log('Success:', data);
-              reportlist.push(data.id);
+              // console.log(data);
+              // console.log('Success:', data);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
@@ -461,12 +463,28 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              console.log('Success:', data);
-              reportlist.push(data.id);
+              // console.log(data);
+              // console.log('Success:', data);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
@@ -503,12 +521,26 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              reportlist.push(data.id);
-              console.log('Success:', data);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
@@ -548,12 +580,26 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              console.log('Success:', data);
-              reportlist.push(data.id);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
           // 2.5 Speed Violation Report
@@ -595,12 +641,26 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              reportlist.push(data.id);
-              console.log('Success:', data);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
@@ -638,12 +698,26 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              console.log('Success:', data);
-              reportlist.push(data.id);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
@@ -683,16 +757,30 @@
             })
             .then(response => response.json())
             .then(data => {
-              console.log(data);
-              console.log('Success:', data);
-              reportlist.push(data.id);
+              if (data.success === true) {
+                reportlist.push(data.id);
+              } else {
+
+                switch (data.status.code) {
+                  case 13:
+                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
+                    break;
+                  case 217:
+                    $.alert(data.status.description);
+                    break;
+                  default:
+                    $.alert(data.status.description);
+                    break;
+                }
+                return;
+              }
             })
             .catch((error) => {
-              console.log('Error', error);
+              // console.log('Error', error);
             });
 
 
-          if (reportlist.length >= 6) {
+          if (reportlist.length >= 6 && !reportlist.includes(undefined)) {
             $.confirm({
               title: 'Success',
               content: 'Report Successfully Created',
@@ -708,9 +796,128 @@
                 }
               }
             });
+          } else {
+            $.confirm({
+              title: 'Failed',
+              content: 'Failed to create Report',
+              useBootstrap: false,
+              type: 'red',
+              boxWidth: '30%',
+              theme: 'modern',
+              icon: 'fa fa-exclamation-triangle',
+              buttons: {
+                close: {
+                  text: 'Close',
+                  action: function () { $('#available-reports').html(''); }
+                }
+              }
+            });
           }
-          console.log(reportlist);
+          // console.log(reportlist);
         }
+      }
+      generateReportsAsync();
+    }
+
+    function createReports() {
+      const createReportsAsync = async () => {
+        $('#btn-generate').prop('disabled', true);
+        $('#available-reports').html('<div class="col-md-12 text-center">'
+          + ' <div class="spinner-grow text-secondary" role="status">'
+          + '<span class="sr-only">Loading...</span>'
+          + ' </div>'
+          + '</div>');
+        // var startDate = $('#startdate').val();
+        // var endDate = $('#enddate').val();
+        // var maxspeed = parseInt($('#maxspeed').val());
+        // if (checkenddate() && checkMaxSpeed()) {
+        //   // debugger;
+        //   startDate = startDate.replace("/", "-") + ' 00:00:00';
+        //   endDate = endDate.replace("/", "-") + ' 23:59:59';
+        //   // console.log(endDate + "   " + startDate);
+
+        // 1. Get all assets to be tracked 
+        if (trackerlist.length == 0) {
+          $.ajax({
+            url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
+            data: {
+              hash: hash
+            },
+            type: 'GET',
+            success: function (response) {
+              // debugger;
+              // console.log(response);
+              var vehicles = response.list;
+              var html = '<div class="form-group vehicle-list">' +
+                '<div class="form-check">' +
+                '<label class="form-check-label">' +
+                '<input id="checkAll" type="checkbox" class="form-check-input" value="all" name="vehicle-check-list" onchange="checkForVehicle(\'all\')"> All </label>' +
+                '</div><hr>';
+              for (var i = 0; i < vehicles.length; i++) {
+                //Create a list of all vehicles attached to user for selection and inclusion in report generation
+                html = html + '<div class="form-check">' +
+                  '<label class="form-check-label">' +
+                  '<input type="checkbox" class="form-check-input" value="' + vehicles[i].id + '" name="vehicle-check-list" onchange="checkForVehicle(' + vehicles[i].id + ')"> ' + vehicles[i].label + '</label>' +
+                  '</div><hr>';
+
+
+                // // console.log(vehicles[i].label);
+                // trackerlist.push(vehicles[i].id);
+              }
+
+              html = html + '</div>';
+              $.confirm({
+                title: 'Select Vehicles to include in the report(s)',
+                content: '' + html,
+                useBootstrap: false,
+                type: 'blue',
+                theme: 'modern',
+                icon: 'fa fa-checked-circle',
+                buttons: {
+                  close: {
+                    text: 'Generate',
+                    btnClass: 'btn btn-primary',
+                    action: function () {
+                      // console.log($('input[name="vehicle-check-list"]:checked').serialize());
+                      $('input[name="vehicle-check-list"]:checked').each(function () {
+                        // console.log(this.value);
+                        if (this.value != 'all') {
+                          trackerlist.push(parseInt(this.value));
+                        }
+                      });
+                      // console.log(trackerlist);
+                      if (trackerlist.length == 0) {
+                        $.alert('Please select atleast one vehicle.')
+                        return false;
+                      } else {
+                        $('#btn-generate').prop('disabled', false);
+                        // // test purposes only 
+                        // trackerlist.push(5789);
+                        generateReports();
+                      }
+                    }
+                  },
+                  cancel: {
+                    text: 'Cancel',
+                    action: function () {
+                      $('#btn-generate').prop('disabled', false);
+                      $('#available-reports').html('');
+                    }
+                  }
+                }
+              });
+              return;
+            }, error: function (error) {
+              // console.log(error);
+              return;
+            },
+            async: false
+          });
+        } else {
+          trackerlist = [];
+          createReportsAsync();
+        }
+        // }
       }
 
       createReportsAsync();
@@ -723,7 +930,7 @@
           hash: hash
         },
         success: function (response) {
-          console.log(response);
+          // console.log(response);
           // debugger;
           if (response.list.length > 0) {
             $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
@@ -735,11 +942,11 @@
               '</div>' +
               '</div></div>');
             for (var i = 0; i < response.list.length; i++) {
-              console.log(response.list[i].id);
+              // console.log(response.list[i].id);
               avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
             }
-            console.log("Available Reports List: ");
-            console.log(avaliableReports);
+            // console.log("Available Reports List: ");
+            // console.log(avaliableReports);
           } else {
             $.confirm({
               title: 'Error',
@@ -759,7 +966,7 @@
         },
         async: false,
         error: function (error) {
-          console.log(error);
+          // console.log(error);
         }
       });
 
@@ -776,13 +983,13 @@
             hash: hash
           },
           success: function (response) {
-            console.log(response);
+            // console.log(response);
             if (response.list.length > 0) {
               for (var i = 0; i < response.list.length; i++) {
-                console.log(response.list[i].id);
+                // console.log(response.list[i].id);
                 reportlist.push(response.list[i].id);
               }
-              console.log("Reports List: " + reportlist);
+              // console.log("Reports List: " + reportlist);
             } else {
               $.confirm({
                 title: 'Error',
@@ -803,7 +1010,7 @@
           },
           async: false,
           error: function (error) {
-            console.log(error);
+            // console.log(error);
           }
         });
       }
@@ -819,9 +1026,9 @@
               report_id: reportlist[i]
             },
             success: function (response) {
-              console.log(response);
+              // console.log(response);
               if (response.success === true) {
-                console.log("Successfully deleted Report");
+                // console.log("Successfully deleted Report");
                 if (i === (reportlist.length - 1)) {
                   $.confirm({
                     title: 'Success',
@@ -840,12 +1047,12 @@
                   });
                 }
               } else {
-                console.log("Failed to delete Report, Please try again");
+                // console.log("Failed to delete Report, Please try again");
               }
             },
             async: false,
             error: function (error) {
-              console.log(error);
+              // console.log(error);
             }
           });
         }

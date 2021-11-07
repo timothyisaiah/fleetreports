@@ -287,6 +287,7 @@
     <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="../../dist/js/datepicker/js/Moment.js"></script>
     <script src="../../dist/js/datepicker/js/bootstrap-datetimepicker.js"></script>
+    <script src="../../plugins/jquery-confirm/jquery-confirm.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
@@ -304,6 +305,9 @@
 
         var avaliableReports = [];
         $(document).ready(function () {
+            var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+            // debugger;
+            hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
             listAllReportsAvailable();
         });
         $(function () {
@@ -352,7 +356,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "7a91782874f5aa854a7d0c616750e5bb",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
                 },
                 type: 'GET',
@@ -383,7 +387,7 @@
                 var CostOfFuelConsumed = '-';
                 var fuellost = '-';
 
-                fuelcoststable.row.add([
+                fuelperformancetable.row.add([
                     i.toString(),
                     assetname,
                     drivername,
@@ -392,6 +396,11 @@
                     cost,
                     CostOfFuelConsumed,
                     fuellost,
+                    '-',
+                    '-',
+                    '-',
+                    '-',
+                    '-'
                 ]).draw();
             }
 
@@ -409,7 +418,7 @@
             $.ajax({
                 url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
                 data: {
-                    hash: "7a91782874f5aa854a7d0c616750e5bb",
+                    hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
                 },
                 type: 'GET',
@@ -443,7 +452,7 @@
                 url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
                 type: 'GET',
                 data: {
-                    hash: "7a91782874f5aa854a7d0c616750e5bb"
+                    hash: hash
                 },
                 success: function (response) {
                     console.log(response);

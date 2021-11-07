@@ -53,7 +53,7 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="../examples/login.html" class="nav-link">Log Out</a>
+                    <a href="../../index.html" class="nav-link">Log Out</a>
                 </li>
             </ul>
         </nav>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="data.html">Home</a></li>
                                 <li class="breadcrumb-item active">Fleet reports</li>
                             </ol>
                         </div>
@@ -191,7 +191,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-center" >
+                    <div class="d-flex justify-content-center">
                         <div class="spinner-border" role="status" id="progressloading">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -526,7 +526,7 @@
             if ($('#startdate').val() !== '') {
                 var start = Date.parse(($('#startdate').val()).toString());
                 var end = Date.parse(($('#enddate').val()).toString());
-                console.log($('#enddate').val());
+                // console.log($('#enddate').val());
                 if (start > end) {
                     //            $('#eDate').css('border-color', '#ff0000');
                     $('#startdate').val('');
@@ -559,177 +559,188 @@
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
-            //Retieve Trip Report
-            // $("#btn-view-report").prop('disabled', true);
-            var tripreport;
-            var enginehours;
-            var geofencereport;
-            // debugger;
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    tripreport = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
+
+            //Check if table has data already
+            if (fleettable != null) {
+                if (fleettable.data().count()) {
+                    //do nothing
+                } else {
 
 
-
-            //Retieve Engine Hours
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    enginehours = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
-
-
-            //Retieve Geofence entry/exit events
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Geofence entry/exit events')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    generateReport = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                },
-                async: false
-            });
-
-            console.log(tripreport);
-
-            console.log(enginehours);
-            console.log("Geofence entry/exit events: " + geofencereport);
-            $('#fleetperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
-            $('title').html('Fleet Operations performance Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
-            var fleetsummary = tripreport.report.sheets[0].sections[0].data;
-            console.log(fleetsummary.length);
-            var enginesummary = enginehours.report.sheets[0].sections[0].data;
-            var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
-            // debugger;
-            // $('#fleet-table-bod').html('');
-            fleettable.clear().draw();
-            for (var i = 0; i < fleetsummary.length; i++) {
-                // debugger;
-                var assetname = fleetsummary[i].header;
-                var drivername = fleetsummary[i].rows[0].object.v;
-                if (fleetsummary[i].rows.length > 1) {
-                    for (var d = 0; d < fleetsummary[i].rows.length; d++) {
-                        drivername = (fleetsummary[i].rows[d].object.v !== 'Unidentified driver') ? fleetsummary[i].rows[d].object.v : fleetsummary[i].rows[0].object.v;
-                    }
-                }
-                var milage = fleetsummary[i].rows[0].length;
-                var enginehoursValue = formatInHHMMSS(enginesummary[0].rows[i].in_movement.v, enginesummary[0].rows[i].idle.v);
-                var enginehours = (enginesummary[0].rows[i].in_movement.raw, enginesummary[0].rows[i].idle.raw);
-                var idling = enginesummary[0].rows[i].idle.v;
-                var driving = enginesummary[0].rows[i].in_movement.v;
-                var idle_duration = fleetsummary[i].rows[0].idle_duration.v;
-                // var nightmileage = fleetsummary[i].rows[0].idle_duration.v;
-                // var nightdriving = (nightmileage !== undefined) ? "YES" : "NO";
-                // var earlymoriningmileage = fleetsummary[i].rows[0].idle_duration.v;
-                // var earlymorningdriving = (earlymoriningmileage !== undefined) ? "YES" : "NO";
-                var assetutilization = Number((enginehours / (12 * 60 * 60 * daysinperiod)) * 100).toFixed(2);
-                var geofenceentry = 'NO';
-
-                var weekendmileage;
-                var weekenddriving;
-                var nightdriving;
-                var earlymorningdriving;
-                var tripsOnWeekends = 0;
-                var mileageCoveredOnWeekends = 0;
-                var tripsAtNight = 0;
-                var mileageCoveredAtNight = 0;
-                var tripsEarlyMorning = 0;
-                var mileageCoveredEarlyMorning = 0;
-                // check for weekend driving
-                if (tripreport.report.sheets.findIndex(x => x.header === assetname) > -1) {
-                    var assetSheetData = tripreport.report.sheets[tripreport.report.sheets.findIndex(x => x.header === assetname)].sections[0].data;
-
+                    //Retieve Trip Report
+                    // $("#btn-view-report").prop('disabled', true);
+                    var tripreport;
+                    var enginehours;
+                    var geofencereport;
                     // debugger;
-                    for (var x = 0; x < assetSheetData.length; x++) {
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            tripreport = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
 
-                        //This checks for weekends and their mileage
-                        if (assetSheetData[x].header.includes('Sun') || assetSheetData[x].header.includes('Sat')) {
-                            tripsOnWeekends += parseInt(assetSheetData[x].header.split(':')[1].trim());
-                            console.log("Weekend trips For " + assetname + " is Now " + tripsOnWeekends);
+
+
+                    //Retieve Engine Hours
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            enginehours = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+
+                    //Retieve Geofence entry/exit events
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Geofence entry/exit events')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            generateReport = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                        },
+                        async: false
+                    });
+
+                    // console.log(tripreport);
+
+                    // console.log(enginehours);
+                    // console.log("Geofence entry/exit events: " + geofencereport);
+                    $('#fleetperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
+                    $('title').html('Fleet Operations performance Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
+                    var fleetsummary = tripreport.report.sheets[0].sections[0].data;
+                    // console.log(fleetsummary.length);
+                    var enginesummary = enginehours.report.sheets[0].sections[0].data;
+                    var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
+                    // debugger;
+                    // $('#fleet-table-bod').html('');
+                    fleettable.clear().draw();
+                    for (var i = 0; i < fleetsummary.length; i++) {
+                        // debugger;
+                        var assetname = fleetsummary[i].header;
+                        var drivername = fleetsummary[i].rows[0].object.v;
+                        if (fleetsummary[i].rows.length > 1) {
+                            for (var d = 0; d < fleetsummary[i].rows.length; d++) {
+                                drivername = (fleetsummary[i].rows[d].object.v !== 'Unidentified driver') ? fleetsummary[i].rows[d].object.v : fleetsummary[i].rows[0].object.v;
+                            }
+                        }
+                        var milage = fleetsummary[i].rows[0].length;
+                        var enginehoursValue = formatInHHMMSS(enginesummary[0].rows[i].in_movement.v, enginesummary[0].rows[i].idle.v);
+                        var enginehours = (enginesummary[0].rows[i].in_movement.raw, enginesummary[0].rows[i].idle.raw);
+                        var idling = enginesummary[0].rows[i].idle.v;
+                        var driving = enginesummary[0].rows[i].in_movement.v;
+                        var idle_duration = fleetsummary[i].rows[0].idle_duration.v;
+                        // var nightmileage = fleetsummary[i].rows[0].idle_duration.v;
+                        // var nightdriving = (nightmileage !== undefined) ? "YES" : "NO";
+                        // var earlymoriningmileage = fleetsummary[i].rows[0].idle_duration.v;
+                        // var earlymorningdriving = (earlymoriningmileage !== undefined) ? "YES" : "NO";
+                        var assetutilization = Number((enginehours / (12 * 60 * 60 * daysinperiod)) * 100).toFixed(2);
+                        var geofenceentry = 'NO';
+
+                        var weekendmileage;
+                        var weekenddriving;
+                        var nightdriving;
+                        var earlymorningdriving;
+                        var tripsOnWeekends = 0;
+                        var mileageCoveredOnWeekends = 0;
+                        var tripsAtNight = 0;
+                        var mileageCoveredAtNight = 0;
+                        var tripsEarlyMorning = 0;
+                        var mileageCoveredEarlyMorning = 0;
+                        // check for weekend driving
+                        if (tripreport.report.sheets.findIndex(x => x.header === assetname) > -1) {
+                            var assetSheetData = tripreport.report.sheets[tripreport.report.sheets.findIndex(x => x.header === assetname)].sections[0].data;
+
                             // debugger;
-                            console.log(assetSheetData[x].rows.length);
-                            if (assetSheetData[x].rows.length > 0) {
-                                for (var y = 0; y < assetSheetData[x].rows.length; y++) {
-                                    mileageCoveredOnWeekends += assetSheetData[x].rows[y].length.raw;
+                            for (var x = 0; x < assetSheetData.length; x++) {
+
+                                //This checks for weekends and their mileage
+                                if (assetSheetData[x].header.includes('Sun') || assetSheetData[x].header.includes('Sat')) {
+                                    tripsOnWeekends += parseInt(assetSheetData[x].header.split(':')[1].trim());
+                                    // console.log("Weekend trips For " + assetname + " is Now " + tripsOnWeekends);
+                                    // debugger;
+                                    // console.log(assetSheetData[x].rows.length);
+                                    if (assetSheetData[x].rows.length > 0) {
+                                        for (var y = 0; y < assetSheetData[x].rows.length; y++) {
+                                            mileageCoveredOnWeekends += assetSheetData[x].rows[y].length.raw;
+                                        }
+                                    }
+                                    // console.log("Weekend Mileage For " + assetname + " is Now " + mileageCoveredOnWeekends);
+
+                                }
+
+                                //This checks for Night & early morning Driving and their respective Mileage
+                                if (assetSheetData[x].rows.length > 0) {
+                                    for (var y = 0; y < assetSheetData[x].rows.length; y++) {
+                                        //Constraint Night begins at 18 and ends at 24 HRS
+                                        if ((parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) > 18 && parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) < 24) || (parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) > 18 && parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) < 24)) {
+                                            tripsAtNight++;
+                                            mileageCoveredAtNight += assetSheetData[x].rows[y].length.raw;
+                                        }
+                                        //Constraint morning begins at 00 and ends at 06 HRS
+                                        if ((parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) > 0 && parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) < 6) || (parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) > 0 && parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) < 6)) {
+                                            tripsEarlyMorning++;
+                                            mileageCoveredEarlyMorning += assetSheetData[x].rows[y].length.raw;
+                                        }
+                                    }
                                 }
                             }
-                            console.log("Weekend Mileage For " + assetname + " is Now " + mileageCoveredOnWeekends);
-
                         }
+                        weekendmileage = Number(mileageCoveredOnWeekends).toFixed(2);
+                        weekenddriving = (tripsOnWeekends > 0) ? "YES" : "NO";
+                        mileageCoveredAtNight = Number(mileageCoveredAtNight).toFixed(2);
+                        nightdriving = (tripsAtNight > 0) ? "YES" : "NO";
+                        mileageCoveredEarlyMorning = Number(mileageCoveredEarlyMorning).toFixed(2);
+                        earlymorningdriving = (tripsEarlyMorning > 0) ? "YES" : "NO";
 
-                        //This checks for Night & early morning Driving and their respective Mileage
-                        if (assetSheetData[x].rows.length > 0) {
-                            for (var y = 0; y < assetSheetData[x].rows.length; y++) {
-                                //Constraint Night begins at 18 and ends at 24 HRS
-                                if ((parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) > 18 && parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) < 24) || (parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) > 18 && parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) < 24)) {
-                                    tripsAtNight++;
-                                    mileageCoveredAtNight += assetSheetData[x].rows[y].length.raw;
-                                }
-                                //Constraint morning begins at 00 and ends at 06 HRS
-                                if ((parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) > 0 && parseInt(assetSheetData[x].rows[y].from.v.split(':')[0]) < 6) || (parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) > 0 && parseInt(assetSheetData[x].rows[y].to.v.split(':')[0]) < 6)) {
-                                    tripsEarlyMorning++;
-                                    mileageCoveredEarlyMorning += assetSheetData[x].rows[y].length.raw;
-                                }
-                            }
-                        }
+                        fleettable.row.add([
+                            (i + 1).toString(),
+                            assetname,
+                            drivername,
+                            milage.v,
+                            enginehoursValue,
+                            idling,
+                            driving,
+                            idle_duration,
+                            assetutilization,
+                            weekenddriving,
+                            weekendmileage,
+                            nightdriving,
+                            mileageCoveredAtNight,
+                            earlymorningdriving,
+                            mileageCoveredEarlyMorning,
+                            geofenceentry
+
+                        ]).draw();
                     }
+
                 }
-                weekendmileage = Number(mileageCoveredOnWeekends).toFixed(2);
-                weekenddriving = (tripsOnWeekends > 0) ? "YES" : "NO";
-                mileageCoveredAtNight = Number(mileageCoveredAtNight).toFixed(2);
-                nightdriving = (tripsAtNight > 0) ? "YES" : "NO";
-                mileageCoveredEarlyMorning = Number(mileageCoveredEarlyMorning).toFixed(2);
-                earlymorningdriving = (tripsEarlyMorning > 0) ? "YES" : "NO";
-
-                fleettable.row.add([
-                    (i + 1).toString(),
-                    assetname,
-                    drivername,
-                    milage.v,
-                    enginehoursValue,
-                    idling,
-                    driving,
-                    idle_duration,
-                    assetutilization,
-                    weekenddriving,
-                    weekendmileage,
-                    nightdriving,
-                    mileageCoveredAtNight,
-                    earlymorningdriving,
-                    mileageCoveredEarlyMorning,
-                    geofenceentry
-
-                ]).draw();
             }
             hideLoader();
             // $('#progressloading').css('display', 'none');
@@ -750,125 +761,134 @@
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
-            var ecoreport;
-            var speedviolation;
-            var speedviolations;
-            var ecosummary;
-            // debugger;
-            //Retieve Eco-Driving report
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Eco-driving report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    ecoreport = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
 
-            //Retieve Speed Violation report
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    speedviolations = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
-
-            $('#ecoperiod').text(' From: ' + ecoreport.report.from + ' To : ' + ecoreport.report.to);
-            $('title').html('Eco Driving performance Report  From: ' + new Date(ecoreport.report.from).toLocaleString() + ' To : ' + new Date(ecoreport.report.to).toLocaleString());
-
-            console.log(ecoreport);
-            console.log(speedviolations);
-            ecosummary = ecoreport.report.sheets;
-            speedviolation = speedviolations.report.sheets;
-            // debugger;
-            // $('#eco-table-bod').html('');
-            ecotable.clear().draw();
-            for (var i = 1; i < ecosummary.length; i++) {
-                // debugger;
-                var assetname = ecosummary[i].header;
-
-                var drivername;
-                var overspeedingmax;
-                var overspeedingLocation;
-                var overspeedingtime;
-                var HarshDrivingcount;
-                var harshdriving;
-                var driverperformance;
-                var accident;
-
-                var index = speedviolation.findIndex(x => x.header === assetname);
-                console.log("Index is " + index);
-                if (index >= 0) {
-                    // debugger;
-                    drivername = speedviolation[index].sections[0].text.replace(speedviolation[index].sections[2].header, '');
-                    overspeedingmax = getMax(speedviolation[index].sections[2].data[0].rows);
-                    overspeedingcount = speedviolation[index].sections[2].data[0].rows.length;
-                    overspeedingLocation = speedviolation[index].sections[2].data[0].rows[speedviolation[index].sections[2].data[0].rows.findIndex(x => x.max_speed.raw === overspeedingmax)].max_speed_address.v;
-                    overspeedingtime = speedviolation[index].sections[2].data[0].rows[speedviolation[index].sections[2].data[0].rows.findIndex(x => x.max_speed.raw === overspeedingmax)].start_time.v;
-                    HarshDrivingcount = ecosummary[i].sections[1].rows[2].v;
-                    harshdriving = (HarshDrivingcount !== undefined) ? "YES" : "NO";
-                    driverperformance = ecosummary[i].sections[1].rows[0].v;
-                    accident = "NO";
+            //Check if table has data already
+            if (ecotable != null) {
+                if (ecotable.data().count()) {
+                    //do nothing
                 } else {
+
+                    var ecoreport;
+                    var speedviolation;
+                    var speedviolations;
+                    var ecosummary;
                     // debugger;
-                    drivername = "Unidentified driver";
-                    overspeedingmax = 0;
-                    overspeedingmax = '-';
-                    overspeedingcount = 0;
-                    overspeedingLocation = '-';
-                    overspeedingtime = '-';
-                    if (ecosummary[i].sections.length > 1) {
-                        HarshDrivingcount = ecosummary[i].sections[1].rows[2].v;
-                        harshdriving = (HarshDrivingcount !== undefined) ? "YES" : "NO";
-                        driverperformance = ecosummary[i].sections[1].rows[0].v;
-                    } else {
-                        HarshDrivingcount = '-';
-                        harshdriving = '-';
-                        driverperformance = '-';
+                    //Retieve Eco-Driving report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Eco-driving report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            ecoreport = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+                    //Retieve Speed Violation report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            speedviolations = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+                    $('#ecoperiod').text(' From: ' + ecoreport.report.from + ' To : ' + ecoreport.report.to);
+                    $('title').html('Eco Driving performance Report  From: ' + new Date(ecoreport.report.from).toLocaleString() + ' To : ' + new Date(ecoreport.report.to).toLocaleString());
+
+                    // console.log(ecoreport);
+                    // console.log(speedviolations);
+                    ecosummary = ecoreport.report.sheets;
+                    speedviolation = speedviolations.report.sheets;
+                    // debugger;
+                    // $('#eco-table-bod').html('');
+                    ecotable.clear().draw();
+                    for (var i = 1; i < ecosummary.length; i++) {
+                        // debugger;
+                        var assetname = ecosummary[i].header;
+
+                        var drivername;
+                        var overspeedingmax;
+                        var overspeedingLocation;
+                        var overspeedingtime;
+                        var HarshDrivingcount;
+                        var harshdriving;
+                        var driverperformance;
+                        var accident;
+
+                        var index = speedviolation.findIndex(x => x.header === assetname);
+                        // console.log("Index is " + index);
+                        if (index >= 0) {
+                            // debugger;
+                            drivername = speedviolation[index].sections[0].text.replace(speedviolation[index].sections[2].header, '');
+                            overspeedingmax = getMax(speedviolation[index].sections[2].data[0].rows);
+                            overspeedingcount = speedviolation[index].sections[2].data[0].rows.length;
+                            overspeedingLocation = speedviolation[index].sections[2].data[0].rows[speedviolation[index].sections[2].data[0].rows.findIndex(x => x.max_speed.raw === overspeedingmax)].max_speed_address.v;
+                            overspeedingtime = speedviolation[index].sections[2].data[0].rows[speedviolation[index].sections[2].data[0].rows.findIndex(x => x.max_speed.raw === overspeedingmax)].start_time.v;
+                            HarshDrivingcount = ecosummary[i].sections[1].rows[2].v;
+                            harshdriving = (HarshDrivingcount !== undefined) ? "YES" : "NO";
+                            driverperformance = ecosummary[i].sections[1].rows[0].v;
+                            accident = "NO";
+                        } else {
+                            // debugger;
+                            drivername = "Unidentified driver";
+                            overspeedingmax = 0;
+                            overspeedingmax = '-';
+                            overspeedingcount = 0;
+                            overspeedingLocation = '-';
+                            overspeedingtime = '-';
+                            if (ecosummary[i].sections.length > 1) {
+                                HarshDrivingcount = ecosummary[i].sections[1].rows[2].v;
+                                harshdriving = (HarshDrivingcount !== undefined) ? "YES" : "NO";
+                                driverperformance = ecosummary[i].sections[1].rows[0].v;
+                            } else {
+                                HarshDrivingcount = '-';
+                                harshdriving = '-';
+                                driverperformance = '-';
+                            }
+                            accident = "-";
+                        }
+
+                        // console.log(drivername);
+
+
+
+
+
+                        // debugger;
+                        ecotable.row.add([
+                            i.toString(),
+                            assetname,
+                            drivername,
+                            overspeedingmax,
+                            overspeedingtime,
+                            overspeedingcount,
+                            overspeedingLocation,
+                            harshdriving,
+                            HarshDrivingcount,
+                            accident,
+                            driverperformance
+                        ]).draw();
                     }
-                    accident = "-";
+
                 }
-
-                console.log(drivername);
-
-
-
-
-
-                // debugger;
-                ecotable.row.add([
-                    i.toString(),
-                    assetname,
-                    drivername,
-                    overspeedingmax,
-                    overspeedingtime,
-                    overspeedingcount,
-                    overspeedingLocation,
-                    harshdriving,
-                    HarshDrivingcount,
-                    accident,
-                    driverperformance
-                ]).draw();
             }
-
             hideLoader();
 
         }
@@ -888,70 +908,79 @@
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
-            var fuelreport;
-            var fuelsummary;
-            //Retieve Fuel volume report
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    fuelreport = response;
-                    console.log("Fuel Report :" + fuelreport);
-                }, error: function () {
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
 
-            $('#fuelcostperiod').text(' From: ' + fuelreport.report.from + ' To : ' + fuelreport.report.to);
-            $('title').html('Fuel Costs performance Report  From: ' + new Date(fuelreport.report.from).toLocaleString() + ' To : ' + new Date(fuelreport.report.to).toLocaleString());
+            //Check if table has data already
+            if (fuelcoststable != null) {
+                if (fuelcoststable.data().count()) {
+                    //do nothing
+                } else {
 
-            console.log(fuelreport);
-            if(fuelreport.report.sheets[0].sections[0].text !==  'No data'){
-            fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
-            }else{
-                hideLoader();
-                return;
-            }
-            console.log(fuelsummary);
+                    var fuelreport;
+                    var fuelsummary;
+                    //Retieve Fuel volume report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            fuelreport = response;
+                            // console.log("Fuel Report :" + fuelreport);
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
 
-            // Pending is set up json structure to recieve data from fuel volume report 
-            // debugger;
-            // $('#fuel-table-bod').html('');
-            fuelcoststable.clear().draw();
-            for (var i = 0; i < fuelsummary.length; i++) {
-                // debugger;
-                //Final And initial volume are missing a variable of openning balance
-                var assetname = fuelsummary[i].object.v;
-                var drivername = 'Unidentified Driver';
-                var refueling = fuelsummary[i].fillingsVolume.v;
-                var fuelconsumed = fuelsummary[i].consumed.v;
-                var cost = 3800;
-                var CostOfFuelConsumed = (cost * fuelsummary[i].consumed.raw).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
-                var fuellost = fuelsummary[i].drainsVolume.v;
-                var mileage_by_gps = fuelsummary[i].mileage_by_gps.v;
-                var consumptionKmPerLitre = Number(mileage_by_gps / fuelsummary[i].consumed.raw).toFixed(2);
-                var initialvolume = '-';
-                var finalVolume = '-';
-                fuelcoststable.row.add([
-                    (i + 1).toString(),
-                    assetname,
-                    drivername,
-                    mileage_by_gps,
-                    fuelconsumed,
-                    consumptionKmPerLitre,
-                    refueling,
-                    fuellost,
-                    cost,
-                    CostOfFuelConsumed,
-                    initialvolume,
-                    finalVolume
-                ]).draw();
+                    $('#fuelcostperiod').text(' From: ' + fuelreport.report.from + ' To : ' + fuelreport.report.to);
+                    $('title').html('Fuel Costs performance Report  From: ' + new Date(fuelreport.report.from).toLocaleString() + ' To : ' + new Date(fuelreport.report.to).toLocaleString());
+
+                    // console.log(fuelreport);
+                    if (fuelreport.report.sheets[0].sections[0].text !== 'No data') {
+                        fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+                    } else {
+                        hideLoader();
+                        return;
+                    }
+                    // console.log(fuelsummary);
+
+                    // Pending is set up json structure to recieve data from fuel volume report 
+                    // debugger;
+                    // $('#fuel-table-bod').html('');
+                    fuelcoststable.clear().draw();
+                    for (var i = 0; i < fuelsummary.length; i++) {
+                        // debugger;
+                        //Final And initial volume are missing a variable of openning balance
+                        var assetname = fuelsummary[i].object.v;
+                        var drivername = 'Unidentified Driver';
+                        var refueling = fuelsummary[i].fillingsVolume.v;
+                        var fuelconsumed = fuelsummary[i].consumed.v;
+                        var cost = 3800;
+                        var CostOfFuelConsumed = (cost * fuelsummary[i].consumed.raw).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+                        var fuellost = fuelsummary[i].drainsVolume.v;
+                        var mileage_by_gps = fuelsummary[i].mileage_by_gps.v;
+                        var consumptionKmPerLitre = Number(mileage_by_gps / fuelsummary[i].consumed.raw).toFixed(2);
+                        var initialvolume = '-';
+                        var finalVolume = '-';
+                        fuelcoststable.row.add([
+                            (i + 1).toString(),
+                            assetname,
+                            drivername,
+                            mileage_by_gps,
+                            fuelconsumed,
+                            consumptionKmPerLitre,
+                            refueling,
+                            fuellost,
+                            cost,
+                            CostOfFuelConsumed,
+                            initialvolume,
+                            finalVolume
+                        ]).draw();
+                    }
+                }
             }
             hideLoader();
         }
@@ -971,50 +1000,59 @@
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
-            var tripreport;
-            var fuelreport;
-            var tripsummary;
-            var fuelsummary;
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    tripreport = response;
-                    console.log("Trip Report: " + tripreport);
-                }, error: function () {
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
 
-            //Retieve Fuel volume report
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    fuelreport = response;
-                    console.log("fuel report : " + fuelreport);
-                }, error: function () {
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
+            //Check if table has data already
+            if (maintanancecoststable != null) {
+                if (maintanancecoststable.data().count()) {
+                    //do nothing
+                } else {
+
+                    var tripreport;
+                    var fuelreport;
+                    var tripsummary;
+                    var fuelsummary;
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            tripreport = response;
+                            // console.log("Trip Report: " + tripreport);
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+                    //Retieve Fuel volume report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            fuelreport = response;
+                            // console.log("fuel report : " + fuelreport);
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
 
 
-            $('#maintananceperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
-            $('title').html('Maintenance Performance Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
-            // $('#maintanace-table-bod').html('');
-            maintanancecoststable.clear().draw();
+                    $('#maintananceperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
+                    $('title').html('Maintenance Performance Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
+                    // $('#maintanace-table-bod').html('');
+                    maintanancecoststable.clear().draw();
+                }
+            }
             hideLoader();
             // debugger;
             // create loop to hadle maintanace report 
@@ -1036,7 +1074,7 @@
 
         //         startDate = startDate.replace("/", "-") + ' 00:00:00';
         //         endDate = endDate.replace("/", "-") + ' 23:59:59';
-        //         console.log(endDate + "   " + startDate);
+        //         // console.log(endDate + "   " + startDate);
         //         $.ajax({
         //             url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
         //             data: {
@@ -1045,12 +1083,12 @@
         //             type: 'GET',
         //             success: function (response) {
         //                 // debugger;
-        //                 console.log(response);
+        //                 // console.log(response);
         //                 var vehicles = response.list;
         //                 // $('#table-bod').html('');
 
         //                 for (var i = 0; i < vehicles.length; i++) {
-        //                     console.log(vehicles[i].label);
+        //                     // console.log(vehicles[i].label);
         //                     var distancetraveled = 0;
         //                     var enginetime = 0;
 
@@ -1066,14 +1104,14 @@
         //                         type: 'GET',
         //                         success: function (resp) {
         //                             // debugger;
-        //                             console.log(resp);
+        //                             // console.log(resp);
         //                             var tracks = resp.list;
         //                             for (var x = 0; x < tracks.length; x++) {
         //                                 distancetraveled = distancetraveled + tracks[x].length;
         //                             }
 
         //                         }, error: function () {
-        //                             alert('There has been an error, Please Try again');
+        //                             $.alert(error.responseJSON.status.description);
         //                         },
         //                         async: false
         //                     });
@@ -1092,11 +1130,11 @@
         //                         type: 'GET',
         //                         success: function (resp) {
         //                             // debugger;
-        //                             console.log(resp);
+        //                             // console.log(resp);
         //                             enginetime = resp.value;
 
         //                         }, error: function (error) {
-        //                             console.log(error);
+        //                             // console.log(error);
         //                         },
         //                         async: false
         //                     });
@@ -1155,59 +1193,66 @@
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
-            var speedviolation;
-            var speedviolations;
-            // debugger;
+            //Check if table has data already
+            if (speedviolationtable != null) {
+                if (speedviolationtable.data().count()) {
+                    //do nothing
+                } else {
+                    var speedviolation;
+                    var speedviolations;
+                    // debugger;
 
-            //Retieve Speed Violation report
-            $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
-                data: {
-                    hash: hash,
-                    report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
-                },
-                type: 'GET',
-                success: function (response) {
-                    speedviolations = response;
-                }, error: function (error) {
-                    console.log(error.responseJSON);
-                    alert('There has been an error, Please Try again');
-                    hideLoader();
-                },
-                async: false
-            });
+                    //Retieve Speed Violation report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            speedviolations = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
 
-            // $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
-            $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
-            console.log(speedviolations);
-            speedviolation = speedviolations.report.sheets;
-            // debugger;
-            // $('#speedviolation-table-bod').html('');
-            speedviolationtable.clear().draw();
+                    // $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
+                    $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
+                    // console.log(speedviolations);
+                    speedviolation = speedviolations.report.sheets;
+                    // debugger;
+                    // $('#speedviolation-table-bod').html('');
+                    speedviolationtable.clear().draw();
 
-            for (var i = 0; i < speedviolation.length; i++) {
-                // debugger;
-                speedviolationtable.row.add([
-                    speedviolation[i].header,
-                    '', '', '', ''
-                ]).draw(false);
-                var headerrows = speedviolation[i].sections[2].data;
-                for (var y = 0; y < headerrows.length; y++) {
-                    speedviolationtable.row.add([
-                        speedviolation[i].sections[2].data[0].header,
-                        '', '', '', ''
-                    ]).draw(false);
-                    var rowData = headerrows[y].rows;
-                    console.log(rowData);
-                    for (var x = 0; x < rowData.length; x++) {
+                    for (var i = 0; i < speedviolation.length; i++) {
+                        // debugger;
                         speedviolationtable.row.add([
-                            '',
-                            rowData[x].start_time.v,
-                            rowData[x].duration.v,
-                            rowData[x].max_speed.v,
-                            rowData[x].max_speed_address.v
+                            speedviolation[i].header,
+                            '', '', '', ''
                         ]).draw(false);
+                        var headerrows = speedviolation[i].sections[2].data;
+                        for (var y = 0; y < headerrows.length; y++) {
+                            speedviolationtable.row.add([
+                                speedviolation[i].sections[2].data[0].header,
+                                '', '', '', ''
+                            ]).draw(false);
+                            var rowData = headerrows[y].rows;
+                            // console.log(rowData);
+                            for (var x = 0; x < rowData.length; x++) {
+                                speedviolationtable.row.add([
+                                    '',
+                                    rowData[x].start_time.v,
+                                    rowData[x].duration.v,
+                                    rowData[x].max_speed.v,
+                                    rowData[x].max_speed_address.v
+                                ]).draw(false);
 
+                            }
+                        }
                     }
                 }
             }
@@ -1223,14 +1268,14 @@
                     hash: hash
                 },
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response.list.length > 0) {
                         for (var i = 0; i < response.list.length; i++) {
-                            console.log(response.list[i].id);
+                            // console.log(response.list[i].id);
                             avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
                         }
-                        console.log("Available Reports List: ");
-                        console.log(avaliableReports);
+                        // console.log("Available Reports List: ");
+                        // console.log(avaliableReports);
                     } else {
                         $.confirm({
                             title: 'Error',
@@ -1250,7 +1295,7 @@
                 },
                 async: false,
                 error: function (error) {
-                    console.log(error);
+                    // console.log(error);
                 }
             });
 
@@ -1297,7 +1342,7 @@
             }
         }
         function formatInHHMMSS(drivetime, idletime) {
-            console.log(drivetime + "  " + idletime);
+            // console.log(drivetime + "  " + idletime);
             var secondsInMilli1 = parseInt(drivetime.split(':')[2]);
             var minutesInMilli1 = parseInt(drivetime.split(':')[1]);
             var hoursInMilli1 = parseInt(drivetime.split(':')[0]);
