@@ -171,19 +171,22 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="row text-center" style="padding: 10px;">
-                                    <div class="col-md-3"> <button class="btn btn-sm btn-primary btn"
+                                    <div class="col-sm-4"> <button class="btn btn-sm btn-primary btn"
                                             onclick="viewFleetOperationsreport('Only');">View Fleet Operations
                                             Report</button>
                                     </div>
-                                    <div class="col-md-3"> <button class="btn btn-sm btn-success btn"
+                                    <div class="col-sm-2"> <button class="btn btn-sm btn-success btn"
                                             onclick="viewEcodrivingreport('Only');">View Eco-Driving Report</button>
                                     </div>
-                                    <div class="col-md-3"><button class="btn btn-sm btn-danger btn"
+                                    <div class="col-sm-2"><button class="btn btn-sm btn-danger btn"
                                             onclick="viewSpeedViolationreport('Only');">View Speed Violation
                                             Report</button>
                                     </div>
-                                    <div class="col-md-3"> <button class="btn btn-sm btn-warning btn"
+                                    <div class="col-sm-2"> <button class="btn btn-sm btn-warning btn"
                                             onclick="viewFuelreport('Only');">View Fuel Report</button></div>
+                                    <div class="col-sm-2"> <button class="btn btn-sm btn-outline-primary btn"
+                                            onclick="viewTripReport('Only');">View Trip Report</button>
+                                    </div>
                                     <!-- <div class="col-md-3"> <button class="btn btn-sm btn-danger btn"
                                             onclick="viewMaintanancereport('Only')">View Maintanance Report</button>
                                     </div> -->
@@ -413,6 +416,47 @@
                             </div>
                         </div>
                         <!-- /.row -->
+                        <!-- /.row -->
+                        <div id="tripdom">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Trip Report<span id="tripreportperiod"
+                                                    class="pull-right"></span></h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="tripreporttable">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="5" class="text-center">
+                                                            <span id="tripreportheader"></span>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Asset Name</th>
+                                                        <th>Movement Start</th>
+                                                        <th>Movement End</th>
+                                                        <th>Total trips length, km</th>
+                                                        <th>Travel Time</th>
+                                                        <th>Average Speed [km/hr]</th>
+                                                        <th>Max. Speed [km/hr]</th>
+                                                        <th>Stops duration</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tripreport-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -485,6 +529,11 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print"],
             "bSort": false
         });
+        var tripreporttable = $("#tripreporttable").DataTable({
+            "dom": "Bfrtip",
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "bSort": false
+        });
         var avaliableReports = [];
 
         function showLoader() {
@@ -506,6 +555,7 @@
             $('#fueldom').css('display', 'none');
             $('#maintanancedom').css('display', 'none');
             $('#speedviolationdom').css('display', 'none');
+            $('#tripdom').css('display', 'none');
             hideLoader();
         });
         $(function () {
@@ -552,12 +602,14 @@
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+                $('#tripdom').css('display', 'none');
             } else {
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -754,12 +806,14 @@
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+                $('#tripdom').css('display', 'none');
             } else {
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -901,12 +955,14 @@
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'none');
+                $('#tripdom').css('display', 'none');
             } else {
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -993,12 +1049,14 @@
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'none');
+                $('#tripdom').css('display', 'none');
             } else {
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -1066,117 +1124,6 @@
             }
             return max;
         }
-        // function generateReport() {
-        //     var startDate = $('#startdate').val();
-        //     var endDate = $('#enddate').val();
-        //     if (checkenddate()) {
-        //         $('#table-bod').html('<div><div class="spinner-grow text-primary pull-center"></div></div>');
-
-        //         startDate = startDate.replace("/", "-") + ' 00:00:00';
-        //         endDate = endDate.replace("/", "-") + ' 23:59:59';
-        //         // console.log(endDate + "   " + startDate);
-        //         $.ajax({
-        //             url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
-        //             data: {
-        //                 hash: "02d4aad3606697c7255b5aa2c12ff00a"
-        //             },
-        //             type: 'GET',
-        //             success: function (response) {
-        //                 // debugger;
-        //                 // console.log(response);
-        //                 var vehicles = response.list;
-        //                 // $('#table-bod').html('');
-
-        //                 for (var i = 0; i < vehicles.length; i++) {
-        //                     // console.log(vehicles[i].label);
-        //                     var distancetraveled = 0;
-        //                     var enginetime = 0;
-
-        //                     $.ajax({
-        //                         url: 'https://hosting.fms-ecsinternational.com/api/track/list',
-        //                         data: {
-        //                             hash: "02d4aad3606697c7255b5aa2c12ff00a",
-        //                             tracker_id: vehicles[i].id,
-        //                             type: "engine_hours",
-        //                             from: startDate,
-        //                             to: endDate
-        //                         },
-        //                         type: 'GET',
-        //                         success: function (resp) {
-        //                             // debugger;
-        //                             // console.log(resp);
-        //                             var tracks = resp.list;
-        //                             for (var x = 0; x < tracks.length; x++) {
-        //                                 distancetraveled = distancetraveled + tracks[x].length;
-        //                             }
-
-        //                         }, error: function () {
-        //                             $.alert(error.responseJSON.status.description);
-        //                         },
-        //                         async: false
-        //                     });
-
-
-
-        //                     $.ajax({
-        //                         url: 'https://hosting.fms-ecsinternational.com/api/tracker/stats/engine_hours/read',
-        //                         data: {
-        //                             hash: "02d4aad3606697c7255b5aa2c12ff00a",
-        //                             tracker_id: vehicles[i].id,
-        //                             type: "engine_hours",
-        //                             from: startDate,
-        //                             to: endDate
-        //                         },
-        //                         type: 'GET',
-        //                         success: function (resp) {
-        //                             // debugger;
-        //                             // console.log(resp);
-        //                             enginetime = resp.value;
-
-        //                         }, error: function (error) {
-        //                             // console.log(error);
-        //                         },
-        //                         async: false
-        //                     });
-
-        //                     //Append Fetched values to datatable
-        //                     var row = '<tr>' +
-        //                         ' <td>' + vehicles[i].label + '</td>' +
-        //                         ' <td>' + startDate + '</td>' +
-        //                         ' <td>' + endDate + '</td>' +
-        //                         ' <td>' + distancetraveled + '</td>' +
-        //                         ' <td>' + enginetime + '</td>' +
-        //                         ' <td>0.00</td>' +
-        //                         ' <td>0.00</td>' +
-        //                         ' <td>0.00</td>' +
-        //                         ' <td>0.00</td>' +
-        //                         ' <td>0.00</td>' +
-        //                         '</tr>';
-
-        //                     $('#table-bod').append(row);
-
-
-        //                 }
-        //             }
-        //         });
-        //     } else {
-        //         $.confirm({
-        //             title: 'Error',
-        //             content: 'Please select a valid date range!',
-        //             useBootstrap: false,
-        //             type: 'red',
-        //             theme: 'modern',
-        //             icon: 'fa fa-exclamation-triangle',
-        //             buttons: {
-        //                 close: {
-        //                     text: 'Close',
-        //                     action: function () { }
-        //                 }
-        //             }
-        //         });
-        //     }
-        // }
-
 
         function viewSpeedViolationreport(option) {
             if (option === 'Only') {
@@ -1185,12 +1132,14 @@
                 $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'none');
+                $('#tripdom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'block');
             } else {
                 $('#fleetoperationsdom').css('display', 'block');
                 $('#ecodrivingdom').css('display', 'block');
                 $('#fueldom').css('display', 'block');
                 $('#maintanancedom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
                 $('#speedviolationdom').css('display', 'block');
             }
             //Check if table has data already
@@ -1260,6 +1209,101 @@
         }
 
 
+        function viewTripReport(option) {
+
+            if (option === 'Only') {
+                showLoader();
+                $('#fleetoperationsdom').css('display', 'none');
+                $('#ecodrivingdom').css('display', 'none');
+                $('#fueldom').css('display', 'none');
+                $('#maintanancedom').css('display', 'none');
+                $('#speedviolationdom').css('display', 'none');
+                $('#tripdom').css('display', 'block');
+            } else {
+                $('#fleetoperationsdom').css('display', 'block');
+                $('#ecodrivingdom').css('display', 'block');
+                $('#fueldom').css('display', 'block');
+                $('#maintanancedom').css('display', 'block');
+                $('#speedviolationdom').css('display', 'block');
+                $('#tripdom').css('display', 'block');
+            }
+
+            //Check if table has data already
+            if (tripreporttable != null) {
+                if (tripreporttable.data().count()) {
+                    //do nothing
+                } else {
+
+
+                    //Retieve Trip Report
+                    // $("#btn-view-report").prop('disabled', true);
+                    var tripreport;
+                    // debugger;
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            tripreport = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+
+                    $('#tripreportperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
+                    $('title').html('Trip Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
+                    var fleetsummary = tripreport.report.sheets;
+                    // console.log(fleetsummary.length);
+                    console.log(tripreport, tripreport);
+                    var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
+                    // debugger;
+                    for (var i = 1; i < tripreport.report.sheets.length; i++) {
+
+                        tripreporttable.row.add([
+                            fleetsummary[i].header,
+                            '', '', '', '', '', '',''
+                        ]).draw(false);//Add the asset name
+
+                        var reportDetails = fleetsummary[i].sections[0].data;
+                        for (var x = 0; x < reportDetails.length; x++) {
+                            tripreporttable.row.add([
+                                reportDetails[x].header,
+                                fleetsummary[i].sections[0].header, '', '', '', '', '',''
+                            ]).draw(false);//Add the report date
+
+                            for (var y = 0; y < reportDetails[x].rows.length; y++) {
+                                tripreporttable.row.add([
+                                    '',
+                                    reportDetails[x].rows[y].from.v,
+                                    reportDetails[x].rows[y].to.v,
+                                    reportDetails[x].rows[y].length.v,
+                                    reportDetails[x].rows[y].time.v,
+                                    reportDetails[x].rows[y].avg_speed.v,
+                                    reportDetails[x].rows[y].max_speed.v,
+                                    reportDetails[x].rows[y].idle_duration.v
+
+                                ]).draw(false);//Add the report date
+                            }
+
+
+                        }
+
+
+
+                    }
+
+                }
+            }
+            hideLoader();
+
+        }
         function listAllReportsAvailable() {
             $.ajax({
                 url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
@@ -1308,12 +1352,14 @@
             viewFuelreport('All');
             viewMaintanancereport('All');
             viewSpeedViolationreport('All');
+            viewTripReport('All');
 
             $('#fleetoperationsdom').css('display', 'block');
             $('#ecodrivingdom').css('display', 'block');
             $('#fueldom').css('display', 'block');
             $('#maintanancedom').css('display', 'block');
             $('#speedviolationdom').css('display', 'block');
+            $('#tripdom').css('display', 'block');
             hideLoader();
         }
         // function formatDate(dateString){

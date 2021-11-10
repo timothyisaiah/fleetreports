@@ -434,7 +434,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
@@ -484,7 +484,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
@@ -540,7 +540,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
@@ -599,7 +599,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
           // 2.5 Speed Violation Report
@@ -660,7 +660,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
@@ -717,7 +717,7 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
@@ -776,11 +776,14 @@
               }
             })
             .catch((error) => {
-              // console.log('Error', error);
+               console.log('Error', error);
             });
 
 
           if (reportlist.length >= 6 && !reportlist.includes(undefined)) {
+            // 1. Check if (a) report has been fully generated.
+
+
             $.confirm({
               title: 'Success',
               content: 'Report Successfully Created',
