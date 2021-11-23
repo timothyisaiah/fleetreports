@@ -151,94 +151,74 @@
                             <div class="tile"></div>
                         </div>
                     </div>
-                    <div class="row">
-                        <!-- <div class="col-md-5">
-                            <input type="date" class="form-control" id="startdate">
-                        </div>
-                        <div class="col-md-5">
-                            <input type="date" class="form-control" id="enddate">
-                        </div>
-                        <div class="col-md-2"> -->
-                        <div class="col-md-12 text-right">
-                            <button class="btn btn-primary btn-sm" onclick="viewAllReportsAvailable();"
-                                id="btn-view-report"><i class="fa fa-eye"></i>
-                                View All
-                                Reports
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row" style="padding: 10px;">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="row text-center" style="padding: 10px;">
-                                    <div class="col-sm-4"> <button class="btn btn-sm btn-primary btn"
-                                            onclick="viewFleetOperationsreport('Only');">View Fleet Operations
-                                            Report</button>
-                                    </div>
-                                    <div class="col-sm-2"> <button class="btn btn-sm btn-success btn"
-                                            onclick="viewEcodrivingreport('Only');">View Eco-Driving Report</button>
-                                    </div>
-                                    <div class="col-sm-2"><button class="btn btn-sm btn-danger btn"
-                                            onclick="viewSpeedViolationreport('Only');">View Speed Violation
-                                            Report</button>
-                                    </div>
-                                    <div class="col-sm-2"> <button class="btn btn-sm btn-warning btn"
-                                            onclick="viewFuelreport('Only');">View Fuel Report</button></div>
-                                    <div class="col-sm-2"> <button class="btn btn-sm btn-outline-primary btn"
-                                            onclick="viewTripReport('Only');">View Trip Report</button>
-                                    </div>
-                                    <!-- <div class="col-md-3"> <button class="btn btn-sm btn-danger btn"
-                                            onclick="viewMaintanancereport('Only')">View Maintanance Report</button>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status" id="progressloading">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                    </div>
 
-                    <!-- <div id="progressloading" style="display: none;">
-                        <div class="text-center">
-                            <div class="spinner-grow text-secondary" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
+
+                    <!-- Tabs start  -->
+
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-fleet-operations-report-tab" data-toggle="tab"
+                                href="#nav-fleet-operations-report" role="tab"
+                                aria-controls="nav-fleet-operations-report" aria-selected="true"
+                                onclick="setTitleText('fleet-title-text')">Fleet Operations
+                                Report</a>
+                            <a class="nav-item nav-link" id="nav-eco-driving-report-tab" data-toggle="tab"
+                                href="#nav-eco-driving-report" role="tab" aria-controls="nav-eco-driving-report"
+                                aria-selected="false" onclick="setTitleText('eco-title-text')">Eco-Driving Report</a>
+                            <a class="nav-item nav-link" id="nav-trip-report-tab" data-toggle="tab"
+                                href="#nav-trip-report" role="tab" aria-controls="nav-trip-report" aria-selected="false"
+                                onclick="setTitleText('trip-title-text')">Trip Report</a>
+                            <a class="nav-item nav-link" id="nav-nav-speed-violation-report-tab" data-toggle="tab"
+                                href="#nav-speed-violation-report" role="tab" aria-controls="nav-speed-violation-report"
+                                aria-selected="false" onclick="setTitleText('speed-title-text')">Speed Violation
+                                Report</a>
+                            <a class="nav-item nav-link" id="nav-fuel-report-tab" data-toggle="tab"
+                                href="#nav-fuel-report" role="tab" aria-controls="nav-fuel-report" aria-selected="false"
+                                onclick="setTitleText('fuel-title-text')">Fuel Report</a>
+
+                            <a class="nav-item nav-link" id="nav-fuel-report-per-day-tab" data-toggle="tab"
+                                href="#nav-fuel-report-per-day" role="tab" aria-controls="nav-fuel-report-per-day"
+                                aria-selected="false" onclick="setTitleText('fuel-day-title-text')">Fuel Report/Day</a>
                         </div>
-                    </div> -->
-                    <div class="reportsdom">
-                        <!-- tables  -->
-                        <div id="fleetoperationsdom">
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-fleet-operations-report" role="tabpanel"
+                            aria-labelledby="nav-fleet-operations-report-tab">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Fleet Operations performance <span id="fleetperiod"
-                                                    class="pull-right"></span></h3>
+                                            <h3 class="card-title" id="fleet-title-text">Fleet Operations performance
+                                                <span id="fleetperiod" class="pull-right"></span>
+                                            </h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <table class="table table-bordered" id="fleetoperations">
                                                 <thead>
                                                     <!-- <tr>
-                                                        <th colspan="9" id="">
-
-                                                        </th>
-                                                    </tr> -->
+                                                            <th colspan="9" id="">
+    
+                                                            </th>
+                                                        </tr> -->
                                                     <tr>
                                                         <th>No.</th>
                                                         <th title="Asset Name">Asset Name</th>
                                                         <th title="Driver Name">Driver Name</th>
                                                         <th title="Mileage covered (KM)">Mileage covered (KM)</th>
-                                                        <th title="Engine Runtime [HH:mm:ss]">Engine Runtime [HH:mm:ss]
+                                                        <th title="Engine Runtime [HH:mm:ss]">Engine Runtime
+                                                            [HH:mm:ss]
                                                         </th>
-                                                        <th title="Idling Time [HH:mm:ss]">Idling Time [HH:mm:ss]</th>
-                                                        <th title="Driving Time [HH:mm:ss]">Driving Time [HH:mm:ss]</th>
-                                                        <th title="Parking Time [HH:mm:ss]">Parking Time [HH:mm:ss]</th>
+                                                        <th title="Idling Time [HH:mm:ss]">Idling Time [HH:mm:ss]
+                                                        </th>
+                                                        <th title="Driving Time [HH:mm:ss]">Driving Time [HH:mm:ss]
+                                                        </th>
+                                                        <th title="Parking Time [HH:mm:ss]">Parking Time [HH:mm:ss]
+                                                        </th>
                                                         <th title="Asset Utilization [%]">Asset Utilization [%]</th>
                                                         <th title="Weekend Driving">Weekend Driving</th>
-                                                        <th title="Weekend Mileage Covered [KM]">Weekend Mileage Covered
+                                                        <th title="Weekend Mileage Covered [KM]">Weekend Mileage
+                                                            Covered
                                                             [KM]</th>
                                                         <th title="Night Driving">Night Driving</th>
                                                         <th title="Night Driving Mileage Covered [KM]">Night Driving
@@ -260,14 +240,14 @@
                                 <!-- /.col -->
                             </div>
                         </div>
-                        <!-- /.row -->
-                        <div id="ecodrivingdom">
+                        <div class="tab-pane fade" id="nav-eco-driving-report" role="tabpanel"
+                            aria-labelledby="nav-eco-driving-report-tab">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Eco Driving Performance <span id="ecoperiod"
-                                                    class="pull-right"></span></h3>
+                                            <h3 class="card-title" id="eco-title-text">Eco Driving Performance <span
+                                                    id="ecoperiod" class="pull-right"></span></h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
@@ -299,143 +279,23 @@
                                 <!-- /.col -->
                             </div>
                         </div>
-                        <!-- /.row -->
-                        <!-- /.row -->
-                        <div id="fueldom">
+                        <div class="tab-pane fade" id="nav-trip-report" role="tabpanel"
+                            aria-labelledby="nav-trip-report-tab">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Fuel Costs Performance <span id="fuelcostperiod"
-                                                    class="pull-right"></span></h3>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <table class="table table-bordered" id="fuelcoststable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No.</th>
-                                                        <th title="Asset Name">Asset Name</th>
-                                                        <th title="Driver Name">Driver Name</th>
-                                                        <th title="Mileage">Mileage</th>
-                                                        <th title="Fuel Consumed [ltrs]">Fuel Consumed [ltrs]</th>
-                                                        <th title="Consumption [Km/L]">Consumption [Km/L]</th>
-                                                        <th title="Refueling [Ltrs]">Refueling [Ltrs]</th>
-                                                        <th title="Fuel Lost (Siphoned) [Ltrs]">Fuel Lost (Siphoned)
-                                                            [Ltrs]</th>
-                                                        <th title="Cost/Ltr [Ugx]">Cost/Ltr [Ugx]</th>
-                                                        <th title="Cost Of Fuel Consumed [Ugx]">Cost Of Fuel Consumed
-                                                            [Ugx]</th>
-                                                        <th title="Initial Volume [Ltrs]">Initial Volume [Ltrs]</th>
-                                                        <th title="Final Volume [Ltrs]">Final Volume [Ltrs]</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="fuel-table-bod">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                        <!-- /.row -->
-                        <div id="maintanancedom">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Maintanance Costs Performance <span
-                                                    id="maintananceperiod" class="pull-right"></span></h3>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <table class="table table-bordered" id="maintanancecoststable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No.</th>
-                                                        <th>AssetName</th>
-                                                        <th>DriverName</th>
-                                                        <th>CurrentMileage[OdometerReading]</th>
-                                                        <th>TargetMileage</th>
-                                                        <th>KmsLLeftToService</th>
-                                                        <th>ServiceCost</th>
-                                                        <th>RepairsCost</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="maintanace-table-bod">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                        <!-- /.row -->
-                        <div id="speedviolationdom">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Speed Violation Report<span id="speedviolationperiod"
-                                                    class="pull-right"></span></h3>
-                                        </div>
-                                        <!-- /.card-header -->
-                                        <div class="card-body">
-                                            <table class="table table-bordered" id="speedviolationtable">
-                                                <thead>
-                                                    <tr>
-                                                        <th colspan="5" class="text-center">
-                                                            <span id="speedviolationtableheader"></span>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Asset name</th>
-                                                        <th>Start Time</th>
-                                                        <th>Duration</th>
-                                                        <th>Max. Speed [km/hr]</th>
-                                                        <th>Address</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="speedviolation-table-bod">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- /.card-body -->
-                                    </div>
-                                    <!-- /.card -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                        <!-- /.row -->
-                        <div id="tripdom">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h3 class="card-title">Trip Report<span id="tripreportperiod"
-                                                    class="pull-right"></span></h3>
+                                            <h3 class="card-title" id="trip-title-text">Trip Report<span
+                                                    id="tripreportperiod" class="pull-right"></span></h3>
                                         </div>
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <table class="table table-bordered" id="tripreporttable">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="5" class="text-center">
-                                                            <span id="tripreportheader"></span>
-                                                        </th>
-                                                    </tr>
-                                                    <tr>
                                                         <th>Asset Name</th>
+                                                        <th>Date</th>
+                                                        <th>Driver Name</th>
                                                         <th>Movement Start</th>
                                                         <th>Movement End</th>
                                                         <th>Total trips length, km</th>
@@ -456,28 +316,157 @@
                                 <!-- /.col -->
                             </div>
                         </div>
-                        <!-- /.row -->
+                        <div class="tab-pane fade" id="nav-speed-violation-report" role="tabpanel"
+                            aria-labelledby="nav-speed-violation-report-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title" id="speed-title-text">Speed Violation Report<span
+                                                    id="speedviolationperiod" class="pull-right"></span></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="speedviolationtable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Asset name</th>
+                                                        <th>Date</th>
+                                                        <th>Start Time</th>
+                                                        <th>Duration</th>
+                                                        <th>Max. Speed [km/hr]</th>
+                                                        <th>Address</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="speedviolation-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-fuel-report" role="tabpanel"
+                            aria-labelledby="nav-fuel-report-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title" id="fuel-title-text">Fuel Costs Performance <span
+                                                    id="fuelcostperiod" class="pull-right"></span></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="fuelcoststable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No.</th>
+                                                        <th title="Asset Name">Asset Name</th>
+                                                        <!-- <th title="Driver Name">Driver Name</th> -->
+                                                        <th title="Mileage">Mileage</th>
+                                                        <th title="Fuel Consumed [ltrs]">Fuel Consumed [ltrs]
+                                                        </th>
+                                                        <th title="Consumption [Km/L]">Consumption [Km/L]</th>
+                                                        <th title="Refueling [Ltrs]">Refueling [Ltrs]</th>
+                                                        <th title="Fuel Lost (Siphoned) [Ltrs]">Fuel Lost
+                                                            (Siphoned)
+                                                            [Ltrs]</th>
+                                                        <th title="Cost/Ltr [Ugx]">Cost/Ltr [Ugx]</th>
+                                                        <th title="Cost Of Fuel Consumed [Ugx]">Cost Of Fuel
+                                                            Consumed
+                                                            [Ugx]</th>
+                                                        <th title="Initial Volume [Ltrs]">Initial Volume [Ltrs]
+                                                        </th>
+                                                        <th title="Final Volume [Ltrs]">Final Volume [Ltrs]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fuel-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-fuel-report-per-day" role="tabpanel"
+                            aria-labelledby="nav-fuel-report-per-day-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title" id="fuel-day-title-text">Fuel Costs Performance Per
+                                                Day <span id="fuelcostperdayperiod" class="pull-right"></span></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="fuelperdaytable">
+                                                <thead>
+                                                    <tr>
+                                                        <th title="Asset Name">Asset Name</th>
+                                                        <th title="Date">Date</th>
+                                                        <th title="Mileage">Mileage</th>
+                                                        <th title="Start Volume">Start Volume</th>
+                                                        <th title="End Volume">End Volume</th>
+                                                        <th title="Fuel Consumed [ltrs]">Fuel Consumed [ltrs]</th>
+                                                        <th title="Consumption [Km/L]">Consumption [Km/L]</th>
+                                                        <th title="Refueling Count">Refueling Count</th>
+                                                        <th title="Refueling [Ltrs]">Refueling Volume[Ltrs]</th>
+                                                        <th title="Drains Counts">Drains Count</th>
+                                                        <th title="Refueling [Ltrs]">Drains Volume [Ltrs]</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="fuel-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 0.1.2
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://www.linkedin.com/in/timothy-isaiah">Timothy Isaiah</a>.</strong>
-            All
-            rights reserved.
-        </footer>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
+                <!-- Tabs End  -->
+                <!-- <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-primary btn-sm" onclick="viewAllReportsAvailable();"
+                                id="btn-view-report"><i class="fa fa-eye"></i>
+                                View All
+                                Reports
+                            </button>
+                        </div>
+                    </div> -->
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status" id="progressloading">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+
+                <!-- <div id="progressloading" style="display: none;">
+                        <div class="text-center">
+                            <div class="spinner-grow text-secondary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div> -->
+        </div>
+        <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="float-right d-none d-sm-block">
+            <b>Version</b> 0.1.3
+        </div>
+        <strong>Copyright &copy; 2014-2021 <a href="https://www.linkedin.com/in/timothy-isaiah">Timothy
+                Isaiah</a>.</strong>
+        All
+        rights reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
 
@@ -534,6 +523,11 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print"],
             "bSort": false
         });
+        var fuelperdaytable = $("#fuelperdaytable").DataTable({
+            "dom": "Bfrtip",
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "bSort": false
+        });
         var avaliableReports = [];
 
         function showLoader() {
@@ -545,17 +539,27 @@
                 .style.display = 'none';
         };
 
+        function setTitleText(titleid) {
+
+            $('title').html($('#' + titleid).text());
+
+        }
         $(document).ready(function () {
             var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
             // debugger;
             hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
             listAllReportsAvailable();
-            $('#fleetoperationsdom').css('display', 'none');
-            $('#ecodrivingdom').css('display', 'none');
-            $('#fueldom').css('display', 'none');
-            $('#maintanancedom').css('display', 'none');
-            $('#speedviolationdom').css('display', 'none');
-            $('#tripdom').css('display', 'none');
+            // $('#fleetoperationsdom').css('display', 'none');
+            // $('#ecodrivingdom').css('display', 'none');
+            // $('#fueldom').css('display', 'none');
+            // $('#maintanancedom').css('display', 'none');
+            // $('#speedviolationdom').css('display', 'none');
+            // $('#tripdom').css('display', 'none');
+            viewFleetOperationsreport('only');
+            viewTripReport('Only');
+            viewEcodrivingreport('only');
+            viewFuelreport('only');
+            viewSpeedViolationreport('only');
             hideLoader();
         });
         $(function () {
@@ -598,18 +602,18 @@
             if (option === 'Only') {
                 showLoader();
                 $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'none');
-                $('#fueldom').css('display', 'none');
-                $('#maintanancedom').css('display', 'none');
-                $('#speedviolationdom').css('display', 'none');
-                $('#tripdom').css('display', 'none');
+                // $('#ecodrivingdom').css('display', 'none');
+                // $('#fueldom').css('display', 'none');
+                // $('#maintanancedom').css('display', 'none');
+                // $('#speedviolationdom').css('display', 'none');
+                // $('#tripdom').css('display', 'none');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -789,7 +793,7 @@
                             mileageCoveredEarlyMorning,
                             geofenceentry
 
-                        ]).draw();
+                        ]).draw(false);
                     }
 
                 }
@@ -801,19 +805,19 @@
         function viewEcodrivingreport(option) {
             if (option === 'Only') {
                 showLoader();
-                $('#fleetoperationsdom').css('display', 'none');
+                // $('#fleetoperationsdom').css('display', 'none');
                 $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'none');
-                $('#maintanancedom').css('display', 'none');
-                $('#speedviolationdom').css('display', 'none');
-                $('#tripdom').css('display', 'none');
+                // $('#fueldom').css('display', 'none');
+                // $('#maintanancedom').css('display', 'none');
+                // $('#speedviolationdom').css('display', 'none');
+                // $('#tripdom').css('display', 'none');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -938,7 +942,7 @@
                             HarshDrivingcount,
                             accident,
                             driverperformance
-                        ]).draw();
+                        ]).draw(false);
                     }
 
                 }
@@ -950,19 +954,19 @@
         function viewFuelreport(option) {
             if (option === 'Only') {
                 showLoader();
-                $('#fleetoperationsdom').css('display', 'none');
-                $('#ecodrivingdom').css('display', 'none');
+                // $('#fleetoperationsdom').css('display', 'none');
+                // $('#ecodrivingdom').css('display', 'none');
                 $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'none');
-                $('#speedviolationdom').css('display', 'none');
-                $('#tripdom').css('display', 'none');
+                // $('#maintanancedom').css('display', 'none');
+                // $('#speedviolationdom').css('display', 'none');
+                // $('#tripdom').css('display', 'none');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -973,6 +977,7 @@
 
                     var fuelreport;
                     var fuelsummary;
+                    var fuelperdaysummary;
                     //Retieve Fuel volume report
                     $.ajax({
                         url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
@@ -997,11 +1002,14 @@
                     // console.log(fuelreport);
                     if (fuelreport.report.sheets[0].sections[0].text !== 'No data') {
                         fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+                        fuelperdaysummary = fuelreport.report.sheets;
+
                     } else {
                         hideLoader();
                         return;
                     }
-                    // console.log(fuelsummary);
+                    console.log(fuelsummary);
+                    console.log("fuelreport", fuelreport);
 
                     // Pending is set up json structure to recieve data from fuel volume report 
                     // debugger;
@@ -1024,17 +1032,46 @@
                         fuelcoststable.row.add([
                             (i + 1).toString(),
                             assetname,
-                            drivername,
+                            // drivername,
                             mileage_by_gps,
                             fuelconsumed,
                             consumptionKmPerLitre,
                             refueling,
                             fuellost,
-                            cost,
-                            CostOfFuelConsumed,
+                            // cost,
+                            // CostOfFuelConsumed,
+                            '-',
+                            '-',
                             initialvolume,
                             finalVolume
                         ]).draw();
+                    }
+
+                    //Fuel Report Per Day
+                    fuelperdaytable.clear().draw();
+                    // debugger;
+                    for (var x = 1; x < fuelperdaysummary.length; x++) {
+                        var vehicle_name = fuelperdaysummary[x].header;
+                        var vehicle_data = fuelperdaysummary[x].sections[fuelperdaysummary[x].sections.findIndex(p => p.header === 'Details by dates')].data[0].rows;
+                        // console.log('section index',fuelperdaysummary[x].sections.findIndex(p => p.header === 'Details by dates'));
+                        fuelperdaytable.row.add([
+                            vehicle_name, '', '', '', '', '', '', '', '', '', ''
+                        ]).draw(false);
+                        for (var y = 0; y < vehicle_data.length; y++) {
+                            fuelperdaytable.row.add([
+                                '',
+                                vehicle_data[y].date.v,
+                                vehicle_data[y].mileage_by_gps.v,
+                                vehicle_data[y].start.v,
+                                vehicle_data[y].end.v,
+                                vehicle_data[y].consumed.v,
+                                vehicle_data[y].consumption_per_dist.v,
+                                vehicle_data[y].fillingsCount.v,
+                                vehicle_data[y].fillingsVolume.v,
+                                vehicle_data[y].drainsCount.v,
+                                vehicle_data[y].drainsVolume.v,
+                            ]).draw(false);
+                        }
                     }
                 }
             }
@@ -1044,19 +1081,19 @@
         function viewMaintanancereport(option) {
             if (option === 'Only') {
                 showLoader();
-                $('#fleetoperationsdom').css('display', 'none');
-                $('#ecodrivingdom').css('display', 'none');
-                $('#fueldom').css('display', 'none');
+                // $('#fleetoperationsdom').css('display', 'none');
+                // $('#ecodrivingdom').css('display', 'none');
+                // $('#fueldom').css('display', 'none');
                 $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'none');
-                $('#tripdom').css('display', 'none');
+                // $('#speedviolationdom').css('display', 'none');
+                // $('#tripdom').css('display', 'none');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -1128,19 +1165,19 @@
         function viewSpeedViolationreport(option) {
             if (option === 'Only') {
                 showLoader();
-                $('#fleetoperationsdom').css('display', 'none');
-                $('#ecodrivingdom').css('display', 'none');
-                $('#fueldom').css('display', 'none');
-                $('#maintanancedom').css('display', 'none');
-                $('#tripdom').css('display', 'none');
+                // $('#fleetoperationsdom').css('display', 'none');
+                // $('#ecodrivingdom').css('display', 'none');
+                // $('#fueldom').css('display', 'none');
+                // $('#maintanancedom').css('display', 'none');
+                // $('#tripdom').css('display', 'none');
                 $('#speedviolationdom').css('display', 'block');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
             }
             //Check if table has data already
             if (speedviolationtable != null) {
@@ -1169,7 +1206,7 @@
                         async: false
                     });
 
-                    // $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
+                    $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
                     $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
                     // console.log(speedviolations);
                     speedviolation = speedviolations.report.sheets;
@@ -1181,19 +1218,19 @@
                         // debugger;
                         speedviolationtable.row.add([
                             speedviolation[i].header,
-                            '', '', '', ''
+                            '', '', '', '', ''
                         ]).draw(false);
                         var headerrows = speedviolation[i].sections[2].data;
                         for (var y = 0; y < headerrows.length; y++) {
                             speedviolationtable.row.add([
-                                speedviolation[i].sections[2].data[0].header,
+                                '', speedviolation[i].sections[2].data[y].header,
                                 '', '', '', ''
                             ]).draw(false);
                             var rowData = headerrows[y].rows;
                             // console.log(rowData);
                             for (var x = 0; x < rowData.length; x++) {
                                 speedviolationtable.row.add([
-                                    '',
+                                    '', '',
                                     rowData[x].start_time.v,
                                     rowData[x].duration.v,
                                     rowData[x].max_speed.v,
@@ -1213,19 +1250,19 @@
 
             if (option === 'Only') {
                 showLoader();
-                $('#fleetoperationsdom').css('display', 'none');
-                $('#ecodrivingdom').css('display', 'none');
-                $('#fueldom').css('display', 'none');
-                $('#maintanancedom').css('display', 'none');
-                $('#speedviolationdom').css('display', 'none');
+                // $('#fleetoperationsdom').css('display', 'none');
+                // $('#ecodrivingdom').css('display', 'none');
+                // $('#fueldom').css('display', 'none');
+                // $('#maintanancedom').css('display', 'none');
+                // $('#speedviolationdom').css('display', 'none');
                 $('#tripdom').css('display', 'block');
             } else {
-                $('#fleetoperationsdom').css('display', 'block');
-                $('#ecodrivingdom').css('display', 'block');
-                $('#fueldom').css('display', 'block');
-                $('#maintanancedom').css('display', 'block');
-                $('#speedviolationdom').css('display', 'block');
-                $('#tripdom').css('display', 'block');
+                // $('#fleetoperationsdom').css('display', 'block');
+                // $('#ecodrivingdom').css('display', 'block');
+                // $('#fueldom').css('display', 'block');
+                // $('#maintanancedom').css('display', 'block');
+                // $('#speedviolationdom').css('display', 'block');
+                // $('#tripdom').css('display', 'block');
             }
 
             //Check if table has data already
@@ -1268,19 +1305,19 @@
 
                         tripreporttable.row.add([
                             fleetsummary[i].header,
-                            '', '', '', '', '', '',''
+                            '', '', '', '', '', '', '', '', ''
                         ]).draw(false);//Add the asset name
 
                         var reportDetails = fleetsummary[i].sections[0].data;
                         for (var x = 0; x < reportDetails.length; x++) {
                             tripreporttable.row.add([
-                                reportDetails[x].header,
-                                fleetsummary[i].sections[0].header, '', '', '', '', '',''
+                                '', reportDetails[x].header,
+                                fleetsummary[i].sections[0].header, '', '', '', '', '', '', ''
                             ]).draw(false);//Add the report date
 
                             for (var y = 0; y < reportDetails[x].rows.length; y++) {
                                 tripreporttable.row.add([
-                                    '',
+                                    '', '', '',
                                     reportDetails[x].rows[y].from.v,
                                     reportDetails[x].rows[y].to.v,
                                     reportDetails[x].rows[y].length.v,
