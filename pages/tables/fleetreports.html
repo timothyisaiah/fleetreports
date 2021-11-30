@@ -330,6 +330,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Asset name</th>
+                                                        <th>Driver</th>
                                                         <th>Date</th>
                                                         <th>Start Time</th>
                                                         <th>Duration</th>
@@ -1209,7 +1210,7 @@
 
                     $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
                     $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
-                    // console.log("speedviolation",speedviolations);
+                    console.log("speedviolation",speedviolations);
                     speedviolation = speedviolations.report.sheets;
                     // debugger;
                     // $('#speedviolation-table-bod').html('');
@@ -1218,20 +1219,20 @@
                     for (var i = 0; i < speedviolation.length; i++) {
                         // debugger;
                         speedviolationtable.row.add([
-                            speedviolation[i].header,
+                            speedviolation[i].header,speedviolation[i].sections[0].text.split(":")[0],
                             '', '', '', '', ''
                         ]).draw(false);
                         var headerrows = speedviolation[i].sections[2].data;
                         for (var y = 0; y < headerrows.length; y++) {
                             speedviolationtable.row.add([
-                                '', speedviolation[i].sections[2].data[y].header,
-                                '', '', '', ''
+                                '','', speedviolation[i].sections[2].data[y].header,
+                                '', '','', ''
                             ]).draw(false);
                             var rowData = headerrows[y].rows;
                             // console.log(rowData);
                             for (var x = 0; x < rowData.length; x++) {
                                 speedviolationtable.row.add([
-                                    '', '',
+                                    '', '','',
                                     rowData[x].start_time.v,
                                     rowData[x].duration.v,
                                     rowData[x].max_speed.v,
