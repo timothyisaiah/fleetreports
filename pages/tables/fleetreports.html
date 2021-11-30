@@ -558,8 +558,8 @@
             viewFleetOperationsreport('only');
             viewTripReport('Only');
             viewEcodrivingreport('only');
-            viewFuelreport('only');
             viewSpeedViolationreport('only');
+            viewFuelreport('only');
             hideLoader();
         });
         $(function () {
@@ -1197,9 +1197,10 @@
                         },
                         type: 'GET',
                         success: function (response) {
+                            // debugger;
                             speedviolations = response;
                         }, error: function (error) {
-                            // console.log(error.responseJSON);
+                            console.log("error speedviolation", error.responseJSON);
                             $.alert(error.responseJSON.status.description);
                             hideLoader();
                         },
@@ -1208,7 +1209,7 @@
 
                     $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
                     $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
-                    // console.log(speedviolations);
+                    // console.log("speedviolation",speedviolations);
                     speedviolation = speedviolations.report.sheets;
                     // debugger;
                     // $('#speedviolation-table-bod').html('');
@@ -1304,14 +1305,15 @@
                     for (var i = 1; i < tripreport.report.sheets.length; i++) {
 
                         tripreporttable.row.add([
-                            fleetsummary[i].header,
+                            '<b>' + fleetsummary[i].header + '</b>',
                             '', '', '', '', '', '', '', '', ''
                         ]).draw(false);//Add the asset name
 
                         var reportDetails = fleetsummary[i].sections[0].data;
                         for (var x = 0; x < reportDetails.length; x++) {
                             tripreporttable.row.add([
-                                '', reportDetails[x].header,
+                                // '', reportDetails[x].header,
+                                fleetsummary[i].header, reportDetails[x].header,
                                 fleetsummary[i].sections[0].header, '', '', '', '', '', '', ''
                             ]).draw(false);//Add the report date
 
