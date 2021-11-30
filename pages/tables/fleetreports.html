@@ -167,7 +167,7 @@
                                 aria-selected="false" onclick="setTitleText('eco-title-text')">Eco-Driving Report</a>
                             <a class="nav-item nav-link" id="nav-trip-report-tab" data-toggle="tab"
                                 href="#nav-trip-report" role="tab" aria-controls="nav-trip-report" aria-selected="false"
-                                onclick="setTitleText('trip-title-text')">Trip Report</a>
+                                onclick="setTitleText('trip-title-text');viewTripReport('Only');">Trip Report</a>
                             <a class="nav-item nav-link" id="nav-nav-speed-violation-report-tab" data-toggle="tab"
                                 href="#nav-speed-violation-report" role="tab" aria-controls="nav-speed-violation-report"
                                 aria-selected="false" onclick="setTitleText('speed-title-text')">Speed Violation
@@ -557,7 +557,7 @@
             // $('#speedviolationdom').css('display', 'none');
             // $('#tripdom').css('display', 'none');
             viewFleetOperationsreport('only');
-            viewTripReport('Only');
+            // viewTripReport('Only');
             viewEcodrivingreport('only');
             viewSpeedViolationreport('only');
             viewFuelreport('only');
