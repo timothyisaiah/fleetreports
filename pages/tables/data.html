@@ -128,7 +128,7 @@
       <section class="content">
         <div class="container-fluid">
           <!-- Date picker  -->
-          <div class="row" style="padding: 2% 5%;">
+          <!-- <div class="row" style="padding: 2% 5%;">
             <div class="col-md-3">
               <label style="padding-left: 10px;">Start Date:</label>
               <input type="date" class="form-control" id="startdate">
@@ -146,8 +146,65 @@
                   class="fa fa-download"></i> Generate
                 Report</button>
             </div>
-          </div>
+          </div> -->
 
+          <!-- new date picker with time  -->
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="time">Start Date:</label>
+                <div class="input-group">
+                  <input type="date" id="startdate" placeholder="dd-mm-yyyy" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="time">Start Time:</label>
+                <div class="input-group date" id="start_time">
+                  <input type="text" id="starttime" placeholder="Time" class="form-control" />
+                  <div class="input-group-addon input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-clock"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="time">End Date:</label>
+                <div class="input-group">
+                  <input type="date" id="enddate" placeholder="dd-mm-yyyy" class="form-control" />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                <label for="time">End Time:</label>
+                <div class="input-group date" id="end_time">
+                  <input type="text" id="endtime" placeholder="Time" class="form-control" />
+                  <div class="input-group-addon input-group-append">
+                    <div class="input-group-text">
+                      <i class="fa fa-clock"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <label style="padding-left: 10px;">Max Speed (km/h):</label>
+              <input type="number" class="form-control" id="maxspeed" name="maxspeed">
+            </div>
+            <div class="col-md-2" style="padding: 2.7%;">
+              <button class="btn btn-sm btn-primary" onclick="createReports()" id="btn-generate"><i
+                  class="fa fa-download"></i>Create
+                Report</button>
+            </div>
+
+          </div>
+          <!-- new date picker with time  -->
           <!-- tables  -->
           <div class="row" style="padding: 2% 2%;">
             <div class="col-12">
@@ -272,6 +329,23 @@
       // $("#exampletime2").datetimepicker();
     });
 
+    $('#start_time').datetimepicker({
+      "allowInputToggle": true,
+      "showClose": true,
+      "showClear": true,
+      "showTodayButton": true,
+      "format": "HH:mm:ss",
+      // "format": "HH:mm",
+    });
+    $('#end_time').datetimepicker({
+      "allowInputToggle": true,
+      "showClose": true,
+      "showClear": true,
+      "showTodayButton": true,
+      "format": "HH:mm:ss",
+      // "format": "HH:mm",
+    });
+
     $(document).ready(function () {
       var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
       // debugger;
@@ -380,12 +454,16 @@
       const generateReportsAsync = async () => {
         var startDate = $('#startdate').val();
         var endDate = $('#enddate').val();
+        var starttime = ($('#starttime').val() !== "") ? ' ' + $('#starttime').val() : ' 00:00:00';
+        var endtime = ($('#endtime').val() !== "") ? ' ' + $('#endtime').val() : ' 23:59:59';
         var maxspeed = parseInt($('#maxspeed').val());
         if (checkenddate() && checkMaxSpeed()) {
           // debugger;
-          startDate = startDate.replace("/", "-") + ' 00:00:00';
-          endDate = endDate.replace("/", "-") + ' 23:59:59';
+          startDate = startDate.replace("/", "-") + starttime;
+          endDate = endDate.replace("/", "-") + endtime;
           // console.log(endDate + "   " + startDate);
+          // console.log("start time", starttime);
+          // console.log("end time", endtime);
           //Using the javascript API to create reports
           // 2.1 Trip Report 
 
@@ -847,7 +925,7 @@
         //   startDate = startDate.replace("/", "-") + ' 00:00:00';
         //   endDate = endDate.replace("/", "-") + ' 23:59:59';
         //   // console.log(endDate + "   " + startDate);
-
+          trackerlist.push(12345);
         // 1. Get all assets to be tracked 
         if (trackerlist.length == 0) {
           $.ajax({
