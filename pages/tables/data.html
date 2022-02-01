@@ -215,42 +215,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div id="available-reports" class="row">
-                    <!-- <div class="col-md-12 text-center">
-                      <div class="spinner-grow text-secondary" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </div> -->
                   </div>
-                  <!-- <table class="table table-bordered" id="dataTable">
-                    <thead>
-                      <tr>
-                        <th>Vehicle</th>
-                        <th>StartDate</th>
-                        <th>EndDate</th>
-                        <th>DistanceTravelled</th>
-                        <th>TotalEngineTime[Km]</th>
-                        <th>TotalIdleTime</th>
-                        <th>FuelConsumtionRate[Km/Litre]</th>
-                        <th>OverallConsumption</th>
-                        <th>AbnormalConsumed[Litre]</th>
-                        <th>OverallRefueled[Litre]</th>
-                      </tr>
-                    </thead>
-                    <tbody id="table-bod">
-                      <tr>
-                        <td>UAT 912X</td>
-                        <td>01/08/2021</td>
-                        <td>01/08/2021</td>
-                        <td>0.00</td>
-                        <td>00:00:00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -314,20 +279,6 @@
     var reportlist = [];
     var group_ids = [];
     var avaliableReports = [];
-    $(function () {
-      $("#dataTable").DataTable();
-      // $('#dataTable').DataTable({
-      //   "paging": true,
-      //   "lengthChange": false,
-      //   "searching": false,
-      //   "ordering": true,
-      //   "info": true,
-      //   "autoWidth": false,
-      //   "responsive": true,
-      // });
-      // $("#exampletime").datetimepicker();
-      // $("#exampletime2").datetimepicker();
-    });
 
     $('#start_time').datetimepicker({
       "allowInputToggle": true,
@@ -423,7 +374,7 @@
       if ($('#startdate').val() !== '' && $('#enddate').val() !== '') {
         var start = Date.parse(($('#startdate').val()).toString());
         var end = Date.parse(($('#enddate').val()).toString());
-        // console.log($('#enddate').val());
+        console.log("end date", $('#enddate').val());
         if (start > end) {
           //            $('#eDate').css('border-color', '#ff0000');
           $('#startdate').val('');
@@ -925,7 +876,7 @@
         //   startDate = startDate.replace("/", "-") + ' 00:00:00';
         //   endDate = endDate.replace("/", "-") + ' 23:59:59';
         //   // console.log(endDate + "   " + startDate);
-          trackerlist.push(12345);
+        // trackerlist.push(12345);
         // 1. Get all assets to be tracked 
         if (trackerlist.length == 0) {
           $.ajax({
