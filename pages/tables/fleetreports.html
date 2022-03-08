@@ -179,6 +179,9 @@
                             <a class="nav-item nav-link" id="nav-fuel-report-per-day-tab" data-toggle="tab"
                                 href="#nav-fuel-report-per-day" role="tab" aria-controls="nav-fuel-report-per-day"
                                 aria-selected="false" onclick="setTitleText('fuel-day-title-text')">Fuel Report/Day</a>
+                            <a class="nav-item nav-link" id="nav-alight-tab" data-toggle="tab" href="#nav-alight"
+                                role="tab" aria-controls="nav-alight" aria-selected="false"
+                                onclick="setTitleText('alight-title-text');viewAlightReport('Only');">Alight</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -421,6 +424,67 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="nav-alight" role="tabpanel" aria-labelledby="nav-alight-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title" id="alight-title-text">Alight <span id="alightperiod"
+                                                    class="pull-right"></span></h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered" id="alighttable">
+                                                <thead>
+                                                    <tr>
+                                                        <th title="No.">No.</th>
+                                                        <th title="NUMBER PLATE">NUMBER PLATE</th>
+                                                        <th title="PRIMARY PROGRAM USE">PRIMARY PROGRAM USE</th>
+                                                        <th title="ARC ASSET NUMBER">ARC ASSET NUMBER</th>
+                                                        <th title="PRIMARY COUNTRY LOCATION">PRIMARY COUNTRY LOCATION
+                                                        </th>
+                                                        <th title="DONOR">DONOR</th>
+                                                        <th title="OWNERSHIP">OWNERSHIP</th>
+                                                        <th title="OPENING KM">OPENING KM</th>
+                                                        <th title="CLOSING KM">CLOSING KM</th>
+                                                        <th title="LITERS OF FUEL USED IN MONTH">LITERS OF FUEL USED IN
+                                                            MONTH</th>
+                                                        <th title="TOTAL FUEL COST IN LOCAL CURRENCY">TOTAL FUEL COST IN
+                                                            LOCAL CURRENCY</th>
+                                                        <th title="HOURS USED">HOURS USED</th>
+                                                        <th title="MONTHLY MAINTENANCE COSTS IN LOCAL CURRENCY">MONTHLY
+                                                            MAINTENANCE COSTS IN LOCAL CURRENCY</th>
+                                                        <th title="WORKING DAYS IN GARAGE / WORKSHOP">WORKING DAYS IN
+                                                            GARAGE / WORKSHOP</th>
+                                                        <th title="VEHICLE CONDITION">VEHICLE CONDITION</th>
+                                                        <th title="MONTH RENTAL CHARGES IN LOCAL CURRENCY">MONTH RENTAL
+                                                            CHARGES IN LOCAL CURRENCY</th>
+                                                        <th
+                                                            title="HOURS PER DAY THE VEHICLE IS NORMALLY AVAILABLE FOR USE">
+                                                            HOURS PER DAY THE VEHICLE IS NORMALLY AVAILABLE FOR USE</th>
+                                                        <th
+                                                            title="NUMBER OF DAYS PER MONTH THE VEHICLE IS NORMALLY AVAILABLE FOR USE">
+                                                            NUMBER OF DAYS PER MONTH THE VEHICLE IS NORMALLY AVAILABLE
+                                                            FOR USE</th>
+                                                        <th title="TOTAL REPORTED SAFETY OR SECURITY INCIDENTS">TOTAL
+                                                            REPORTED SAFETY OR SECURITY INCIDENTS</th>
+                                                        <th title="KILOMETERS TRAVELED">KILOMETERS TRAVELED</th>
+                                                        <th title="TOTAL FUEL COST">TOTAL FUEL COST</th>
+                                                        <th title="FUEL CONSUMPTION (KM/L)">FUEL CONSUMPTION (KM/L)</th>
+                                                        <th title="RUNNING COST PER KM">RUNNING COST PER KM</th>
+                                                        <th title="AVAILABILITY PERCENTAGE">AVAILABILITY PERCENTAGE</th>
+                                                        <th title="PERCENT UTILIZATION">PERCENT UTILIZATION</th>
+                                                        <th title="VEHICLE AGE">VEHICLE AGE</th>
+                                                        <th title="VEHICLE MILEAGE">VEHICLE MILEAGE</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="alight-table-bod">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -529,6 +593,14 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print"],
             "bSort": false
         });
+        var alighttable = $("#alighttable").DataTable({
+            "dom": "Bfrtip",
+            "buttons": ["copy", "csv", "excel", "pdf", "print"],
+            "bSort": false,
+            "columnDefs": [
+                { 'visible': false, 'targets': [2, 3, 4, 5, 6, 10, 12, 13, 14, 15, 16, 17, 18, 20, 22, 23, 25] }
+            ]
+        });
         var avaliableReports = [];
 
         function showLoader() {
@@ -556,11 +628,11 @@
             // $('#maintanancedom').css('display', 'none');
             // $('#speedviolationdom').css('display', 'none');
             // $('#tripdom').css('display', 'none');
-            viewFleetOperationsreport('only');
-            // viewTripReport('Only');
-            viewEcodrivingreport('only');
-            viewSpeedViolationreport('only');
-            viewFuelreport('only');
+            // viewFleetOperationsreport('only');
+            // // viewTripReport('Only');
+            // viewEcodrivingreport('only');
+            // viewSpeedViolationreport('only');
+            // viewFuelreport('only');
             hideLoader();
         });
         $(function () {
@@ -1210,7 +1282,7 @@
 
                     $('#speedviolationperiod').text(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + speedviolations.report.from + ' To : ' + speedviolations.report.to);
                     $('title').html(speedviolations.report.sheets[0].sections[0].text.split(':')[1] + '  From: ' + new Date(speedviolations.report.from).toLocaleString() + ' To : ' + new Date(speedviolations.report.to).toLocaleString());
-                    console.log("speedviolation",speedviolations);
+                    console.log("speedviolation", speedviolations);
                     speedviolation = speedviolations.report.sheets;
                     // debugger;
                     // $('#speedviolation-table-bod').html('');
@@ -1219,20 +1291,20 @@
                     for (var i = 0; i < speedviolation.length; i++) {
                         // debugger;
                         speedviolationtable.row.add([
-                            speedviolation[i].header,speedviolation[i].sections[0].text.split(":")[0],
+                            speedviolation[i].header, speedviolation[i].sections[0].text.split(":")[0],
                             '', '', '', '', ''
                         ]).draw(false);
                         var headerrows = speedviolation[i].sections[2].data;
                         for (var y = 0; y < headerrows.length; y++) {
                             speedviolationtable.row.add([
-                                '','', speedviolation[i].sections[2].data[y].header,
-                                '', '','', ''
+                                '', '', speedviolation[i].sections[2].data[y].header,
+                                '', '', '', ''
                             ]).draw(false);
                             var rowData = headerrows[y].rows;
                             // console.log(rowData);
                             for (var x = 0; x < rowData.length; x++) {
                                 speedviolationtable.row.add([
-                                    '', '','',
+                                    '', '', '',
                                     rowData[x].start_time.v,
                                     rowData[x].duration.v,
                                     rowData[x].max_speed.v,
@@ -1336,6 +1408,117 @@
                         }
 
 
+
+                    }
+
+                }
+            }
+            hideLoader();
+
+        }
+
+
+        function viewAlightReport(option) {
+
+            if (option === 'Only') {
+                showLoader();
+                $('#alightdom').css('display', 'block');
+            }
+            //Check if table has data already
+            if (alighttable != null) {
+                if (alighttable.data().count()) {
+                    //do nothing
+                } else {
+
+
+                    //Retieve Trip Report
+                    // $("#btn-view-report").prop('disabled', true);
+                    var tripreport;
+                    // debugger;
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            tripreport = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+                    var fuelreport;
+                    var enginehours;
+                    //Retieve Fuel volume report
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            fuelreport = response;
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        data: {
+                            hash: hash,
+                            report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            enginehours = response;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
+
+                    $('#alightperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
+                    $('title').html('Alight Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
+                    var fleetsummary = tripreport.report.sheets;
+                    var fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+                    var enginesummary = enginehours.report.sheets[0].sections[0].data;
+
+                    // console.log(fleetsummary.length);
+                    console.log("tripreport", fleetsummary);
+                    console.log("Fuel Report :", fuelsummary);
+                    console.log("Engine Report :", enginesummary);
+                    var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
+                    // debugger;
+                    for (var i = 1; i < tripreport.report.sheets.length; i++) {
+                        alighttable.row.add([
+                            i, '<b>' + fleetsummary[i].header + '</b>',
+                            '', '', '', '', '',
+                            fleetsummary[i].sections[0].data[0].total.length.v,
+                            fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
+                            (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0,
+                            '',
+                            fleetsummary[i].sections[1].data[0].rows[0].time.v,
+                            '', '', '', '',
+                            '', '', '',
+                            fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
+                            '',
+                            (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? Number((fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].mileage_by_gps.v / fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v)).toFixed(2) : 0,
+                            '', '',
+                            Number(((enginesummary[0].rows[i].in_movement.raw, enginesummary[0].rows[i].idle.raw) / (12 * 60 * 60 * daysinperiod)) * 100).toFixed(2),
+                            '',
+                            fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v
+
+                        ]).draw(false);//Add the asset name
 
                     }
 
