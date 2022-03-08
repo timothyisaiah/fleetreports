@@ -598,7 +598,7 @@
             "buttons": ["copy", "csv", "excel", "pdf", "print"],
             "bSort": false,
             "columnDefs": [
-                { 'visible': false, 'targets': [2, 3, 4, 5, 6, 10, 12, 13, 14, 15, 16, 17, 18, 20, 22, 23, 25] }
+                { 'visible': false, 'targets': [2, 3, 4, 5, 6, 10, 12, 13, 14] }
             ]
         });
         var avaliableReports = [];
@@ -628,11 +628,11 @@
             // $('#maintanancedom').css('display', 'none');
             // $('#speedviolationdom').css('display', 'none');
             // $('#tripdom').css('display', 'none');
-            // viewFleetOperationsreport('only');
-            // // viewTripReport('Only');
-            // viewEcodrivingreport('only');
-            // viewSpeedViolationreport('only');
-            // viewFuelreport('only');
+            viewFleetOperationsreport('only');
+            // viewTripReport('Only');
+            viewEcodrivingreport('only');
+            viewSpeedViolationreport('only');
+            viewFuelreport('only');
             hideLoader();
         });
         $(function () {
