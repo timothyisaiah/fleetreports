@@ -1486,17 +1486,20 @@
                         },
                         async: false
                     });
-
+                    // debugger
                     $('#alightperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
                     $('title').html('Alight Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
                     var fleetsummary = tripreport.report.sheets;
-                    var fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+                    var fuelsummary = [];
+                    if(fuelreport.report.sheets[0].sections[0].data){
+                        fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
+                    }
                     var enginesummary = enginehours.report.sheets[0].sections[0].data;
 
                     // console.log(fleetsummary.length);
-                    console.log("tripreport", fleetsummary);
-                    console.log("Fuel Report :", fuelsummary);
-                    console.log("Engine Report :", enginesummary);
+                    // console.log("tripreport", fleetsummary);
+                    // console.log("Fuel Report :", fuelsummary);
+                    // console.log("Engine Report :", enginesummary);
                     var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
                     // debugger;
                     for (var i = 1; i < tripreport.report.sheets.length; i++) {
@@ -1505,7 +1508,7 @@
                             '', '', '', '', '',
                             fleetsummary[i].sections[0].data[0].total.length.v,
                             fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
-                            (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0,
+                           (fuelsummary.length>0)?( (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0):'__',
                             '',
                             fleetsummary[i].sections[1].data[0].rows[0].time.v,
                             '', '', '', '',
