@@ -1430,7 +1430,39 @@
                     //do nothing
                 } else {
 
+                    var vehicle_list;
+                    var vehicle_group_list;
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/tracker/group/list',
+                        data: {
+                            hash: hash
+                        },
+                        type: 'GET',
+                        success: function (resp) {
+                            vehicle_group_list = resp.list;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
 
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
+                        data: {
+                            hash: hash
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            vehicle_list = response.list;
+                        }, error: function (error) {
+                            // console.log(error.responseJSON);
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
                     //Retieve Trip Report
                     // $("#btn-view-report").prop('disabled', true);
                     var tripreport;
@@ -1445,7 +1477,6 @@
                         success: function (response) {
                             tripreport = response;
                         }, error: function (error) {
-                            // console.log(error.responseJSON);
                             $.alert(error.responseJSON.status.description);
                             hideLoader();
                         },
@@ -1486,38 +1517,79 @@
                         },
                         async: false
                     });
-                    // debugger
+                  
                     $('#alightperiod').text(' From: ' + tripreport.report.from + ' To : ' + tripreport.report.to);
                     $('title').html('Alight Report  From: ' + new Date(tripreport.report.from).toLocaleString() + ' To : ' + new Date(tripreport.report.to).toLocaleString());
                     var fleetsummary = tripreport.report.sheets;
                     var fuelsummary = [];
-                    if(fuelreport.report.sheets[0].sections[0].data){
+                    if (fuelreport.report.sheets[0].sections[0].data) {
                         fuelsummary = fuelreport.report.sheets[0].sections[0].data[0].rows;
                     }
                     var enginesummary = enginehours.report.sheets[0].sections[0].data;
 
+                    var service_task;
+                    $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/vehicle/service_task/list',
+                        data: {
+                            hash: hash,
+                            return_prediction: false
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            service_task = response.list;
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
                     // console.log(fleetsummary.length);
+                    // console.log("vehicles", vehicle_list);
+                    // console.log("vehicle groups :", vehicle_group_list);
+                    // console.log("service task :", service_task);
                     // console.log("tripreport", fleetsummary);
                     // console.log("Fuel Report :", fuelsummary);
                     // console.log("Engine Report :", enginesummary);
                     var daysinperiod = dateDiffInDays(tripreport.report.from, tripreport.report.to, 'days');
                     // debugger;
                     for (var i = 1; i < tripreport.report.sheets.length; i++) {
+
+                        var driver_journal;
+                        $.ajax({
+                        url: 'https://hosting.fms-ecsinternational.com/api/driver/journal/proposal/list',
+                        data: {
+                            hash: hash,
+                            from: tripreport.report.from,
+                            to: tripreport.report.to,
+                            tracker_id: vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].id
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            driver_journal = response.list;
+                            // console.log(driver_journal)
+                        }, error: function () {
+                            $.alert(error.responseJSON.status.description);
+                            hideLoader();
+                        },
+                        async: false
+                    });
                         alighttable.row.add([
-                            i, '<b>' + fleetsummary[i].header + '</b>',
-                            '', '', '', '', '',
-                            fleetsummary[i].sections[0].data[0].total.length.v,
-                            fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
-                           (fuelsummary.length>0)?( (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0):'__',
+                            i, '<b>' + fleetsummary[i].header + '</b>','',
+                            vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].source.device_id,
+                            vehicle_group_list[vehicle_group_list.findIndex(x => x.id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].group_id)].title,
+                             '', '',
+                            driver_journal[0].start_odometer,
+                            driver_journal[driver_journal.length - 1].end_odometer,
+                            (fuelsummary.length > 0) ? ((fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0) : '__',
                             '',
                             fleetsummary[i].sections[1].data[0].rows[0].time.v,
-                            '', '', '', '',
+                            (service_task.length>0)?service_task[service_task.findIndex(x => x.vehicle_id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].id)].cost:'__', '', '', '',
                             '', '', '',
                             fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
                             '',
                             (fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? Number((fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].mileage_by_gps.v / fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v)).toFixed(2) : 0,
                             '', '',
-                            Number(((enginesummary[0].rows[i].in_movement.raw, enginesummary[0].rows[i].idle.raw) / (12 * 60 * 60 * daysinperiod)) * 100).toFixed(2),
+                            Number(((enginesummary[0].rows[i-1].in_movement.raw, enginesummary[0].rows[i-1].idle.raw) / (12 * 60 * 60 * daysinperiod)) * 100).toFixed(2),
                             '',
                             fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v
 
