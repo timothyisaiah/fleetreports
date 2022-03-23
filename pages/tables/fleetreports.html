@@ -439,7 +439,7 @@
                                                         <th title="No.">No.</th>
                                                         <th title="NUMBER PLATE">NUMBER PLATE</th>
                                                         <th title="PRIMARY PROGRAM USE">PRIMARY PROGRAM USE</th>
-                                                        <th title="ARC ASSET NUMBER">ARC ASSET NUMBER</th>
+                                                        <!-- <th title="ARC ASSET NUMBER">ARC ASSET NUMBER</th> -->
                                                         <th title="PRIMARY COUNTRY LOCATION">PRIMARY COUNTRY LOCATION</th>
                                                         <th title="DONOR">DONOR</th>
                                                         <th title="OWNERSHIP">OWNERSHIP</th>
@@ -1565,7 +1565,7 @@
                     });
                         alighttable.row.add([
                             i, '<b>' + fleetsummary[i].header + '</b>','',
-                            vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].source.device_id,
+                            // vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].source.device_id,
                             vehicle_group_list[vehicle_group_list.findIndex(x => x.id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].group_id)].title,
                              '', '',
                             driver_journal[0].start_odometer,
