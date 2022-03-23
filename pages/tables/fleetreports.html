@@ -1573,6 +1573,7 @@
                         },
                         async: false
                     });
+                    debugger
                         alighttable.row.add([
                             i, '<b>' + fleetsummary[i].header + '</b>','',
                             vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].source.device_id,
@@ -1583,7 +1584,7 @@
                             (fuelsummary.length > 0) ? ((fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header) !== -1) ? fuelsummary[fuelsummary.findIndex(x => x.object.v === fleetsummary[i].header)].consumed.v : 0) : '__',
                             '',
                             fleetsummary[i].sections[1].data[0].rows[0].time.v,
-                            (service_task.length>0)?service_task[service_task.findIndex(x => x.vehicle_id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].id)].cost:'__', '', '', '',
+                            (service_task.length>0 && service_task.findIndex(x => x.vehicle_id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].id) !== -1)?service_task[service_task.findIndex(x => x.vehicle_id === vehicle_list[vehicle_list.findIndex(x => x.label === fleetsummary[i].header)].id)].cost:'__', '', '', '',
                             '', '', '',
                             fleetsummary[i].sections[1].data[0].rows[fleetsummary[i].sections[1].data[0].rows.length - 1].length.v,
                             '',
