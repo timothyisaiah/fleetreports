@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "D:isaiah\\FMSAfrica\\fleetreports\\index.html",
+            "url": "D:isaiah\\FMSAfrica\\reports-new-api\\fleetreports\\index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]

@@ -1,1219 +1,1233 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create Reports</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Create Reports</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="../../plugins/fontawesome-free/css/all.min.css"
+    />
+    <!-- DataTables -->
+    <link
+      rel="stylesheet"
+      href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../plugins/jquery-confirm/jquery-confirm.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../dist/js/datepicker/sass/bootstrap-datetimepicker-build.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css" />
+  </head>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/jquery-confirm/jquery-confirm.css">
-  <link rel="stylesheet" href="../../dist/js/datepicker/sass/bootstrap-datetimepicker-build.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-</head>
+  <body class="hold-transition sidebar-mini sidebar-collapse">
+    <div class="wrapper">
+      <!-- Navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"
+              ><i class="fas fa-bars"></i
+            ></a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="data.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Contact</a>
+          </li>
+        </ul>
 
-<body class="hold-transition sidebar-mini  sidebar-collapse">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="data.html" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
-        </li>
-      </ul>
-
-      <!-- SEARCH FORM -->
-      <form class="form-inline ml-3">
-        <div class="input-group input-group-sm">
-          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-navbar" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
+        <!-- SEARCH FORM -->
+        <form class="form-inline ml-3">
+          <div class="input-group input-group-sm">
+            <input
+              class="form-control form-control-navbar"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-navbar" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item d-none d-sm-inline-block">
-          <a href="../../index.html" class="nav-link">Log Out</a>
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
-
-    <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
-      <!-- Brand Logo -->
-      <a href="data.html" class="brand-link">
-        <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-          style="opacity: .8">
-        <span class="brand-text font-weight-light">FMS-Reports</span>
-      </a>
-
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <!-- <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-          </li> -->
-          <li class="nav-item">
-            <a href="data.html" class="nav-link active">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Create Reports</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="fleetreports.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Fleet Report</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="gensets.html" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Gensets Report</p>
-            </a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item d-none d-sm-inline-block">
+            <a href="../../index.html" class="nav-link">Log Out</a>
           </li>
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
-    </aside>
+      <!-- /.navbar -->
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Create Report</h1>
-            </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Create Report</li>
-              </ol>
-            </div>
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
+      <!-- Main Sidebar Container -->
+      <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="data.html" class="brand-link">
+          <img
+            src="../../dist/img/AdminLTELogo.png"
+            alt="AdminLTE Logo"
+            class="brand-image img-circle elevation-3"
+            style="opacity: 0.8"
+          />
+          <span class="brand-text font-weight-light">FMS-Reports</span>
+        </a>
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <!-- Date picker  -->
-          <!-- <div class="row" style="padding: 2% 5%;">
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">Start Date:</label>
-              <input type="date" class="form-control" id="startdate">
-            </div>
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">End Date:</label>
-              <input type="date" class="form-control" id="enddate">
-            </div>
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">Max Speed (km/h):</label>
-              <input type="number" class="form-control" id="maxspeed" name="maxspeed">
-            </div>
-            <div class="col-md-3" style="padding: 2.7%;">
-              <button class="btn btn-sm btn-primary" onclick="createReports()" id="btn-generate"><i
-                  class="fa fa-download"></i> Generate
-                Report</button>
-            </div>
-          </div> -->
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul
+            class="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+          >
+            <li class="nav-item">
+              <a href="data.html" class="nav-link active">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Create Reports</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="fleetreports.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Fleet Report</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="gensets.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gensets Report</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </aside>
 
-          <!-- new date picker with time  -->
-          <div class="row">
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="time">Start Date:</label>
-                <div class="input-group">
-                  <input type="date" id="startdate" placeholder="dd-mm-yyyy" class="form-control" />
-                </div>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1>Create Report</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active">Create Report</li>
+                </ol>
               </div>
             </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="time">Start Time:</label>
-                <div class="input-group date" id="start_time">
-                  <input type="text" id="starttime" placeholder="Time" class="form-control" />
-                  <div class="input-group-addon input-group-append">
-                    <div class="input-group-text">
-                      <i class="fa fa-clock"></i>
+          </div>
+          <!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="container-fluid">
+            <!-- new date picker with time  -->
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="time">Start Date:</label>
+                  <div class="input-group">
+                    <input
+                      type="date"
+                      id="startdate"
+                      placeholder="dd-mm-yyyy"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="time">Start Time:</label>
+                  <div class="input-group date" id="start_time">
+                    <input
+                      type="text"
+                      id="starttime"
+                      placeholder="Time"
+                      class="form-control"
+                    />
+                    <div class="input-group-addon input-group-append">
+                      <div class="input-group-text">
+                        <i class="fa fa-clock"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="time">End Date:</label>
-                <div class="input-group">
-                  <input type="date" id="enddate" placeholder="dd-mm-yyyy" class="form-control" />
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="time">End Date:</label>
+                  <div class="input-group">
+                    <input
+                      type="date"
+                      id="enddate"
+                      placeholder="dd-mm-yyyy"
+                      class="form-control"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label for="time">End Time:</label>
-                <div class="input-group date" id="end_time">
-                  <input type="text" id="endtime" placeholder="Time" class="form-control" />
-                  <div class="input-group-addon input-group-append">
-                    <div class="input-group-text">
-                      <i class="fa fa-clock"></i>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="time">End Time:</label>
+                  <div class="input-group date" id="end_time">
+                    <input
+                      type="text"
+                      id="endtime"
+                      placeholder="Time"
+                      class="form-control"
+                    />
+                    <div class="input-group-addon input-group-append">
+                      <div class="input-group-text">
+                        <i class="fa fa-clock"></i>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="col-md-2">
-              <label style="padding-left: 10px;">Max Speed (km/h):</label>
-              <input type="number" class="form-control" id="maxspeed" name="maxspeed">
-            </div>
-            <div class="col-md-2" style="padding: 2.7%;">
-              <button class="btn btn-sm btn-primary" onclick="createReports()" id="btn-generate"><i
-                  class="fa fa-download"></i>Create
-                Report</button>
-            </div>
-
-          </div>
-          <!-- new date picker with time  -->
-          <!-- tables  -->
-          <div class="row" style="padding: 2% 2%;">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Available Reports</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div id="available-reports" class="row">
-                  </div>
-                </div>
-                <!-- /.card-body -->
+              <div class="col-md-2">
+                <label style="padding-left: 10px">Max Speed (km/h):</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="maxspeed"
+                  name="maxspeed"
+                />
               </div>
-              <!-- /.card -->
+              <div class="col-md-2" style="padding: 2.7%">
+                <button
+                  class="btn btn-sm btn-primary"
+                  onclick="createReports()"
+                  id="btn-generate"
+                >
+                  <i class="fa fa-download"></i>Create Report
+                </button>
+              </div>
             </div>
-            <!-- /.col -->
+            <!-- new date picker with time  -->
+            <!-- tables  -->
+            <div class="row" style="padding: 2% 2%">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Available Reports</h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                    <div id="available-reports" class="row"></div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
           </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <div class="float-right d-none d-sm-block">
-        <b>Version</b> 0.1.4
+          <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
       </div>
-      <strong>Copyright &copy; 2019-2021 <a href="https://www.linkedin.com/in/timothy-isaiah">Timothy
-          Isaiah</a>.</strong>
-      All
-      rights reserved.
-    </footer>
+      <!-- /.content-wrapper -->
+      <footer class="main-footer">
+        <div class="float-right d-none d-sm-block"><b>Version</b> 0.1.4</div>
+        <strong
+          >Copyright &copy; 2019-2021
+          <a href="https://www.linkedin.com/in/timothy-isaiah">Timothy Isaiah</a
+          >.</strong
+        >
+        All rights reserved.
+      </footer>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-  </div>
-  <!-- ./wrapper -->
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
 
-  <!-- jQuery -->
-  <script src="../../plugins/jquery/jquery.min.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- DataTables  & Plugins -->
-  <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-  <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-  <script src="../../plugins/jquery-confirm/jquery-confirm.js"></script>
-  <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-  <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-  <script src="../../plugins/jszip/jszip.min.js"></script>
-  <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-  <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-  <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-  <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-  <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-  <script src="../../dist/js/datepicker/js/Moment.js"></script>
-  <script src="../../dist/js/datepicker/js/bootstrap-datetimepicker.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../../dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="../../dist/js/demo.js"></script>
-  <!-- Page specific script -->
-  <script>
-    var hash;
-    var trackerlist = [];
-    var reportlist = [];
-    var group_ids = [];
-    var avaliableReports = [];
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="../../plugins/jquery-confirm/jquery-confirm.js"></script>
+    <script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="../../plugins/jszip/jszip.min.js"></script>
+    <script src="../../plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="../../plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="../../dist/js/datepicker/js/Moment.js"></script>
+    <script src="../../dist/js/datepicker/js/bootstrap-datetimepicker.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../../dist/js/demo.js"></script>
+    <!-- Page specific script -->
+    <script>
+      var hash;
+      var BASE_URL;
+      var trackerlist = [];
+      var reportlist = [];
+      var group_ids = [];
+      var avaliableReports = [];
 
-    $('#start_time').datetimepicker({
-      "allowInputToggle": true,
-      "showClose": true,
-      "showClear": true,
-      "showTodayButton": true,
-      "format": "HH:mm:ss",
-      // "format": "HH:mm",
-    });
-    $('#end_time').datetimepicker({
-      "allowInputToggle": true,
-      "showClose": true,
-      "showClear": true,
-      "showTodayButton": true,
-      "format": "HH:mm:ss",
-      // "format": "HH:mm",
-    });
-
-    $(document).ready(function () {
-      var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
-      // debugger;
-      hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
-      $.ajax({
-        url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
-        type: 'GET',
-        data: {
-          hash: hash
-        },
-        success: function (response) {
-          // console.log(response);
-          // debugger;
-          if (response.list.length > 0) {
-            $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
-              '<div class="col-md-6">' +
-              '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
-              '</div>' +
-              '<div class="col-md-6">' +
-              '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
-              '</div>' +
-              '</div></div>');
-            for (var i = 0; i < response.list.length; i++) {
-              // console.log(response.list[i].id);
-              avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
-            }
-            // console.log("Available Reports List: ");
-            // console.log(avaliableReports);
-          } else {
-            $.confirm({
-              title: 'Error',
-              content: 'There is no report currently, please generate one and try again!',
-              useBootstrap: false,
-              type: 'red',
-              boxWidth: '30%',
-              theme: 'modern',
-              icon: 'fa fa-exclamation-triangle',
-              buttons: {
-                close: {
-                  text: 'Close',
-                  action: function () { }
-                }
-              }
-            });
-          }
-        },
-        async: false,
-        error: function (error) {
-          // console.log(error);
-        }
+      $("#start_time").datetimepicker({
+        allowInputToggle: true,
+        showClose: true,
+        showClear: true,
+        showTodayButton: true,
+        format: "HH:mm:ss",
+        // "format": "HH:mm",
+      });
+      $("#end_time").datetimepicker({
+        allowInputToggle: true,
+        showClose: true,
+        showClear: true,
+        showTodayButton: true,
+        format: "HH:mm:ss",
+        // "format": "HH:mm",
       });
 
-    });
-
-    //Track vehicle selection
-    function checkForVehicle(valuee) {
-      // debugger;
-      if (valuee === 'all') {
-        for (i in group_ids) {
-          $('input[name="vehicle-check-list-group' + group_ids[i] + '"]').each(function () {
-            this.checked = true;
-          });
-        }
-      } else {
-        if (valuee.includes('group')) {
-          $('input[name="vehicle-check-list-' + valuee + '"]').each(function () {
-            this.checked = true;
-          });
-        }
-        $('#checkAll').prop('checked', false);
-      }
-    }
-
-    function checkenddate() {
-      if ($('#startdate').val() !== '' && $('#enddate').val() !== '') {
-        var start = Date.parse(($('#startdate').val()).toString());
-        var end = Date.parse(($('#enddate').val()).toString());
-        console.log("end date", $('#enddate').val());
-        if (start > end) {
-          //            $('#eDate').css('border-color', '#ff0000');
-          $('#startdate').val('');
-          $('#enddate').focus();
-          return false;
-        } else {
-          $('#enddate').css('border-color', '#C0C0C0');
-          return true;
-        }
-      } else {
-        alert("Please Select a date range");
-        return false;
-      }
-
-      return true;
-    }
-
-    function checkMaxSpeed() {
-      var maxspeed = $('#maxspeed').val();
-      if (maxspeed === '') {
-        $.alert("Please Input Maximum speed(Speed violation)")
-        return false;
-      }
-      return true;
-    }
-
-    function generateReports() {
-      const generateReportsAsync = async () => {
-        var startDate = $('#startdate').val();
-        var endDate = $('#enddate').val();
-        var starttime = ($('#starttime').val() !== "") ? ' ' + $('#starttime').val() : ' 00:00:00';
-        var endtime = ($('#endtime').val() !== "") ? ' ' + $('#endtime').val() : ' 23:59:59';
-        var maxspeed = parseInt($('#maxspeed').val());
-        if (checkenddate() && checkMaxSpeed()) {
-          // debugger;
-          startDate = startDate.replace("/", "-") + starttime;
-          endDate = endDate.replace("/", "-") + endtime;
-          // console.log(endDate + "   " + startDate);
-          // console.log("start time", starttime);
-          // console.log("end time", endtime);
-          //Using the javascript API to create reports
-          // 2.1 Trip Report 
-
-          var tripReportdata = {
-            "plugin": {
-              "hide_empty_tabs": true,
-              "plugin_id": 4,
-              "show_seconds": true,
-              "include_summary_sheet_only": false,
-              "split": true,
-              "show_idle_duration": true,
-              "show_coordinates": false,
-              "filter": true,
-              "group_by_driver": true
-            },
-            "time_filter": {
-              "from": "00:00:00",
-              "to": "23:59:59",
-              "weekdays": [1, 2, 3, 4, 5, 6, 7]
-            },
-            "hash": hash,
-            "title": "Trip report",
-            "trackers": trackerlist,
-            "from": startDate,
-            "to": endDate
-          };
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(tripReportdata),
-            })
-            .then(response => response.json())
-            .then(data => {
-              // console.log(data);
-              // console.log('Success:', data);
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-          // 2.2 Eco Driving Report 
-          var ecoReportdata = {
-            "hash": hash,
-            "title": "Eco-driving report",
-            "trackers": trackerlist,
-            "from": startDate,
-            "to": endDate,
-            "time_filter": { "from": "00:00:00", "to": "23:59:59", "weekdays": [1, 2, 3, 4, 5, 6, 7] },
-            "plugin": {
-              "hide_empty_tabs": true, "plugin_id": 46, "show_seconds": true, "include_summary_sheet_only": false, "split": true, "show_idle_duration": true, "show_coordinates": false, "filter": true, "group_by_driver": true, "show_detailed": true,
-              "min_duration_minutes": 1, "max_speed": maxspeed, "smoothing": false, "graph_type": "mileage"
-            }
-          }
-
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(ecoReportdata),
-            })
-            .then(response => response.json())
-            .then(data => {
-              // console.log(data);
-              // console.log('Success:', data);
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-
-          // 2.3 Engine Hours Report 
-          var engineHoursdata = {
-            hash: hash,
-            title: "Engine hours report",
-            trackers: trackerlist,
-            from: startDate,
-            to: endDate,
-            time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-            plugin: {
-              hide_empty_tabs: true,
-              plugin_id: 7,
-              show_seconds: true,
-              include_summary_sheet_only: false,
-              split: true,
-              show_idle_duration: true,
-              show_coordinates: false,
-              filter: true,
-              group_by_driver: true,
-              show_detailed: true
-            }
-          }
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(engineHoursdata),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-          // 2.4 Geo Fence Entry/Exit 
-          var geoFencedata = {
-            hash: hash,
-            title: "Geofence entry/exit events",
-            trackers: trackerlist,
-            from: startDate,
-            to: endDate,
-            time_filter: {
-              from: "00:00:00",
-              to: "23:59:59",
-              weekdays: [1, 2, 3, 4, 5, 6, 7]
-            },
-            plugin: {
-              hide_empty_tabs: true,
-              plugin_id: 89,
-              show_seconds: true,
-              include_summary_sheet_only: false,
-              split: true,
-              show_idle_duration: true,
-              show_coordinates: false,
-              filter: true,
-              group_by_driver: true,
-              min_minutes_in_zone: 1
-            }
-          }
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(geoFencedata),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-          // 2.5 Speed Violation Report
-          var SpeedViolationdata = {
-            hash: hash,
-            title: "Speed violation report",
-            trackers: trackerlist,
-            from: startDate,
-            to: endDate,
-            time_filter: {
-              from: "00:00:00",
-              to: "23:59:59",
-              weekdays: [1, 2, 3, 4, 5, 6, 7]
-            },
-            plugin: {
-              hide_empty_tabs: true,
-              plugin_id: 27,
-              show_seconds: true,
-              include_summary_sheet_only: false,
-              split: true,
-              show_idle_duration: true,
-              show_coordinates: false,
-              filter: true,
-              group_by_driver: true,
-              show_detailed: true,
-              min_duration_minutes: 1,
-              max_speed: maxspeed
-            }
-          }
-
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(SpeedViolationdata),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-          // 2.6 Car Security Report 
-          var CarSecurityData = {
-            hash: hash,
-            title: "Car security report",
-            trackers: trackerlist,
-            from: startDate,
-            to: endDate,
-            time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-            plugin: {
-              hide_empty_tabs: true,
-              plugin_id: 15,
-              show_seconds: true,
-              include_summary_sheet_only: false,
-              split: true,
-              show_idle_duration: true,
-              show_coordinates: false,
-              filter: true,
-              group_by_driver: true,
-              show_detailed: true,
-              min_duration_minutes: 1,
-              max_speed: maxspeed
-            }
-          }
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(CarSecurityData),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-          // 2.7 Fuel Volume Report 
-          var fuelVolumeData = {
-            hash: hash,
-            title: "Fuel report",
-            trackers: trackerlist,
-            from: startDate,
-            to: endDate,
-            time_filter: { from: "00:00:00", to: "23:59:59", weekdays: [1, 2, 3, 4, 5, 6, 7] },
-            plugin: {
-              hide_empty_tabs: true,
-              plugin_id: 10,
-              show_seconds: true,
-              include_summary_sheet_only: false,
-              split: true, show_idle_duration: true,
-              show_coordinates: false,
-              filter: true,
-              group_by_driver: true,
-              show_detailed: true,
-              min_duration_minutes: 1,
-              max_speed: maxspeed,
-              smoothing: false,
-              graph_type: "mileage"
-            }
-          }
-
-
-          await fetch('https://hosting.fms-ecsinternational.com/api/report/tracker/generate',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(fuelVolumeData),
-            })
-            .then(response => response.json())
-            .then(data => {
-              if (data.success === true) {
-                reportlist.push(data.id);
-              } else {
-
-                switch (data.status.code) {
-                  case 13:
-                    $.alert(data.status.description + ' <br> Please ensure that Vehicle list selected does\'nt contain only GenSets');
-                    break;
-                  case 217:
-                    $.alert(data.status.description);
-                    break;
-                  default:
-                    $.alert(data.status.description);
-                    break;
-                }
-                return;
-              }
-            })
-            .catch((error) => {
-              console.log('Error', error);
-            });
-
-
-          if (reportlist.length >= 6 && !reportlist.includes(undefined)) {
-            // 1. Check if (a) report has been fully generated.
-
-
-            $.confirm({
-              title: 'Success',
-              content: 'Report Successfully Created',
-              useBootstrap: false,
-              type: 'green',
-              boxWidth: '30%',
-              theme: 'modern',
-              icon: 'fa fa-tick',
-              buttons: {
-                close: {
-                  text: 'Close',
-                  action: function () { listAllReportsAvailable() }
-                }
-              }
-            });
-          } else {
-            $.confirm({
-              title: 'Failed',
-              content: 'Failed to create Report',
-              useBootstrap: false,
-              type: 'red',
-              boxWidth: '30%',
-              theme: 'modern',
-              icon: 'fa fa-exclamation-triangle',
-              buttons: {
-                close: {
-                  text: 'Close',
-                  action: function () { $('#available-reports').html(''); }
-                }
-              }
-            });
-          }
-          // console.log(reportlist);
-        }
-      }
-      generateReportsAsync();
-    }
-
-    function createReports() {
-      const createReportsAsync = async () => {
-        $('#btn-generate').prop('disabled', true);
-        $('#available-reports').html('<div class="col-md-12 text-center">'
-          + ' <div class="spinner-grow text-secondary" role="status">'
-          + '<span class="sr-only">Loading...</span>'
-          + ' </div>'
-          + '</div>');
-        // var startDate = $('#startdate').val();
-        // var endDate = $('#enddate').val();
-        // var maxspeed = parseInt($('#maxspeed').val());
-        // if (checkenddate() && checkMaxSpeed()) {
-        //   // debugger;
-        //   startDate = startDate.replace("/", "-") + ' 00:00:00';
-        //   endDate = endDate.replace("/", "-") + ' 23:59:59';
-        //   // console.log(endDate + "   " + startDate);
-        // trackerlist.push(12345);
-        // 1. Get all assets to be tracked 
-        if (trackerlist.length == 0) {
-          $.ajax({
-            url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
-            data: {
-              hash: hash
-            },
-            type: 'GET',
-            success: function (response) {
-              // var vehicle_groups;
-
-
-              $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/tracker/group/list',
-                data: {
-                  hash: hash
-                },
-                type: 'GET',
-                success: function (resp) {
-                  var vehicle_groups = resp;
-                  // console.log('groups', vehicle_groups);
-                  // debugger;
-                  console.log(response);
-                  var vehicles = response.list;
-                  var html = '<div class="form-group vehicle-list">' +
-                    '<div class="form-check">' +
-                    '<label class="form-check-label">' +
-                    '<input id="checkAll" type="checkbox" class="form-check-input" value="all" name="vehicle-check-list" onchange="checkForVehicle(\'all\')"> All </label>' +
-                    '</div><hr>';
-                  for (var x = 0; x < vehicle_groups.list.length; x++) {
-                    group_ids.push(vehicle_groups.list[x].id);
-                    var groups_html = '<div class="form-check" style="border-left: 15px solid #' + vehicle_groups.list[x].color + '">' +
-                      '<label class="form-check-label">' +
-                      '<input type="checkbox" class="form-check-input" value="group' + vehicle_groups.list[x].id + '" name="vehicle-check-list-group' + vehicle_groups.list[x].id + '" onchange="checkForVehicle(\'group' + vehicle_groups.list[x].id + '\')"> ' + vehicle_groups.list[x].title + '</label>' +
-                      '</div><hr>';
-                    var vehicle_html = '';
-                    // html = html + '<div class="form-check" style="border-left: 5px solid #'+ vehicle_groups.list[x].color +'">' +
-                    //   '<label class="form-check-label">' + vehicle_groups.list[x].title + '</label>' +
-                    //   '</div><hr>';
-                    // Group the Trackers
-                    for (var i = 0; i < vehicles.length; i++) {
-                      //Create a list of all vehicles attached to user for selection and inclusion in report generation
-                      if (vehicle_groups.list[x].id === vehicles[i].group_id) {
-                        vehicle_html = vehicle_html + '<div class="form-check">' +
-                          '<label class="form-check-label">' +
-                          '<input type="checkbox" class="form-check-input" value="' + vehicles[i].id + '" name="vehicle-check-list-group' + vehicle_groups.list[x].id + '" onchange="checkForVehicle(' + vehicles[i].id + ')"> ' + vehicles[i].label + '</label>' +
-                          '</div><hr>';
-                      }
-                    }
-
-                    if (vehicle_html !== '') {
-                      html = html + groups_html + vehicle_html;
-                    }
-                  }
-
-                  html = html + '</div>';
-                  $.confirm({
-                    title: 'Select Vehicles to include in the report(s)',
-                    content: '' + html,
-                    useBootstrap: false,
-                    type: 'blue',
-                    theme: 'modern',
-                    icon: 'fa fa-checked-circle',
-                    buttons: {
-                      close: {
-                        text: 'Generate',
-                        btnClass: 'btn btn-primary',
-                        action: function () {
-                          // console.log($('input[name="vehicle-check-list"]:checked').serialize());
-                          for (i in group_ids) {
-                            $('input[name="vehicle-check-list-group' + group_ids[i] + '"]:checked').each(function () {
-                              // console.log(this.value);
-                              if (this.value != 'all') {
-                                if (!this.value.includes('group')) {
-                                  trackerlist.push(parseInt(this.value));
-                                }
-                              }
-                            });
-                          }
-                          // console.log(trackerlist);
-                          if (trackerlist.length == 0) {
-                            $.alert('Please select atleast one vehicle.')
-                            return false;
-                          } else {
-                            $('#btn-generate').prop('disabled', false);
-                            // // test purposes only 
-                            // trackerlist.push(5789);
-                            generateReports();
-                          }
-                        }
-                      },
-                      cancel: {
-                        text: 'Cancel',
-                        action: function () {
-                          $('#btn-generate').prop('disabled', false);
-                          $('#available-reports').html('');
-                        }
-                      }
-                    }
-                  });
-                  return;
-                }, async: true
-              });
-
-              // // debugger;
-              // console.log(response);
-              // var vehicles = response.list;
-
-
-
-              // var html = '<div class="form-group vehicle-list">' +
-              //   '<div class="form-check">' +
-              //   '<label class="form-check-label">' +
-              //   '<input id="checkAll" type="checkbox" class="form-check-input" value="all" name="vehicle-check-list" onchange="checkForVehicle(\'all\')"> All </label>' +
-              //   '</div><hr>';
-
-              // for (var x = 0; x < vehicle_groups.length; x++) {
-              //   html = html + '<div class="form-check">' +
-              //     '<label class="form-check-label">' + vehicle_groups[i].title + '</label>' +
-              //     '</div><hr>';
-              //   // Group the Trackers
-              //   for (var i = 0; i < vehicles.length; i++) {
-              //     //Create a list of all vehicles attached to user for selection and inclusion in report generation
-              //     html = html + '<div class="form-check">' +
-              //       '<label class="form-check-label">' +
-              //       '<input type="checkbox" class="form-check-input" value="' + vehicles[i].id + '" name="vehicle-check-list" onchange="checkForVehicle(' + vehicles[i].id + ')"> ' + vehicles[i].label + '</label>' +
-              //       '</div><hr>';
-              //   }
-              // }
-
-              // for (var i = 0; i < vehicles.length; i++) {
-              //   //Create a list of all vehicles attached to user for selection and inclusion in report generation
-              //   html = html + '<div class="form-check">' +
-              //     '<label class="form-check-label">' +
-              //     '<input type="checkbox" class="form-check-input" value="' + vehicles[i].id + '" name="vehicle-check-list" onchange="checkForVehicle(' + vehicles[i].id + ')"> ' + vehicles[i].label + '</label>' +
-              //     '</div><hr>';
-
-
-              //   // // console.log(vehicles[i].label);
-              //   // trackerlist.push(vehicles[i].id);
-              // }
-
-              // html = html + '</div>';
-              // $.confirm({
-              //   title: 'Select Vehicles to include in the report(s)',
-              //   content: '' + html,
-              //   useBootstrap: false,
-              //   type: 'blue',
-              //   theme: 'modern',
-              //   icon: 'fa fa-checked-circle',
-              //   buttons: {
-              //     close: {
-              //       text: 'Generate',
-              //       btnClass: 'btn btn-primary',
-              //       action: function () {
-              //         // console.log($('input[name="vehicle-check-list"]:checked').serialize());
-              //         $('input[name="vehicle-check-list"]:checked').each(function () {
-              //           // console.log(this.value);
-              //           if (this.value != 'all') {
-              //             trackerlist.push(parseInt(this.value));
-              //           }
-              //         });
-              //         // console.log(trackerlist);
-              //         if (trackerlist.length == 0) {
-              //           $.alert('Please select atleast one vehicle.')
-              //           return false;
-              //         } else {
-              //           $('#btn-generate').prop('disabled', false);
-              //           // // test purposes only 
-              //           // trackerlist.push(5789);
-              //           generateReports();
-              //         }
-              //       }
-              //     },
-              //     cancel: {
-              //       text: 'Cancel',
-              //       action: function () {
-              //         $('#btn-generate').prop('disabled', false);
-              //         $('#available-reports').html('');
-              //       }
-              //     }
-              //   }
-              // });
-              // return;
-            }, error: function (error) {
-              // console.log(error);
-              return;
-            },
-            async: false
-          });
-        } else {
-          trackerlist = [];
-          createReportsAsync();
-        }
-        // }
-      }
-
-      createReportsAsync();
-    }
-    function listAllReportsAvailable() {
-      $.ajax({
-        url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
-        type: 'GET',
-        data: {
-          hash: hash
-        },
-        success: function (response) {
-          // console.log(response);
-          // debugger;
-          if (response.list.length > 0) {
-            $('#available-reports').html('<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' + new Date(response.list[0].created).toLocaleString() + ' <h4><br><h4>From :' + new Date(response.list[0].from).toLocaleString() + '</h4><br><h4> To: ' + new Date(response.list[0].to).toLocaleString() + '</h4></div><div class="row" style="padding: 20px;">' +
-              '<div class="col-md-6">' +
-              '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
-              '</div>' +
-              '<div class="col-md-6">' +
-              '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
-              '</div>' +
-              '</div></div>');
-            for (var i = 0; i < response.list.length; i++) {
-              // console.log(response.list[i].id);
-              avaliableReports.push({ 'id': response.list[i].id, 'report_title': response.list[i].title });
-            }
-            // console.log("Available Reports List: ");
-            // console.log(avaliableReports);
-          } else {
-            $.confirm({
-              title: 'Error',
-              content: 'There is no report currently, please generate one and try again!',
-              useBootstrap: false,
-              type: 'red',
-              theme: 'modern',
-              icon: 'fa fa-exclamation-triangle',
-              buttons: {
-                close: {
-                  text: 'Close',
-                  action: function () { }
-                }
-              }
-            });
-          }
-        },
-        async: false,
-        error: function (error) {
-          // console.log(error);
-        }
-      });
-
-    }
-
-    function deleteAllReportsAvailable() {
-
-      //Fetch existing reports
-      if (reportlist.length === 0) {
+      $(document).ready(function () {
+        var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+        var storedURL = localStorage.getItem("BASE_URL");
+        BASE_URL = storedURL !== undefined ? storedURL : "";
+        hash = storedDataObj.hash !== undefined ? storedDataObj.hash : "";
         $.ajax({
-          url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
-          type: 'GET',
+          url: BASE_URL+"report/tracker/list",
+          type: "GET",
           data: {
-            hash: hash
+            hash: hash,
           },
           success: function (response) {
-            // console.log(response);
             if (response.list.length > 0) {
+              $("#available-reports").html(
+                '<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' +
+                  new Date(response.list[0].created).toLocaleString() +
+                  " <h4><br><h4>From :" +
+                  new Date(response.list[0].from).toLocaleString() +
+                  "</h4><br><h4> To: " +
+                  new Date(response.list[0].to).toLocaleString() +
+                  '</h4></div><div class="row" style="padding: 20px;">' +
+                  '<div class="col-md-6">' +
+                  '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
+                  "</div>" +
+                  '<div class="col-md-6">' +
+                  '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
+                  "</div>" +
+                  "</div></div>"
+              );
               for (var i = 0; i < response.list.length; i++) {
-                // console.log(response.list[i].id);
-                reportlist.push(response.list[i].id);
+                avaliableReports.push({
+                  id: response.list[i].id,
+                  report_title: response.list[i].title,
+                });
               }
-              // console.log("Reports List: " + reportlist);
             } else {
               $.confirm({
-                title: 'Error',
-                content: 'There is no report currently please generate one and try again!',
+                title: "Error",
+                content:
+                  "There is no report currently, please generate one and try again!",
                 useBootstrap: false,
-                type: 'red',
-                boxWidth: '30%',
-                theme: 'modern',
-                icon: 'fa fa-exclamation-triangle',
+                type: "red",
+                boxWidth: "30%",
+                theme: "modern",
+                icon: "fa fa-exclamation-triangle",
                 buttons: {
                   close: {
-                    text: 'Close',
-                    action: function () { }
-                  }
-                }
+                    text: "Close",
+                    action: function () {},
+                  },
+                },
               });
             }
           },
           async: false,
           error: function (error) {
-            // console.log(error);
-          }
+            console.log(error);
+          },
         });
+      });
+
+      //Track vehicle selection
+      function checkForVehicle(valuee) {
+        if (valuee === "all") {
+          for (i in group_ids) {
+            $(
+              'input[name="vehicle-check-list-group' + group_ids[i] + '"]'
+            ).each(function () {
+              this.checked = true;
+            });
+          }
+        } else {
+          if (valuee.includes("group")) {
+            $('input[name="vehicle-check-list-' + valuee + '"]').each(
+              function () {
+                this.checked = true;
+              }
+            );
+          }
+          $("#checkAll").prop("checked", false);
+        }
       }
-      // debugger;
-      if (reportlist.length > 0) {
-        for (var i = 0; i < reportlist.length; i++) {
-          // Delete Report
-          $.ajax({
-            url: "https://hosting.fms-ecsinternational.com/api/report/tracker/delete",
-            type: 'GET',
-            data: {
+
+      function checkenddate() {
+        if ($("#startdate").val() !== "" && $("#enddate").val() !== "") {
+          var start = Date.parse($("#startdate").val().toString());
+          var end = Date.parse($("#enddate").val().toString());
+          if (start > end) {
+            $("#startdate").val("");
+            $("#enddate").focus();
+            return false;
+          } else {
+            $("#enddate").css("border-color", "#C0C0C0");
+            return true;
+          }
+        } else {
+          alert("Please Select a date range");
+          return false;
+        }
+
+        return true;
+      }
+
+      function checkMaxSpeed() {
+        var maxspeed = $("#maxspeed").val();
+        if (maxspeed === "") {
+          $.alert("Please Input Maximum speed(Speed violation)");
+          return false;
+        }
+        return true;
+      }
+
+      function generateReports() {
+        const generateReportsAsync = async () => {
+          var startDate = $("#startdate").val();
+          var endDate = $("#enddate").val();
+          var starttime =
+            $("#starttime").val() !== ""
+              ? " " + $("#starttime").val()
+              : " 00:00:00";
+          var endtime =
+            $("#endtime").val() !== ""
+              ? " " + $("#endtime").val()
+              : " 23:59:59";
+          var maxspeed = parseInt($("#maxspeed").val());
+          if (checkenddate() && checkMaxSpeed()) {
+            startDate = startDate.replace("/", "-") + starttime;
+            endDate = endDate.replace("/", "-") + endtime;
+            //Using the javascript API to create reports
+            // 2.1 Trip Report
+
+            var tripReportdata = {
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 4,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+              },
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
               hash: hash,
-              report_id: reportlist[i]
-            },
-            success: function (response) {
-              // console.log(response);
-              if (response.success === true) {
-                // console.log("Successfully deleted Report");
-                if (i === (reportlist.length - 1)) {
-                  $.confirm({
-                    title: 'Success',
-                    content: 'Report Successfully deleted',
-                    useBootstrap: false,
-                    type: 'green',
-                    theme: 'modern',
-                    icon: 'fa fa-tick',
-                    boxWidth: '30%',
-                    buttons: {
-                      close: {
-                        text: 'Close',
-                        action: function () { $('#available-reports').html('') }
+              title: "Trip report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+            };
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(tripReportdata),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.2 Eco Driving Report
+            var ecoReportdata = {
+              hash: hash,
+              title: "Eco-driving report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 46,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                show_detailed: true,
+                min_duration_minutes: 1,
+                max_speed: maxspeed,
+                smoothing: false,
+                graph_type: "mileage",
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(ecoReportdata),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.3 Engine Hours Report
+            var engineHoursdata = {
+              hash: hash,
+              title: "Engine hours report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 7,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                show_detailed: true,
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(engineHoursdata),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.4 Geo Fence Entry/Exit
+            var geoFencedata = {
+              hash: hash,
+              title: "Geofence entry/exit events",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 89,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                min_minutes_in_zone: 1,
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(geoFencedata),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.5 Speed Violation Report
+            var SpeedViolationdata = {
+              hash: hash,
+              title: "Speed violation report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 27,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                show_detailed: true,
+                min_duration_minutes: 1,
+                max_speed: maxspeed,
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(SpeedViolationdata),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.6 Car Security Report
+            var CarSecurityData = {
+              hash: hash,
+              title: "Car security report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 15,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                show_detailed: true,
+                min_duration_minutes: 1,
+                max_speed: maxspeed,
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(CarSecurityData),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            // 2.7 Fuel Volume Report
+            var fuelVolumeData = {
+              hash: hash,
+              title: "Fuel report",
+              trackers: trackerlist,
+              from: startDate,
+              to: endDate,
+              time_filter: {
+                from: "00:00:00",
+                to: "23:59:59",
+                weekdays: [1, 2, 3, 4, 5, 6, 7],
+              },
+              plugin: {
+                hide_empty_tabs: true,
+                plugin_id: 10,
+                show_seconds: true,
+                include_summary_sheet_only: false,
+                split: true,
+                show_idle_duration: true,
+                show_coordinates: false,
+                filter: true,
+                group_by_driver: true,
+                show_detailed: true,
+                min_duration_minutes: 1,
+                max_speed: maxspeed,
+                smoothing: false,
+                graph_type: "mileage",
+              },
+            };
+
+            await fetch(
+              BASE_URL+"report/tracker/generate",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(fuelVolumeData),
+              }
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success === true) {
+                  reportlist.push(data.id);
+                } else {
+                  switch (data.status.code) {
+                    case 13:
+                      $.alert(
+                        data.status.description +
+                          " <br> Please ensure that Vehicle list selected does'nt contain only GenSets"
+                      );
+                      break;
+                    case 217:
+                      $.alert(data.status.description);
+                      break;
+                    default:
+                      $.alert(data.status.description);
+                      break;
+                  }
+                  return;
+                }
+              })
+              .catch((error) => {
+                console.log("Error", error);
+              });
+
+            if (reportlist.length >= 6 && !reportlist.includes(undefined)) {
+              // 1. Check if (a) report has been fully generated.
+
+              $.confirm({
+                title: "Success",
+                content: "Report Successfully Created",
+                useBootstrap: false,
+                type: "green",
+                boxWidth: "30%",
+                theme: "modern",
+                icon: "fa fa-tick",
+                buttons: {
+                  close: {
+                    text: "Close",
+                    action: function () {
+                      listAllReportsAvailable();
+                    },
+                  },
+                },
+              });
+            } else {
+              $.confirm({
+                title: "Failed",
+                content: "Failed to create Report",
+                useBootstrap: false,
+                type: "red",
+                boxWidth: "30%",
+                theme: "modern",
+                icon: "fa fa-exclamation-triangle",
+                buttons: {
+                  close: {
+                    text: "Close",
+                    action: function () {
+                      $("#available-reports").html("");
+                    },
+                  },
+                },
+              });
+            }
+          }
+        };
+        generateReportsAsync();
+      }
+
+      function createReports() {
+        const createReportsAsync = async () => {
+          $("#btn-generate").prop("disabled", true);
+          $("#available-reports").html(
+            '<div class="col-md-12 text-center">' +
+              ' <div class="spinner-grow text-secondary" role="status">' +
+              '<span class="sr-only">Loading...</span>' +
+              " </div>" +
+              "</div>"
+          );
+          // 1. Get all assets to be tracked
+          if (trackerlist.length == 0) {
+            $.ajax({
+              url: BASE_URL+"tracker/list",
+              data: {
+                hash: hash,
+              },
+              type: "GET",
+              success: function (response) {
+                // var vehicle_groups;
+
+                $.ajax({
+                  url: BASE_URL+"tracker/group/list",
+                  data: {
+                    hash: hash,
+                  },
+                  type: "GET",
+                  success: function (resp) {
+                    var vehicle_groups = resp;
+                    var vehicles = response.list;
+                    var html =
+                      '<div class="form-group vehicle-list">' +
+                      '<div class="form-check">' +
+                      '<label class="form-check-label">' +
+                      '<input id="checkAll" type="checkbox" class="form-check-input" value="all" name="vehicle-check-list" onchange="checkForVehicle(\'all\')"> All </label>' +
+                      "</div><hr>";
+                    for (var x = 0; x < vehicle_groups.list.length; x++) {
+                      group_ids.push(vehicle_groups.list[x].id);
+                      var groups_html =
+                        '<div class="form-check" style="border-left: 15px solid #' +
+                        vehicle_groups.list[x].color +
+                        '">' +
+                        '<label class="form-check-label">' +
+                        '<input type="checkbox" class="form-check-input" value="group' +
+                        vehicle_groups.list[x].id +
+                        '" name="vehicle-check-list-group' +
+                        vehicle_groups.list[x].id +
+                        '" onchange="checkForVehicle(\'group' +
+                        vehicle_groups.list[x].id +
+                        "')\"> " +
+                        vehicle_groups.list[x].title +
+                        "</label>" +
+                        "</div><hr>";
+                      var vehicle_html = "";
+                      // Group the Trackers
+                      for (var i = 0; i < vehicles.length; i++) {
+                        //Create a list of all vehicles attached to user for selection and inclusion in report generation
+                        if (
+                          vehicle_groups.list[x].id === vehicles[i].group_id
+                        ) {
+                          vehicle_html =
+                            vehicle_html +
+                            '<div class="form-check">' +
+                            '<label class="form-check-label">' +
+                            '<input type="checkbox" class="form-check-input" value="' +
+                            vehicles[i].id +
+                            '" name="vehicle-check-list-group' +
+                            vehicle_groups.list[x].id +
+                            '" onchange="checkForVehicle(' +
+                            vehicles[i].id +
+                            ')"> ' +
+                            vehicles[i].label +
+                            "</label>" +
+                            "</div><hr>";
+                        }
+                      }
+
+                      if (vehicle_html !== "") {
+                        html = html + groups_html + vehicle_html;
                       }
                     }
-                  });
+
+                    html = html + "</div>";
+                    $.confirm({
+                      title: "Select Vehicles to include in the report(s)",
+                      content: "" + html,
+                      useBootstrap: false,
+                      type: "blue",
+                      theme: "modern",
+                      icon: "fa fa-checked-circle",
+                      buttons: {
+                        close: {
+                          text: "Generate",
+                          btnClass: "btn btn-primary",
+                          action: function () {
+                            // console.log($('input[name="vehicle-check-list"]:checked').serialize());
+                            for (i in group_ids) {
+                              $(
+                                'input[name="vehicle-check-list-group' +
+                                  group_ids[i] +
+                                  '"]:checked'
+                              ).each(function () {
+                                if (this.value != "all") {
+                                  if (!this.value.includes("group")) {
+                                    trackerlist.push(parseInt(this.value));
+                                  }
+                                }
+                              });
+                            }
+                            if (trackerlist.length == 0) {
+                              $.alert("Please select atleast one vehicle.");
+                              return false;
+                            } else {
+                              $("#btn-generate").prop("disabled", false);
+                              generateReports();
+                            }
+                          },
+                        },
+                        cancel: {
+                          text: "Cancel",
+                          action: function () {
+                            $("#btn-generate").prop("disabled", false);
+                            $("#available-reports").html("");
+                          },
+                        },
+                      },
+                    });
+                    return;
+                  },
+                  async: true,
+                });
+              },
+              error: function (error) {
+                return;
+              },
+              async: false,
+            });
+          } else {
+            trackerlist = [];
+            createReportsAsync();
+          }
+          // }
+        };
+
+        createReportsAsync();
+      }
+      function listAllReportsAvailable() {
+        $.ajax({
+          url: BASE_URL+"report/tracker/list",
+          type: "GET",
+          data: {
+            hash: hash,
+          },
+          success: function (response) {
+            if (response.list.length > 0) {
+              $("#available-reports").html(
+                '<div class="col-md-3" style="border: purple thin solid"><div class="tile"> <h3>Fleet Report</h3><br><h4> Created :' +
+                  new Date(response.list[0].created).toLocaleString() +
+                  " <h4><br><h4>From :" +
+                  new Date(response.list[0].from).toLocaleString() +
+                  "</h4><br><h4> To: " +
+                  new Date(response.list[0].to).toLocaleString() +
+                  '</h4></div><div class="row" style="padding: 20px;">' +
+                  '<div class="col-md-6">' +
+                  '<button class="btn btn-sm btn-success" onclick="window.location.href=\'fleetreports.html\'"><i class="fa fa-eye"></i> View Report</button>' +
+                  "</div>" +
+                  '<div class="col-md-6">' +
+                  '<button class="btn btn-sm btn-danger" onclick="deleteAllReportsAvailable()"><i class="fa fa-trash"></i>Delete Report</button>' +
+                  "</div>" +
+                  "</div></div>"
+              );
+              for (var i = 0; i < response.list.length; i++) {
+                avaliableReports.push({
+                  id: response.list[i].id,
+                  report_title: response.list[i].title,
+                });
+              }
+            } else {
+              $.confirm({
+                title: "Error",
+                content:
+                  "There is no report currently, please generate one and try again!",
+                useBootstrap: false,
+                type: "red",
+                theme: "modern",
+                icon: "fa fa-exclamation-triangle",
+                buttons: {
+                  close: {
+                    text: "Close",
+                    action: function () {},
+                  },
+                },
+              });
+            }
+          },
+          async: false,
+          error: function (error) {
+            console.log(error);
+          },
+        });
+      }
+
+      function deleteAllReportsAvailable() {
+        //Fetch existing reports
+        if (reportlist.length === 0) {
+          $.ajax({
+            url: BASE_URL+"report/tracker/list",
+            type: "GET",
+            data: {
+              hash: hash,
+            },
+            success: function (response) {
+              if (response.list.length > 0) {
+                for (var i = 0; i < response.list.length; i++) {
+                  reportlist.push(response.list[i].id);
                 }
               } else {
-                // console.log("Failed to delete Report, Please try again");
+                $.confirm({
+                  title: "Error",
+                  content:
+                    "There is no report currently please generate one and try again!",
+                  useBootstrap: false,
+                  type: "red",
+                  boxWidth: "30%",
+                  theme: "modern",
+                  icon: "fa fa-exclamation-triangle",
+                  buttons: {
+                    close: {
+                      text: "Close",
+                      action: function () {},
+                    },
+                  },
+                });
               }
             },
             async: false,
             error: function (error) {
-              // console.log(error);
-            }
+              console.log(error);
+            },
           });
         }
+        if (reportlist.length > 0) {
+          for (var i = 0; i < reportlist.length; i++) {
+            // Delete Report
+            $.ajax({
+              url: BASE_URL+"report/tracker/delete",
+              type: "GET",
+              data: {
+                hash: hash,
+                report_id: reportlist[i],
+              },
+              success: function (response) {
+                if (response.success === true) {
+                  if (i === reportlist.length - 1) {
+                    $.confirm({
+                      title: "Success",
+                      content: "Report Successfully deleted",
+                      useBootstrap: false,
+                      type: "green",
+                      theme: "modern",
+                      icon: "fa fa-tick",
+                      boxWidth: "30%",
+                      buttons: {
+                        close: {
+                          text: "Close",
+                          action: function () {
+                            $("#available-reports").html("");
+                          },
+                        },
+                      },
+                    });
+                  }
+                }
+              },
+              async: false,
+              error: function (error) {
+                console.log(error);
+              },
+            });
+          }
+        }
       }
-    }
-
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

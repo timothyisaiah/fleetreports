@@ -1,232 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FMS Reports | Log in</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>FMS Reports | Log in</title>
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+    <!-- jquery -->
+    <link rel="stylesheet" href="plugins/jquery-confirm/jquery-confirm.css" />
+    <!-- icheck bootstrap -->
+    <link
+      rel="stylesheet"
+      href="plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+  </head>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- jquery -->
-  <link rel="stylesheet" href="plugins/jquery-confirm/jquery-confirm.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-</head>
-
-<body class="hold-transition login-page">
-  <div class="login-box">
-    <div class="login-logo">
-      <a href="pages/tables/data.html" id="loadhome"><b>FMS Reports</b></a>
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-
-        <!-- <form action="../tables/data.html" method="post"> -->
-        <!-- <a href="pages/tables/data.html" id="homepagelink"></a> -->
-        <form>
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email" id="useremail" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" id="userpassword" required>
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <!-- <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
-                </label>
-              </div> -->
-            </div>
-            <!-- /.col -->
-            <div class="col-4">
-              <!-- <button class="btn btn-primary btn-block" id="login" onclick="logIn()">Sign In</button> -->
-              <button class="btn btn-primary btn-block" id="login">Sign In</button>
-            </div>
-            <!-- /.col -->
-          </div>
-        </form>
-
-        <!-- <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> -->
-        <!-- /.social-auth-links -->
-
-        <!-- <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-          <a href="register.html" class="text-center">Register a new membership</a>
-        </p> -->
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="pages/tables/data.html" id="loadhome"><b>FMS Reports</b></a>
       </div>
-      <!-- /.login-card-body -->
+      <!-- /.login-logo -->
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">Sign in to start your session</p>
+          <form>
+            <div class="input-group mb-3">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email"
+                id="useremail"
+                required
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                id="userpassword"
+                required
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button class="btn btn-primary btn-block" id="login">
+                  Sign In
+                </button>
+              </div>
+              <!-- /.col -->
+            </div>
+          </form>
+        </div>
+        <!-- /.login-card-body -->
+      </div>
     </div>
-  </div>
-  <!-- /.login-box -->
+    <!-- /.login-box -->
 
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/jquery-confirm/jquery-confirm.js"></script>
-  <!-- Bootstrap 4 -->
-  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
-  <script>
-    var localstoragedataobj = {};
-    $(document).ready(function () {
-      //This removes previous login details
-      if (localStorage.getItem("user_hash")) {
-        localStorage.removeItem("user_hash");
-      }
-    });
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/jquery-confirm/jquery-confirm.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.min.js"></script>
+    <script>
+      var localstoragedataobj = {};
+      $(document).ready(function () {
+        //This removes previous login details
+        if (localStorage.getItem("user_hash")) {
+          localStorage.removeItem("user_hash");
+        }
+      });
 
-    $('#login').click(function (e) {
-      // debugger;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      var login = $('#useremail').val();
-      var password = $('#userpassword').val();
+      $("#login").click(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var login = $("#useremail").val();
+        var password = $("#userpassword").val();
 
-      if (login !== '' && login !== undefined && password !== '' && password !== undefined) {
-        $.ajax({
-          url: 'https://hosting.fms-ecsinternational.com/api/user/auth',
-          data: {
-            login: login,
-            password: password
-          },
-          type: 'POST',
-          success: function (response) {
-            console.log('Excecuted');
-            // console.log(responseJSON);
-            // debugger;
-            console.log(response);
-            // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
-            // debugger;
+        if (
+          login !== "" &&
+          login !== undefined &&
+          password !== "" &&
+          password !== undefined
+        ) {
+          $.ajax({
+            url: "https://hosting.fms-ecsafrica.com/api-v2/user/auth",
+            data: {
+              login: login,
+              password: password,
+            },
+            type: "POST",
+            success: function (response) {
 
-            if (typeof localstoragedataobj !== "undefined") {
-              localstoragedataobj = {
-                hash: response.hash
-              };
-              if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
-                localStorage.setItem("user_hash", JSON.stringify(localstoragedataobj));
-              }
-            }
-            if (response.hash !== undefined) {
-              // debugger;
-              window.location.href = 'pages/tables/data.html';
-            } else {
-              debugger;
-              location.reload();
-            }
-          },
-          error: function (error) {
-            $.confirm({
-              title: 'Error',
-              content: 'Please Enter correct login credentials',
-              useBootstrap: false,
-              type: 'red',
-              theme: 'modern',
-              icon: 'fa fa-exclamation-triangle',
-              buttons: {
-                close: {
-                  text: 'Close',
-                  action: function () {
-                    location.reload();
-                  }
+              if (typeof localstoragedataobj !== "undefined") {
+                localstoragedataobj = {
+                  hash: response.hash,
+                };
+                if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
+                  localStorage.setItem("user_hash",JSON.stringify(localstoragedataobj));
+                  localStorage.setItem("BASE_URL","https://hosting.fms-ecsafrica.com/api-v2/");
                 }
               }
-            });
-            return false;
-            console.log(error.responseJSON);
-          },
-          async: false
-        });
-      } else {
-        $.alert('Please enter Vaild Email and password');
-      }
-    });
-    // function logIn() {
-    //   // debugger;
-    //   var login = $('#useremail').val();
-    //   var password = $('#userpassword').val();
+              if (response.hash !== undefined) {
+                window.location.href = "pages/tables/data.html";
+              } else {
+                location.reload();
+              }
+            },
+            error: function (error) {
+              // console.log(error.responseJSON);
+              // $.confirm({
+              //   title: 'Error',
+              //   content: 'Please Enter correct login credentials',
+              //   useBootstrap: false,
+              //   type: 'red',
+              //   theme: 'modern',
+              //   icon: 'fa fa-exclamation-triangle',
+              //   buttons: {
+              //     close: {
+              //       text: 'Close',
+              //       action: function () {
+              //         location.reload();
+              //       }
+              //     }
+              //   }
+              // });
+              // return false;
 
-    //   if (login !== '' && login !== undefined && password !== '' && password !== undefined) {
-    //     $.ajax({
-    //       url: 'https://hosting.fms-ecsinternational.com/api/user/auth',
-    //       data: {
-    //         login: login,
-    //         password: password
-    //       },
-    //       type: 'POST',
-    //       success: function (response) {
-    //         console.log('Excecuted');
-    //         console.log(responseJSON);
-    //         debugger;
-    //         console.log(response);
-    //         // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
-    //         debugger;
-
-    //         if (typeof localstoragedataobj !== "undefined") {
-    //           localstoragedataobj = {
-    //             hash: response.hash
-    //           };
-    //           if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
-    //             localStorage.setItem("user_hash", JSON.stringify(localstoragedataobj));
-    //           }
-    //         }
-
-    //       },
-    //       error: function (error) {
-    //         location.reload();
-    //         $.confirm({
-    //           title: 'Error',
-    //           content: 'Please Enter correct login credentials',
-    //           useBootstrap: false,
-    //           type: 'red',
-    //           theme: 'modern',
-    //           icon: 'fa fa-exclamation-triangle',
-    //           buttons: {
-    //             close: {
-    //               text: 'Close',
-    //               action: function () { }
-    //             }
-    //           }
-    //         });
-    //         return false;
-    //         console.log(error.responseJSON);
-    //       },
-    //       async: false
-    //     });
-    //   } else {
-    //     $.alert('Please enter Vaild Email and password');
-    //   }
-    // }
-  </script>
-</body>
-
+              $.ajax({
+                url: "https://hosting.fms-ecsinternational.com/api/user/auth",
+                data: {
+                  login: login,
+                  password: password,
+                },
+                type: "POST",
+                success: function (response) {
+                  if (typeof localstoragedataobj !== "undefined") {
+                    localstoragedataobj = {
+                      hash: response.hash,
+                    };
+                    if (
+                      !localStorage.getItem("user_hash") ||
+                      localStorage.getItem("user_hash").includes("object")
+                    ) {
+                      localStorage.setItem(
+                        "user_hash",
+                        JSON.stringify(localstoragedataobj)
+                      );
+                      localStorage.setItem(
+                        "BASE_URL",
+                        "https://hosting.fms-ecsinternational.com/api/"
+                      );
+                    }
+                  }
+                  if (response.hash !== undefined) {
+                    window.location.href = "pages/tables/data.html";
+                  } else {
+                    location.reload();
+                  }
+                },
+                error: function (error) {
+                  $.confirm({
+                    title: "Error",
+                    content: "Please Enter correct login credentials",
+                    useBootstrap: false,
+                    type: "red",
+                    theme: "modern",
+                    icon: "fa fa-exclamation-triangle",
+                    buttons: {
+                      close: {
+                        text: "Close",
+                        action: function () {
+                          location.reload();
+                        },
+                      },
+                    },
+                  });
+                  return false;
+                  console.log(error.responseJSON);
+                },
+                async: false,
+              });
+            },
+            async: false,
+          });
+        } else {
+          $.alert("Please enter Vaild Email and password");
+        }
+      });
+    </script>
+  </body>
 </html>
