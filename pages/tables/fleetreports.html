@@ -578,6 +578,7 @@
         $(document).ready(function () {
             var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
             hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
+            BASE_URL = (storedDataObj.BASE_URL !== undefined) ? storedDataObj.BASE_URL : "";
             listAllReportsAvailable();
             viewFleetOperationsreport();
             // viewTripReport();
@@ -601,7 +602,7 @@
                     var enginehours;
                     var geofencereport;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
@@ -620,7 +621,7 @@
 
                     //Retieve Engine Hours
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
@@ -638,7 +639,7 @@
 
                     //Retieve Geofence entry/exit events
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Geofence entry/exit events')].id
@@ -768,7 +769,7 @@
                     var ecosummary;
                     //Retieve Eco-Driving report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Eco-driving report')].id
@@ -785,7 +786,7 @@
 
                     //Retieve Speed Violation report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
@@ -887,7 +888,7 @@
                     var fuelperdaysummary;
                     //Retieve Fuel volume report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
@@ -989,7 +990,7 @@
                     var tripsummary;
                     var fuelsummary;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
@@ -1006,7 +1007,7 @@
 
                     //Retieve Fuel volume report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
@@ -1053,7 +1054,7 @@
 
                     //Retieve Speed Violation report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Speed violation report')].id
@@ -1115,7 +1116,7 @@
                     //Retieve Trip Report
                     var tripreport;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
@@ -1190,7 +1191,7 @@
                     var vehicle_list;
                     var vehicle_group_list;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/tracker/group/list',
+                        url: BASE_URL+'tracker/group/list',
                         data: {
                             hash: hash
                         },
@@ -1205,7 +1206,7 @@
                     });
 
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/tracker/list',
+                        url: BASE_URL+'tracker/list',
                         data: {
                             hash: hash
                         },
@@ -1221,7 +1222,7 @@
                     //Retieve Trip Report
                     var tripreport;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
@@ -1240,7 +1241,7 @@
                     var enginehours;
                     //Retieve Fuel volume report
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
@@ -1255,7 +1256,7 @@
                         async: false
                     });
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                        url: BASE_URL+'report/tracker/retrieve',
                         data: {
                             hash: hash,
                             report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Engine hours report')].id
@@ -1281,7 +1282,7 @@
 
                     var service_task;
                     $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/vehicle/service_task/list',
+                        url: BASE_URL+'vehicle/service_task/list',
                         data: {
                             hash: hash,
                             return_prediction: false
@@ -1301,7 +1302,7 @@
 
                         var driver_journal;
                         $.ajax({
-                        url: 'https://hosting.fms-ecsinternational.com/api/driver/journal/proposal/list',
+                        url: BASE_URL+'driver/journal/proposal/list',
                         data: {
                             hash: hash,
                             from: tripreport.report.from,
@@ -1354,7 +1355,7 @@
         }
         function listAllReportsAvailable() {
             $.ajax({
-                url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+                url: BASE_URL+"report/tracker/list",
                 type: 'GET',
                 data: {
                     hash: hash

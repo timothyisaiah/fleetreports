@@ -354,7 +354,7 @@
             var fuelsummary;
             //Retieve Fuel volume report
             $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                url: BASE_URL+'report/tracker/retrieve',
                 data: {
                     hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Fuel report')].id
@@ -416,7 +416,7 @@
             var tripsummary;
             var fuelsummary;
             $.ajax({
-                url: 'https://hosting.fms-ecsinternational.com/api/report/tracker/retrieve',
+                url: BASE_URL+'report/tracker/retrieve',
                 data: {
                     hash: hash,
                     report_id: avaliableReports[avaliableReports.findIndex(x => x.report_title === 'Trip report')].id
@@ -449,7 +449,7 @@
 
         function listAllReportsAvailable() {
             $.ajax({
-                url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+                url: BASE_URL+"report/tracker/list",
                 type: 'GET',
                 data: {
                     hash: hash

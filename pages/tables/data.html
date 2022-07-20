@@ -362,8 +362,9 @@
       $(document).ready(function () {
         var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
         hash = storedDataObj.hash !== undefined ? storedDataObj.hash : "";
+        BASE_URL = storedDataObj.BASE_URL !== undefined ? storedDataObj.BASE_URL : "";
         $.ajax({
-          url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+          url: BASE_URL+"report/tracker/list",
           type: "GET",
           data: {
             hash: hash,
@@ -512,7 +513,7 @@
               to: endDate,
             };
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -578,7 +579,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -640,7 +641,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -702,7 +703,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -766,7 +767,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -830,7 +831,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -896,7 +897,7 @@
             };
 
             await fetch(
-              "https://hosting.fms-ecsinternational.com/api/report/tracker/generate",
+              BASE_URL+"report/tracker/generate",
               {
                 method: "POST",
                 headers: {
@@ -988,7 +989,7 @@
           // 1. Get all assets to be tracked
           if (trackerlist.length == 0) {
             $.ajax({
-              url: "https://hosting.fms-ecsinternational.com/api/tracker/list",
+              url: BASE_URL+"tracker/list",
               data: {
                 hash: hash,
               },
@@ -997,7 +998,7 @@
                 // var vehicle_groups;
 
                 $.ajax({
-                  url: "https://hosting.fms-ecsinternational.com/api/tracker/group/list",
+                  url: BASE_URL+"tracker/group/list",
                   data: {
                     hash: hash,
                   },
@@ -1123,7 +1124,7 @@
       }
       function listAllReportsAvailable() {
         $.ajax({
-          url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+          url: BASE_URL+"report/tracker/list",
           type: "GET",
           data: {
             hash: hash,
@@ -1181,7 +1182,7 @@
         //Fetch existing reports
         if (reportlist.length === 0) {
           $.ajax({
-            url: "https://hosting.fms-ecsinternational.com/api/report/tracker/list",
+            url: BASE_URL+"report/tracker/list",
             type: "GET",
             data: {
               hash: hash,
@@ -1220,7 +1221,7 @@
           for (var i = 0; i < reportlist.length; i++) {
             // Delete Report
             $.ajax({
-              url: "https://hosting.fms-ecsinternational.com/api/report/tracker/delete",
+              url: BASE_URL+"report/tracker/delete",
               type: "GET",
               data: {
                 hash: hash,

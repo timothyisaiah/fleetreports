@@ -168,62 +168,6 @@
         $.alert('Please enter Vaild Email and password');
       }
     });
-    // function logIn() {
-    //   // debugger;
-    //   var login = $('#useremail').val();
-    //   var password = $('#userpassword').val();
-
-    //   if (login !== '' && login !== undefined && password !== '' && password !== undefined) {
-    //     $.ajax({
-    //       url: 'https://hosting.fms-ecsinternational.com/api/user/auth',
-    //       data: {
-    //         login: login,
-    //         password: password
-    //       },
-    //       type: 'POST',
-    //       success: function (response) {
-    //         console.log('Excecuted');
-    //         console.log(responseJSON);
-    //         debugger;
-    //         console.log(response);
-    //         // window.location.href = "D:/Isaiah/Isaiah/Gigs/htmlTemplates/Dashboards/AdminLTE-master/AdminLTE-master/pages/tables/data.html";
-    //         debugger;
-
-    //         if (typeof localstoragedataobj !== "undefined") {
-    //           localstoragedataobj = {
-    //             hash: response.hash
-    //           };
-    //           if (!localStorage.getItem("user_hash") || localStorage.getItem("user_hash").includes("object")) {
-    //             localStorage.setItem("user_hash", JSON.stringify(localstoragedataobj));
-    //           }
-    //         }
-
-    //       },
-    //       error: function (error) {
-    //         location.reload();
-    //         $.confirm({
-    //           title: 'Error',
-    //           content: 'Please Enter correct login credentials',
-    //           useBootstrap: false,
-    //           type: 'red',
-    //           theme: 'modern',
-    //           icon: 'fa fa-exclamation-triangle',
-    //           buttons: {
-    //             close: {
-    //               text: 'Close',
-    //               action: function () { }
-    //             }
-    //           }
-    //         });
-    //         return false;
-    //         console.log(error.responseJSON);
-    //       },
-    //       async: false
-    //     });
-    //   } else {
-    //     $.alert('Please enter Vaild Email and password');
-    //   }
-    // }
   </script>
 </body>
 
