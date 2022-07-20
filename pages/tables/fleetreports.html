@@ -520,6 +520,7 @@
     <!-- Page specific script -->
     <script>
         var hash;
+        var BASE_URL;
         var fleettable = $("#fleetoperations").DataTable({
             "dom": "Bfrtip",
             "buttons": ["copy", "csv", "excel", "pdf", "print"]
@@ -577,8 +578,9 @@
         }
         $(document).ready(function () {
             var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+            var storedURL = localStorage.getItem("BASE_URL");
             hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
-            BASE_URL = (storedDataObj.BASE_URL !== undefined) ? storedDataObj.BASE_URL : "";
+            BASE_URL = (storedURL !== undefined) ? storedURL : "";
             listAllReportsAvailable();
             viewFleetOperationsreport();
             // viewTripReport();

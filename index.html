@@ -32,9 +32,6 @@
       <div class="card">
         <div class="card-body login-card-body">
           <p class="login-box-msg">Sign in to start your session</p>
-
-          <!-- <form action="../tables/data.html" method="post"> -->
-          <!-- <a href="pages/tables/data.html" id="homepagelink"></a> -->
           <form>
             <div class="input-group mb-3">
               <input
@@ -66,16 +63,9 @@
             </div>
             <div class="row">
               <div class="col-8">
-                <!-- <div class="icheck-primary">
-                <input type="checkbox" id="remember">
-                <label for="remember">
-                  Remember Me
-                </label>
-              </div> -->
               </div>
               <!-- /.col -->
               <div class="col-4">
-                <!-- <button class="btn btn-primary btn-block" id="login" onclick="logIn()">Sign In</button> -->
                 <button class="btn btn-primary btn-block" id="login">
                   Sign In
                 </button>
@@ -83,24 +73,6 @@
               <!-- /.col -->
             </div>
           </form>
-
-          <!-- <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> -->
-          <!-- /.social-auth-links -->
-
-          <!-- <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
-        </p>
-        <p class="mb-0">
-          <a href="register.html" class="text-center">Register a new membership</a>
-        </p> -->
         </div>
         <!-- /.login-card-body -->
       </div>
@@ -124,7 +96,6 @@
       });
 
       $("#login").click(function (e) {
-        debugger;
         e.preventDefault();
         e.stopImmediatePropagation();
         var login = $("#useremail").val();
@@ -144,9 +115,6 @@
             },
             type: "POST",
             success: function (response) {
-              debugger
-              console.log("Excecuted");
-              console.log(response);
 
               if (typeof localstoragedataobj !== "undefined") {
                 localstoragedataobj = {
@@ -158,16 +126,12 @@
                 }
               }
               if (response.hash !== undefined) {
-                // debugger;
                 window.location.href = "pages/tables/data.html";
               } else {
-                debugger;
                 location.reload();
               }
             },
             error: function (error) {
-              debugger
-              console.log("error", error);
               // console.log(error.responseJSON);
               // $.confirm({
               //   title: 'Error',
@@ -195,9 +159,6 @@
                 },
                 type: "POST",
                 success: function (response) {
-                  console.log("Excecuted");
-                  debugger;
-                  console.log(response);
                   if (typeof localstoragedataobj !== "undefined") {
                     localstoragedataobj = {
                       hash: response.hash,
@@ -217,10 +178,8 @@
                     }
                   }
                   if (response.hash !== undefined) {
-                    // debugger;
                     window.location.href = "pages/tables/data.html";
                   } else {
-                    debugger;
                     location.reload();
                   }
                 },

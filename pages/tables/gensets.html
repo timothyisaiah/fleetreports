@@ -71,17 +71,6 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                    <!-- <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Dashboard
-                                <i class="right fas fa-angle-left"></i>
-                            </p>
-                        </a>
-                    </li> -->
                     <li class="nav-item">
                         <a href="data.html" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -177,11 +166,6 @@
                                         <div class="card-body">
                                             <table class="table table-bordered" id="fuelperformancetable">
                                                 <thead>
-                                                    <!-- <tr>
-                                                        <th colspan="9" id="">
-
-                                                        </th>
-                                                    </tr> -->
                                                     <tr>
                                                         <th>No.</th>
                                                         <th>AssetName</th>
@@ -302,26 +286,15 @@
             "dom": "Bfrtip",
             "buttons": ["copy", "csv", "excel", "pdf", "print"]
         });
-
+        var BASE_URL;
         var avaliableReports = [];
         $(document).ready(function () {
             var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+            var storedURL = localStorage.getItem("BASE_URL");
             // debugger;
             hash = (storedDataObj.hash !== undefined) ? storedDataObj.hash : "";
+            BASE_URL = (storedURL !== undefined) ? storedURL : "";
             listAllReportsAvailable();
-        });
-        $(function () {
-            // $('#ecodriving').DataTable({
-            //   "paging": true,
-            //   "lengthChange": false,
-            //   "searching": false,
-            //   "ordering": true,
-            //   "info": true,
-            //   "autoWidth": false,
-            //   "responsive": true,
-            // });
-            // $("#exampletime").datetimepicker();
-            // $("#exampletime2").datetimepicker();
         });
 
         function checkenddate() {

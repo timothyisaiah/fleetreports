@@ -105,17 +105,6 @@
             role="menu"
             data-accordion="false"
           >
-            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-            <!-- <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-          </li> -->
             <li class="nav-item">
               <a href="data.html" class="nav-link active">
                 <i class="far fa-circle nav-icon"></i>
@@ -162,27 +151,6 @@
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
-            <!-- Date picker  -->
-            <!-- <div class="row" style="padding: 2% 5%;">
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">Start Date:</label>
-              <input type="date" class="form-control" id="startdate">
-            </div>
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">End Date:</label>
-              <input type="date" class="form-control" id="enddate">
-            </div>
-            <div class="col-md-3">
-              <label style="padding-left: 10px;">Max Speed (km/h):</label>
-              <input type="number" class="form-control" id="maxspeed" name="maxspeed">
-            </div>
-            <div class="col-md-3" style="padding: 2.7%;">
-              <button class="btn btn-sm btn-primary" onclick="createReports()" id="btn-generate"><i
-                  class="fa fa-download"></i> Generate
-                Report</button>
-            </div>
-          </div> -->
-
             <!-- new date picker with time  -->
             <div class="row">
               <div class="col-md-2">
@@ -337,6 +305,7 @@
     <!-- Page specific script -->
     <script>
       var hash;
+      var BASE_URL;
       var trackerlist = [];
       var reportlist = [];
       var group_ids = [];
@@ -361,8 +330,9 @@
 
       $(document).ready(function () {
         var storedDataObj = JSON.parse(localStorage.getItem("user_hash"));
+        var storedURL = localStorage.getItem("BASE_URL");
+        BASE_URL = storedURL !== undefined ? storedURL : "";
         hash = storedDataObj.hash !== undefined ? storedDataObj.hash : "";
-        BASE_URL = storedDataObj.BASE_URL !== undefined ? storedDataObj.BASE_URL : "";
         $.ajax({
           url: BASE_URL+"report/tracker/list",
           type: "GET",
